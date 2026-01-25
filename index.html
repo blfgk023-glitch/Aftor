@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grizator | VPN Pro</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Cairo:wght@400;900&family=Aref+Ruqaa:wght@700&display=swap" rel="stylesheet">
+    <title>Grizator | VPN PRO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Cairo:wght@400;900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
     
     <style>
@@ -25,16 +25,19 @@
             font-family: 'Cairo', sans-serif;
             min-height: 100vh;
             overflow-x: hidden;
+            opacity: 0; /* للتحكم في الدخلة الواعرة */
+            animation: pageFadeIn 1.5s ease-out forwards;
         }
 
-        /* الخلفية */
+        @keyframes pageFadeIn {
+            from { opacity: 0; transform: scale(0.9); filter: blur(10px); }
+            to { opacity: 1; transform: scale(1); filter: blur(0); }
+        }
+
         .main-background {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: url('https://i.ibb.co/ynv1GmLc/a12e4d45adc0f948503cf2e7178b2d1b.jpg') no-repeat center center;
-            background-size: cover;
-            z-index: -2;
-            filter: brightness(0.3);
+            background-size: cover; z-index: -2; filter: brightness(0.3);
         }
 
         /* Navbar */
@@ -43,126 +46,99 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            position: sticky; top: 0; z-index: 100;
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 242, 255, 0.2);
+            position: sticky; top: 0; z-index: 1000;
         }
 
-        .menu-btn { 
-            font-size: 1.8rem; 
-            cursor: pointer; 
-            color: var(--ai-glow); 
-            transition: 0.3s;
+        .brand { display: flex; align-items: center; gap: 15px; }
+        .brand img { 
+            width: 50px; height: 50px; border-radius: 50%; 
+            border: 2px solid var(--ai-glow); box-shadow: 0 0 15px var(--ai-glow);
         }
-        
-        .logo-main img { 
-            width: 60px; 
-            height: 60px;
-            border-radius: 50%; 
-            border: 2px solid var(--ai-glow); 
-            box-shadow: 0 0 20px var(--ai-glow);
-            object-fit: cover;
+        .brand span { 
+            font-family: 'Orbitron'; font-weight: 900; font-size: 1.5rem; 
+            color: white; text-transform: uppercase; letter-spacing: 2px;
         }
 
-        /* 3 شرطات: القائمة الجانبية (جهة اليمين) */
-        .side-menu {
-            position: fixed; top: 90px; right: -300px; /* كتبدا مخبية فاليمن */
+        .menu-container { position: relative; }
+        .menu-btn { font-size: 1.8rem; cursor: pointer; color: var(--ai-glow); transition: 0.3s; }
+
+        /* الجدول اللي كينزل من الـ 3 شرطات */
+        .dropdown-menu {
+            position: absolute; top: 50px; left: 0;
             background: rgba(5, 10, 24, 0.95);
-            border-right: 4px solid var(--ai-glow);
-            border-radius: 15px 0 0 15px;
-            padding: 20px;
-            z-index: 1000;
-            width: 260px;
-            backdrop-filter: blur(15px);
-            box-shadow: -10px 0 30px rgba(0, 242, 255, 0.3);
-            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* حركة مرنة */
+            border: 1px solid var(--ai-glow);
+            border-radius: 12px;
+            width: 220px; display: none;
+            overflow: hidden; box-shadow: 0 10px 30px rgba(0, 242, 255, 0.4);
+            transform-origin: top;
+            animation: slideDown 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        
-        .side-menu.active { right: 0; } /* كتدخل فاش كنضغطو */
+        @keyframes slideDown { from { transform: scaleY(0); opacity: 0; } to { transform: scaleY(1); opacity: 1; } }
 
-        .side-menu a { 
-            color: white; text-decoration: none; display: flex; 
-            align-items: center; justify-content: flex-start; 
-            padding: 15px; margin-bottom: 10px;
-            border-radius: 10px; background: rgba(255,255,255,0.05);
+        .dropdown-menu a {
+            display: flex; align-items: center; padding: 15px;
+            color: white; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.05);
             transition: 0.3s;
         }
-        .side-menu a i { margin-left: 15px; color: var(--ai-glow); }
-        .side-menu a:hover { background: var(--ai-glow); color: black; transform: scale(1.05); }
+        .dropdown-menu a:hover { background: var(--ai-glow); color: black; }
+        .dropdown-menu a i { margin-left: 12px; }
 
-        /* العنوان الأصفر الواعر */
-        header { text-align: center; padding: 60px 20px 40px; }
-        
+        header { text-align: center; padding: 50px 20px; }
         .main-title { 
-            font-family: 'Cairo', sans-serif;
-            font-weight: 900;
-            font-size: clamp(1.8rem, 6vw, 3.5rem); 
-            color: var(--neon-yellow); 
-            text-shadow: 0 0 10px rgba(241, 255, 0, 0.5), 0 0 30px var(--neon-yellow);
-            letter-spacing: 2px;
-            line-height: 1.4;
+            color: var(--neon-yellow); font-weight: 900; 
+            font-size: clamp(1.5rem, 5vw, 3rem);
+            text-shadow: 0 0 20px var(--neon-yellow); margin-bottom: 20px;
         }
 
-        /* إطارات الشبكات */
+        /* التجاوب (Responsive) */
         .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 35px;
+            gap: 30px;
             padding: 20px 8% 60px;
+            /* للحاسوب: 3 أعمدة */
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        /* للتيليفون: عمود واحد */
+        @media (max-width: 900px) {
+            .grid-container { grid-template-columns: 1fr; }
+            .brand span { font-size: 1.2rem; }
         }
 
         .network-card {
-            background: rgba(15, 23, 42, 0.8);
-            border-radius: 25px;
-            padding: 30px;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(15, 23, 42, 0.85);
+            border-radius: 25px; padding: 25px;
+            position: relative; overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: 0.4s;
         }
 
         .network-card::before {
-            content: "";
-            position: absolute;
-            top: -50%; left: -50%;
+            content: ""; position: absolute; top: -50%; left: -50%;
             width: 200%; height: 200%;
             background: conic-gradient(transparent, transparent, var(--border-color), transparent);
-            animation: rotate 4s linear infinite;
-            z-index: -2;
+            animation: rotate 4s linear infinite; z-index: -2;
         }
         @keyframes rotate { 100% { transform: rotate(360deg); } }
-
-        .network-card::after {
-            content: "";
-            position: absolute; inset: 3px;
-            background: #050a18;
-            border-radius: 22px;
-            z-index: -1;
-        }
+        .network-card::after { content: ""; position: absolute; inset: 3px; background: #050a18; border-radius: 22px; z-index: -1; }
 
         .iam { --border-color: var(--iam-red); }
         .inwi { --border-color: var(--inwi-purple); }
         .orange { --border-color: var(--orange-color); }
 
-        .card-title { 
-            font-family: 'Orbitron'; font-size: 1.5rem; text-align: center; 
-            margin-bottom: 25px; color: var(--border-color); text-shadow: 0 0 10px var(--border-color);
-        }
+        .card-title { font-family: 'Orbitron'; font-size: 1.3rem; text-align: center; margin-bottom: 20px; color: var(--border-color); }
 
         .app-box {
             display: flex; align-items: center; justify-content: center;
-            background: rgba(255, 255, 255, 0.03);
-            margin-bottom: 15px; padding: 18px; border-radius: 15px;
-            text-decoration: none; color: white; transition: 0.3s;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.05); margin-bottom: 12px;
+            padding: 15px; border-radius: 12px; text-decoration: none; color: white;
+            transition: 0.3s; border: 1px solid rgba(255, 255, 255, 0.05);
         }
-        .app-box:hover { 
-            background: rgba(255, 255, 255, 0.1); 
-            border-color: var(--border-color);
-            transform: scale(1.05);
-        }
-        .app-box i { font-size: 1.8rem; color: var(--border-color); }
+        .app-box:hover { transform: scale(1.05); background: rgba(255,255,255,0.15); border-color: var(--border-color); }
+        .app-box i { font-size: 1.6rem; color: var(--border-color); }
 
-        @media (max-width: 600px) { .main-title { font-size: 1.8rem; } }
     </style>
 </head>
 <body>
@@ -170,18 +146,20 @@
     <div class="main-background"></div>
 
     <nav>
-        <div class="logo-main">
-            <img src="https://i.ibb.co/F4x0F7Bc/In-Shot-20260125-221439000.jpg" alt="Logo Grizator">
+        <div class="menu-container">
+            <div class="menu-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+            <div class="dropdown-menu" id="dropdownMenu">
+                <a href="#"><i class="fas fa-share-alt"></i> مشاركة</a>
+                <a href="#"><i class="fas fa-star"></i> التقييم</a>
+                <a href="#"><i class="fas fa-envelope"></i> تواصل معنا</a>
+            </div>
         </div>
-        <div class="menu-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
+        
+        <div class="brand">
+            <span>Grizator</span>
+            <img src="https://i.ibb.co/F4x0F7Bc/In-Shot-20260125-221439000.jpg" alt="Logo">
+        </div>
     </nav>
-
-    <div class="side-menu" id="sideMenu">
-        <a href="#"><i class="fas fa-share-alt"></i> مشاركة الموقع</a>
-        <a href="#"><i class="fas fa-id-badge"></i> بروفايل المطور</a>
-        <a href="#"><i class="fas fa-star"></i> قيم تطبيقاتنا</a>
-        <a href="#"><i class="fas fa-envelope"></i> تواصل معنا</a>
-    </div>
 
     <header>
         <h1 class="main-title">التطبيقات VPN تحويل نجمة 6 الى نجمة 3</h1>
@@ -214,17 +192,13 @@
 
     <script>
         function toggleMenu() {
-            var menu = document.getElementById("sideMenu");
-            menu.classList.toggle("active");
+            var menu = document.getElementById("dropdownMenu");
+            menu.style.display = (menu.style.display === "block") ? "none" : "block";
         }
 
-        // إغلاق المنيو إلا كليكا المستعمل برا
         window.onclick = function(event) {
             if (!event.target.matches('.menu-btn') && !event.target.matches('.fa-bars')) {
-                var menu = document.getElementById("sideMenu");
-                if (menu.classList.contains('active')) {
-                    menu.classList.remove('active');
-                }
+                document.getElementById("dropdownMenu").style.display = "none";
             }
         }
     </script>
