@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grizator | Dynamic AI Hub</title>
+    <title>Grizator | Network Pro</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
     
     <style>
         :root {
-            --ai-primary: #00f2ff; /* Cyan */
-            --ai-secondary: #bc13fe; /* Purple */
+            --iam-red: #ff0000;
+            --inwi-purple: #92278f;
+            --orange-color: #ff7900;
+            --ai-glow: #00f2ff;
             --ai-dark: #020617;
-            --ai-gradient-start: #0a0b1b;
-            --ai-gradient-end: #000000;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -24,32 +24,16 @@
             font-family: 'Cairo', sans-serif;
             min-height: 100vh;
             overflow-x: hidden;
-            position: relative;
         }
 
-        /* 1️⃣ خلفية Gradient متحركة */
-        .animated-gradient-bg {
+        /* الخلفية الجديدة الثابتة */
+        .main-background {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(45deg, var(--ai-gradient-start), var(--ai-dark), var(--ai-gradient-end), var(--ai-gradient-start));
-            background-size: 400% 400%;
-            animation: gradientMove 15s ease infinite;
-            z-index: -3;
-        }
-
-        @keyframes gradientMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* 3️⃣ تأثير Particle/نجوم تتحرك في الخلفية */
-        .particles-layer {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, rgba(0, 242, 255, 0.05), transparent 70%);
+            background: url('https://i.ibb.co/ynv1GmLc/a12e4d45adc0f948503cf2e7178b2d1b.jpg') no-repeat center center;
+            background-size: cover;
             z-index: -2;
-            pointer-events: none;
+            filter: brightness(0.35);
         }
 
         /* Navbar */
@@ -59,173 +43,114 @@
             justify-content: space-between;
             align-items: center;
             backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(0, 242, 255, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             position: sticky; top: 0; z-index: 100;
-            background: rgba(2, 6, 23, 0.5); /* شفافية خفيفة */
         }
 
-        .menu-btn { font-size: 1.5rem; cursor: pointer; color: var(--ai-primary); transition: 0.3s; }
-        .menu-btn:hover { text-shadow: 0 0 10px var(--ai-primary); }
-        .logo-main img { width: 50px; border-radius: 50%; border: 2px solid var(--ai-primary); box-shadow: 0 0 15px var(--ai-primary); }
+        .menu-btn { font-size: 1.5rem; cursor: pointer; color: var(--ai-glow); }
+        .logo-main img { width: 50px; border-radius: 50%; border: 2px solid var(--ai-glow); box-shadow: 0 0 15px var(--ai-glow); }
 
         /* القائمة الجانبية */
         .side-menu {
             position: fixed; top: 80px; left: 5%;
             background: rgba(5, 10, 24, 0.95);
-            border: 1px solid var(--ai-primary);
+            border: 1px solid var(--ai-glow);
             border-radius: 15px;
             padding: 10px;
             display: none;
             z-index: 1000;
             width: 220px;
             backdrop-filter: blur(10px);
-            box-shadow: 0 0 30px rgba(0, 242, 255, 0.3);
-            animation: fadeIn 0.3s ease-out;
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.2);
         }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        .side-menu a { color: white; text-decoration: none; display: flex; align-items: center; justify-content: space-between; padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); }
 
-        .side-menu a { 
-            color: white; text-decoration: none; display: flex; 
-            align-items: center; justify-content: space-between;
-            padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.08);
-            transition: 0.3s;
-        }
-        .side-menu a:hover { background: rgba(0, 242, 255, 0.1); border-radius: 10px; color: var(--ai-primary); }
-
-        header { text-align: center; padding: 60px 20px 40px; position: relative; }
-        
-        /* 5️⃣ تأثير Glitch خفيف على النصوص المهمة */
+        header { text-align: center; padding: 70px 20px 40px; }
         h1 { 
-            font-family: 'Orbitron'; font-size: clamp(2.5rem, 10vw, 4rem); 
-            color: white; text-shadow: 0 0 20px var(--ai-primary);
-            letter-spacing: 8px; margin-bottom: 15px;
-            animation: glitchText 1.5s infinite alternate;
+            font-family: 'Orbitron'; font-size: 4rem; 
+            color: white; text-shadow: 0 0 20px var(--ai-glow);
+            letter-spacing: 10px; margin-bottom: 15px;
+            animation: glitchText 2s infinite alternate;
         }
         @keyframes glitchText {
-            0% { text-shadow: 0 0 20px var(--ai-primary); transform: skewX(0deg); }
-            5% { text-shadow: -2px 0 var(--ai-secondary), 2px 0 var(--ai-primary); transform: skewX(5deg); }
-            10% { text-shadow: 2px 0 var(--ai-primary), -2px 0 var(--ai-secondary); transform: skewX(0deg); }
-            100% { text-shadow: 0 0 20px var(--ai-primary); transform: skewX(0deg); }
+            0% { transform: skewX(0deg); }
+            2% { transform: skewX(10deg); color: var(--ai-glow); }
+            4% { transform: skewX(0deg); }
         }
 
-        .sub-title { 
-            color: var(--ai-primary); font-weight: bold; font-size: 1.2rem; opacity: 0.9;
-            /* 🔟 تأثير كتابة ذكي AI Typing Effect */
-            overflow: hidden; border-right: .15em solid var(--ai-primary); /* The typewriter cursor */
-            white-space: nowrap; margin: 0 auto; letter-spacing: .15em;
-            animation: typing 3s steps(40, end), blink-caret .75s step-end infinite;
-        }
-        /* The typing effect */
-        @keyframes typing { from { width: 0 } to { width: 100% } }
-        /* The typewriter cursor effect */
-        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--ai-primary); } }
-
-
-        /* الإطارات مع الإضاءة المتحركة */
+        /* إطارات الشبكات الملونة */
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
+            gap: 35px;
             padding: 20px 8% 60px;
         }
 
         .network-card {
-            background: rgba(5, 10, 24, 0.8);
+            background: rgba(15, 23, 42, 0.7);
             border-radius: 25px;
             padding: 30px;
             position: relative;
             overflow: hidden;
-            transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            /* 7️⃣ Cards تتحرك أو تتباعد عند التمرير Scroll (Scroll Animation). */
-            opacity: 0; /* مخفية في البداية */
-            transform: translateY(50px);
-            animation: cardReveal 0.8s forwards;
+            transition: 0.4s;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            opacity: 0; transform: translateY(30px);
+            animation: cardReveal 0.6s forwards;
         }
+        @keyframes cardReveal { to { opacity: 1; transform: translateY(0); } }
 
-        @keyframes cardReveal {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* تأخير بسيط لكل كارد */
-        .network-card:nth-child(1) { animation-delay: 0.2s; }
-        .network-card:nth-child(2) { animation-delay: 0.4s; }
-        .network-card:nth-child(3) { animation-delay: 0.6s; }
-
-        /* إضاءة النيون المتحركة الدائرة */
+        /* إضاءة النيون المتحركة بالألوان المحددة */
         .network-card::before {
             content: "";
             position: absolute;
             top: -50%; left: -50%;
             width: 200%; height: 200%;
-            background: conic-gradient(transparent, transparent, var(--ai-primary), var(--ai-secondary), var(--ai-primary));
-            animation: rotate 6s linear infinite;
+            background: conic-gradient(transparent, transparent, var(--border-color), transparent);
+            animation: rotate 4s linear infinite;
             z-index: -2;
-            opacity: 0.7;
         }
-
         @keyframes rotate { 100% { transform: rotate(360deg); } }
 
         .network-card::after {
             content: "";
             position: absolute;
-            inset: 2px;
+            inset: 3px;
             background: #050a18;
-            border-radius: 23px;
+            border-radius: 22px;
             z-index: -1;
         }
 
-        .network-card:hover { transform: translateY(-15px) scale(1.03); box-shadow: 0 15px 40px rgba(0, 242, 255, 0.3); }
+        /* تحديد ألوان الشركات */
+        .iam { --border-color: var(--iam-red); box-shadow: 0 0 20px rgba(255, 0, 0, 0.2); }
+        .inwi { --border-color: var(--inwi-purple); box-shadow: 0 0 20px rgba(146, 39, 143, 0.2); }
+        .orange { --border-color: var(--orange-color); box-shadow: 0 0 20px rgba(255, 121, 0, 0.2); }
 
         .card-title { 
             font-family: 'Orbitron'; font-size: 1.5rem; text-align: center; 
-            margin-bottom: 25px; color: white; text-shadow: 0 0 10px var(--ai-primary);
+            margin-bottom: 25px; color: var(--border-color); text-shadow: 0 0 10px var(--border-color);
         }
 
         .app-box {
             display: flex; align-items: center; justify-content: center;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.03);
             margin-bottom: 15px; padding: 18px; border-radius: 15px;
-            text-decoration: none; color: white; transition: 0.4s;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            /* 9️⃣ أزرار Neon/Glow متغيرة الألوان (تأثير Cyberpunk). */
-            position: relative; z-index: 1;
+            text-decoration: none; color: white; transition: 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
-
-        .app-box::before {
-            content: "";
-            position: absolute; inset: 0;
-            background: linear-gradient(45deg, var(--ai-primary), var(--ai-secondary), var(--ai-primary));
-            border-radius: 15px;
-            z-index: -1;
-            filter: blur(8px);
-            opacity: 0;
-            transition: opacity 0.4s;
-        }
-
         .app-box:hover { 
-            transform: scale(1.05); 
-            box-shadow: 0 0 25px var(--ai-primary);
-            border-color: var(--ai-primary);
+            background: rgba(255, 255, 255, 0.1); 
+            border-color: var(--border-color);
+            transform: scale(1.05);
+            box-shadow: 0 0 15px var(--border-color);
         }
-        .app-box:hover::before { opacity: 1; } /* إظهار الـglow عند الهوفر */
+        .app-box i { font-size: 1.6rem; color: var(--border-color); }
 
-        .app-box i { 
-            font-size: 1.8rem; 
-            color: var(--ai-primary); /* اللون الأصلي للأيقونة */
-            transition: 0.4s;
-        }
-        .app-box:hover i { color: white; text-shadow: 0 0 10px white; } /* الأيقونة تبيض وتلمع */
-
-        /* 6️⃣ أيقونات تتحرك مع مرور الماوس (Cursor Hover Animation) - طبقناها على الأيقونات داخل الأزرار */
-
-        @media (max-width: 600px) { h1 { font-size: 2.2rem; } .sub-title { font-size: 1rem; } }
+        @media (max-width: 600px) { h1 { font-size: 2.5rem; letter-spacing: 5px; } }
     </style>
 </head>
 <body>
 
-    <div class="animated-gradient-bg"></div>
-    <div class="particles-layer"></div>
+    <div class="main-background"></div>
 
     <nav>
         <div class="menu-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
@@ -242,26 +167,25 @@
 
     <header>
         <h1>Grizator</h1>
-        <p class="sub-title" id="ai-typing-text"></p>
     </header>
 
     <div class="grid-container">
         
-        <div class="network-card">
+        <div class="network-card iam">
             <div class="card-title">Maroc Telecom</div>
             <a href="https://play.google.com/store/apps/details?id=dastan.prince.bdfreevpn" target="_blank" class="app-box"><i class="fab fa-google-play"></i></a>
             <a href="https://play.google.com/store/apps/details?id=com.boss.actunnelvpn" target="_blank" class="app-box"><i class="fab fa-google-play"></i></a>
             <a href="https://play.google.com/store/apps/details?id=com.more.tunnel.vpn" target="_blank" class="app-box"><i class="fab fa-google-play"></i></a>
         </div>
 
-        <div class="network-card">
+        <div class="network-card inwi">
             <div class="card-title">Inwi</div>
             <a href="https://play.google.com/store/apps/details?id=com.mxtunnel.pro" target="_blank" class="app-box"><i class="fab fa-google-play"></i></a>
             <a href="https://play.google.com/store/apps/details?id=com.msyvpn.lite" target="_blank" class="app-box"><i class="fab fa-google-play"></i></a>
             <a href="https://play.google.com/store/apps/details?id=com.jahrteam.jntunnel" target="_blank" class="app-box"><i class="fab fa-google-play"></i></a>
         </div>
 
-        <div class="network-card">
+        <div class="network-card orange">
             <div class="card-title">Orange</div>
             <a href="https://play.google.com/store/apps/details?id=com.stunnel.dev" target="_blank" class="app-box"><i class="fab fa-google-play"></i></a>
             <a href="https://play.google.com/store/apps/details?id=dastan.prince.vipoman" target="_blank" class="app-box"><i class="fab fa-google-play"></i></a>
@@ -275,27 +199,6 @@
             var menu = document.getElementById("sideMenu");
             menu.style.display = (menu.style.display === "block") ? "none" : "block";
         }
-
-        window.onclick = function(event) {
-            if (!event.target.matches('.menu-btn') && !event.target.matches('.fa-bars')) {
-                var menu = document.getElementById("sideMenu");
-                if (menu.style.display === "block") menu.style.display = "none";
-            }
-        }
-
-        // 🔟 تأثير كتابة ذكي AI Typing Effect
-        const text = "جميع تطبيقات VPN تحويل *6 الى *3";
-        let i = 0;
-        const speed = 70; // سرعة الكتابة بالملي ثانية
-
-        function typeWriter() {
-            if (i < text.length) {
-                document.getElementById("ai-typing-text").innerHTML += text.charAt(i);
-                i++;
-                setTimeout(typeWriter, speed);
-            }
-        }
-        window.onload = typeWriter;
     </script>
 </body>
 </html>
