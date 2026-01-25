@@ -3,36 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grizator | VPN *6 to *3</title>
+    <title>Grizator | AI VPN Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
     
     <style>
         :root {
-            --iam: #00f2ff;
-            --inwi: #92278f;
-            --orange: #ff7900;
-            --bg: #020617;
+            /* ألوان الذكاء الاصطناعي */
+            --ai-glow: #00f2ff;
+            --ai-purple: #bc13fe;
+            --ai-dark: #050a18;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background-color: var(--bg);
+            background-color: var(--ai-dark);
             color: white;
             font-family: 'Cairo', sans-serif;
             min-height: 100vh;
             overflow-x: hidden;
         }
 
-        /* الخلفية الثابتة */
+        /* الخلفية الجديدة */
         .main-background {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://i.ibb.co/DfwCLSLQ/72720391da27bdca8ea8dfe8e5f6a35f.jpg') no-repeat center center;
+            background: url('https://i.ibb.co/8gL8MszV/5fbe9ca0dbb100822e681ce3ad7da1e1.jpg') no-repeat center center;
             background-size: cover;
             z-index: -2;
-            filter: brightness(0.3);
+            filter: brightness(0.4) contrast(1.1);
         }
 
         /* Navbar */
@@ -41,101 +41,106 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(0, 242, 255, 0.2);
             position: sticky; top: 0; z-index: 100;
         }
 
-        .menu-btn { font-size: 1.5rem; cursor: pointer; color: white; }
-        .logo-main img { width: 50px; border-radius: 50%; border: 2px solid var(--iam); }
+        .menu-btn { font-size: 1.5rem; cursor: pointer; color: var(--ai-glow); transition: 0.3s; }
+        .menu-btn:hover { text-shadow: 0 0 10px var(--ai-glow); }
+        .logo-main img { width: 50px; border-radius: 50%; border: 2px solid var(--ai-glow); box-shadow: 0 0 15px var(--ai-glow); }
 
-        /* القائمة الجانبية المنسدلة */
+        /* القائمة الجانبية */
         .side-menu {
-            position: fixed; top: 70px; left: 5%;
-            background: rgba(15, 23, 42, 0.95);
-            border: 1px solid var(--iam);
-            border-radius: 12px;
-            padding: 15px;
+            position: fixed; top: 80px; left: 5%;
+            background: rgba(5, 10, 24, 0.9);
+            border: 1px solid var(--ai-glow);
+            border-radius: 15px;
+            padding: 10px;
             display: none;
             z-index: 1000;
-            width: 200px;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            width: 220px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.2);
         }
-        .side-menu a { color: white; text-decoration: none; display: block; padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .side-menu i { margin-left: 10px; color: var(--iam); }
+        .side-menu a { 
+            color: white; text-decoration: none; display: flex; 
+            align-items: center; justify-content: space-between;
+            padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: 0.3s;
+        }
+        .side-menu a:hover { background: rgba(0, 242, 255, 0.1); border-radius: 10px; }
 
-        header { text-align: center; padding: 50px 20px 30px; }
-        h1 { font-family: 'Orbitron'; font-size: 2.8rem; color: white; text-shadow: 0 0 15px var(--iam); margin-bottom: 10px; }
-        .sub-title { color: #00f2ff; font-weight: bold; font-size: 1.2rem; }
+        header { text-align: center; padding: 60px 20px 40px; }
+        h1 { 
+            font-family: 'Orbitron'; font-size: clamp(2.5rem, 10vw, 4rem); 
+            color: white; text-shadow: 0 0 20px var(--ai-glow);
+            letter-spacing: 8px; margin-bottom: 15px;
+        }
+        .sub-title { color: var(--ai-glow); font-weight: bold; font-size: 1.2rem; opacity: 0.9; }
 
-        /* الإطارات مع الإضاءة المتحركة */
+        /* الإطارات بألوان الذكاء الاصطناعي */
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-            padding: 20px 8% 100px;
+            gap: 40px;
+            padding: 20px 8% 60px;
         }
 
         .network-card {
-            background: rgba(15, 23, 42, 0.8);
-            border-radius: 20px;
-            padding: 25px;
+            background: rgba(5, 10, 24, 0.7);
+            border-radius: 25px;
+            padding: 30px;
             position: relative;
             overflow: hidden;
-            transition: 0.3s;
+            transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        /* أنيميشن الإضاءة في الحواف */
+        /* إضاءة النيون المتحركة الدائرة */
         .network-card::before {
             content: "";
             position: absolute;
             top: -50%; left: -50%;
             width: 200%; height: 200%;
-            background: conic-gradient(transparent, transparent, transparent, var(--border-color));
-            animation: rotate 4s linear infinite;
-            z-index: -1;
+            background: conic-gradient(transparent, transparent, var(--ai-glow), var(--ai-purple), var(--ai-glow));
+            animation: rotate 6s linear infinite;
+            z-index: -2;
         }
+
         @keyframes rotate { 100% { transform: rotate(360deg); } }
 
         .network-card::after {
             content: "";
             position: absolute;
-            inset: 3px;
-            background: #0f172a;
-            border-radius: 18px;
+            inset: 2px;
+            background: #050a18;
+            border-radius: 23px;
             z-index: -1;
         }
 
-        .iam { --border-color: var(--iam); }
-        .inwi { --border-color: var(--inwi); }
-        .orange { --border-color: var(--orange); }
+        .network-card:hover { transform: translateY(-10px) scale(1.02); }
 
-        .card-title { font-family: 'Orbitron'; font-size: 1.4rem; text-align: center; margin-bottom: 20px; }
+        .card-title { 
+            font-family: 'Orbitron'; font-size: 1.5rem; text-align: center; 
+            margin-bottom: 25px; color: white; text-shadow: 0 0 10px var(--ai-glow);
+        }
 
         .app-box {
             display: flex; align-items: center; justify-content: center;
-            background: rgba(255, 255, 255, 0.05);
-            margin-bottom: 15px; padding: 15px; border-radius: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            margin-bottom: 15px; padding: 18px; border-radius: 15px;
             text-decoration: none; color: white; transition: 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
-        .app-box:hover { background: rgba(255, 255, 255, 0.15); }
-        .app-box i { font-size: 1.5rem; color: var(--border-color); }
-
-        /* إعلان بالأسفل */
-        .ad-banner {
-            position: fixed; bottom: 0; left: 0; width: 100%;
-            background: rgba(0, 242, 255, 0.2);
-            backdrop-filter: blur(15px);
-            border-top: 1px solid var(--iam);
-            padding: 15px; text-align: center;
-            z-index: 2000;
-            font-weight: bold;
-            animation: slideUp 1s ease;
+        .app-box:hover { 
+            background: rgba(0, 242, 255, 0.1); 
+            border-color: var(--ai-glow);
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
         }
-        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        .app-box i { font-size: 1.6rem; color: var(--ai-glow); }
 
-        @media (max-width: 600px) { h1 { font-size: 1.8rem; } }
+        @media (max-width: 600px) { h1 { font-size: 2.2rem; } }
     </style>
 </head>
 <body>
@@ -144,12 +149,15 @@
 
     <nav>
         <div class="menu-btn" onclick="toggleMenu()"><i class="fas fa-bars"></i></div>
-        <div class="logo-main"><img src="https://i.ibb.co/hRLJPvgR/ab8795e806c60e55c86fb7a0513a06ef.jpg"></div>
+        <div class="logo-main">
+            <img src="https://i.ibb.co/hRLJPvgR/ab8795e806c60e55c86fb7a0513a06ef.jpg" alt="Logo">
+        </div>
     </nav>
 
     <div class="side-menu" id="sideMenu">
-        <a href="#"><i class="fas fa-share-alt"></i> مشاركة الموقع</a>
-        <a href="#"><i class="fas fa-info-circle"></i> حول الموقع</a>
+        <a href="#">مشاركة الموقع <i class="fas fa-share-alt"></i></a>
+        <a href="#">تطبيقات مميزة <i class="fas fa-star"></i></a>
+        <a href="#">اتصل بنا <i class="fas fa-envelope"></i></a>
     </div>
 
     <header>
@@ -159,21 +167,21 @@
 
     <div class="grid-container">
         
-        <div class="network-card iam">
+        <div class="network-card">
             <div class="card-title">Maroc Telecom</div>
             <a href="https://play.google.com/store/apps/details?id=dastan.prince.bdfreevpn" target="_blank" class="app-box"><i class="fab fa-google-play"></i></a>
             <a href="https://play.google.com/store/apps/details?id=com.boss.actunnelvpn" target="_blank" class="app-box"><i class="fab fa-google-play"></i></a>
             <a href="https://play.google.com/store/apps/details?id=com.more.tunnel.vpn" target="_blank" class="app-box"><i class="fab fa-google-play"></i></a>
         </div>
 
-        <div class="network-card inwi">
+        <div class="network-card">
             <div class="card-title">Inwi</div>
             <a href="https://play.google.com/store/apps/details?id=com.mxtunnel.pro" target="_blank" class="app-box"><i class="fab fa-google-play"></i></a>
             <a href="https://play.google.com/store/apps/details?id=com.msyvpn.lite" target="_blank" class="app-box"><i class="fab fa-google-play"></i></a>
             <a href="https://play.google.com/store/apps/details?id=com.jahrteam.jntunnel" target="_blank" class="app-box"><i class="fab fa-google-play"></i></a>
         </div>
 
-        <div class="network-card orange">
+        <div class="network-card">
             <div class="card-title">Orange</div>
             <a href="https://play.google.com/store/apps/details?id=com.stunnel.dev" target="_blank" class="app-box"><i class="fab fa-google-play"></i></a>
             <a href="https://play.google.com/store/apps/details?id=dastan.prince.vipoman" target="_blank" class="app-box"><i class="fab fa-google-play"></i></a>
@@ -182,17 +190,17 @@
 
     </div>
 
-    <div class="ad-banner">
-        تطبيق جديد كل يوم ⏳
-    </div>
-
     <script>
         function toggleMenu() {
             var menu = document.getElementById("sideMenu");
-            if (menu.style.display === "block") {
-                menu.style.display = "none";
-            } else {
-                menu.style.display = "block";
+            menu.style.display = (menu.style.display === "block") ? "none" : "block";
+        }
+
+        // إغلاق القائمة عند الضغط خارجها
+        window.onclick = function(event) {
+            if (!event.target.matches('.menu-btn') && !event.target.matches('.fa-bars')) {
+                var menu = document.getElementById("sideMenu");
+                if (menu.style.display === "block") menu.style.display = "none";
             }
         }
     </script>
