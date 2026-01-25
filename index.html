@@ -3,194 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grizator AI - Ultimate World</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <title>Grizator AI World - Video Background</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
     <style>
         :root {
             --primary: #00f2ff;
-            --secondary: #ffffff;
             --bg-dark: #060b28;
-            --card-bg: rgba(255, 255, 255, 0.05);
             --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* 1 & 2 & 8. Background Video + Gradient + Particles */
-        body {
-            margin: 0; padding: 0;
-            background: var(--bg-dark);
-            color: white;
+        body, html {
+            margin: 0; padding: 0; height: 100%;
             font-family: 'Rajdhani', sans-serif;
-            overflow-x: hidden;
-            transition: background 0.5s;
+            color: white; overflow-x: hidden;
+            background: var(--bg-dark);
         }
 
-        /* 14. Loading Bar */
-        #loader {
-            position: fixed; top: 0; left: 0; width: 100%; height: 4px;
-            background: linear-gradient(90deg, transparent, var(--primary), transparent);
-            z-index: 10000; animation: loading 2s infinite;
-        }
-        @keyframes loading { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
-
-        .video-bg {
+        /* 1 & 13. Video Background Fixed */
+        .video-background {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            object-fit: cover; z-index: -2; opacity: 0.3; filter: saturate(1.5);
+            z-index: -2; pointer-events: none; overflow: hidden;
         }
 
-        /* 2. Gradient Animation */
-        .gradient-overlay {
+        .video-background iframe {
+            width: 100vw; height: 100vh;
+            transform: scale(1.5); /* باش نغطيو الجوانب */
+            opacity: 0.5; filter: saturate(1.2) blur(2px);
+        }
+
+        .overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(45deg, rgba(0, 242, 255, 0.05), transparent, rgba(255, 255, 255, 0.05));
-            background-size: 400% 400%; animation: gradientMove 15s ease infinite;
+            background: linear-gradient(45deg, rgba(6,11,40,0.8), rgba(0,242,255,0.1));
             z-index: -1;
         }
-        @keyframes gradientMove { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
 
-        /* Header & Logo */
-        header { text-align: center; padding: 60px 20px; position: relative; }
-        
+        header { text-align: center; padding: 50px 20px; }
+
         .logo-box {
-            width: 130px; height: 130px; margin: 0 auto 20px;
+            width: 120px; height: 120px; margin: 0 auto 20px;
             border-radius: 50%; border: 3px solid var(--primary);
             box-shadow: 0 0 30px var(--primary); overflow: hidden;
-            transition: var(--transition);
+            animation: pulse 2s infinite;
         }
-        .logo-box:hover { transform: scale(1.1) rotate(5deg); }
+        @keyframes pulse { 0% { box-shadow: 0 0 10px var(--primary); } 50% { box-shadow: 0 0 40px var(--primary); } 100% { box-shadow: 0 0 10px var(--primary); } }
+
         .logo-box img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* 4 & 5. Text Shadows & Neon */
         h1 {
-            font-family: 'Orbitron', sans-serif; font-size: 3.5rem; margin: 10px 0;
-            text-shadow: 0 0 20px var(--primary), 2px 2px 5px #000;
-            color: var(--secondary); letter-spacing: 5px;
+            font-family: 'Orbitron', sans-serif; font-size: clamp(2rem, 8vw, 4rem);
+            text-shadow: 0 0 20px var(--primary); margin: 0;
         }
 
-        /* 16. Typing Effect */
-        #typing { font-size: 1.5rem; color: var(--primary); height: 30px; font-weight: bold; }
+        #typing { font-size: 1.5rem; color: var(--primary); min-height: 30px; margin-top: 10px; font-weight: bold; }
 
-        /* 11. Parallax Container */
-        .main-content { perspective: 1000px; padding: 40px; }
-
-        /* 6 & 18 & 20. Cards & Grid */
         .grid-layout {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px; max-width: 1300px; margin: 0 auto;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px; padding: 40px; max-width: 1200px; margin: 0 auto;
         }
 
         .ai-card {
-            background: var(--card-bg); border: 1px solid rgba(0, 242, 255, 0.1);
-            border-radius: 20px; padding: 30px; backdrop-filter: blur(15px);
-            transition: var(--transition); position: relative; overflow: hidden;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 242, 255, 0.2);
+            border-radius: 20px; padding: 30px;
+            backdrop-filter: blur(10px); transition: var(--transition);
+            text-align: center; position: relative; overflow: hidden;
         }
-
-        /* 18. Reflection Effect */
-        .ai-card::after {
-            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-            transform: rotate(45deg); transition: 0.6s; pointer-events: none;
-        }
-        .ai-card:hover::after { left: 100%; top: 100%; }
 
         .ai-card:hover {
-            transform: translateY(-15px) scale(1.02);
-            border-color: var(--primary); box-shadow: 0 10px 40px rgba(0, 242, 255, 0.3);
+            transform: translateY(-15px); border-color: var(--primary);
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.3);
         }
 
-        /* 7 & 19. Animated Icons & Hover */
-        .card-icon {
-            font-size: 2.5rem; color: var(--primary); margin-bottom: 20px;
-            transition: var(--transition);
+        /* 18. Reflection Effect on Card Hover */
+        .ai-card::before {
+            content: ''; position: absolute; top: -100%; left: -100%; width: 200%; height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: 0.5s; pointer-events: none;
         }
-        .ai-card:hover .card-icon { transform: rotateY(360deg); color: #fff; }
+        .ai-card:hover::before { top: 0; left: 0; }
 
-        /* 3 & 13. Buttons & Sound */
+        .card-icon { font-size: 3rem; color: var(--primary); margin-bottom: 15px; }
+
         .glow-btn {
             background: transparent; border: 2px solid var(--primary);
-            color: var(--primary); padding: 12px 30px; border-radius: 30px;
+            color: var(--primary); padding: 10px 25px; border-radius: 25px;
             font-family: 'Orbitron'; cursor: pointer; transition: 0.3s;
-            text-transform: uppercase; font-weight: bold; margin-top: 15px;
+            font-weight: bold; margin-top: 15px;
         }
-        .glow-btn:hover { background: var(--primary); color: #000; box-shadow: 0 0 20px var(--primary); transform: scale(1.1); }
+        .glow-btn:hover { background: var(--primary); color: #000; box-shadow: 0 0 20px var(--primary); }
 
-        /* 12. Social Share */
-        .share-bar { margin-top: 40px; display: flex; gap: 20px; justify-content: center; }
-        .share-btn { font-size: 1.5rem; color: var(--secondary); transition: 0.3s; cursor: pointer; }
-        .share-btn:hover { color: var(--primary); transform: translateY(-5px); }
+        /* Social Share */
+        .share-bar { display: flex; justify-content: center; gap: 20px; padding: 40px; }
+        .share-btn { font-size: 1.5rem; color: white; transition: 0.3s; cursor: pointer; }
+        .share-btn:hover { color: var(--primary); transform: scale(1.2); }
 
-        /* 15. Theme Selector */
-        .theme-picker { position: fixed; right: 20px; top: 50%; transform: translateY(-50%); z-index: 100; }
-        .color-dot { width: 20px; height: 20px; border-radius: 50%; cursor: pointer; margin: 10px 0; border: 2px solid white; }
-
-        /* 9. Light Mode */
-        body.light-mode { --bg-dark: #e0e0e0; color: #000; --card-bg: rgba(0,0,0,0.05); }
-        body.light-mode h1 { text-shadow: 2px 2px 5px rgba(0,0,0,0.1); color: #222; }
     </style>
 </head>
 <body>
 
-    <div id="loader"></div>
-    <div class="gradient-overlay"></div>
-    <video class="video-bg" autoplay muted loop>
-        <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-technology-vj-loop-background-4497-large.mp4" type="video/mp4">
-    </video>
-
-    <div class="theme-picker">
-        <div class="color-dot" style="background: #00f2ff;" onclick="changeTheme('#00f2ff')"></div>
-        <div class="color-dot" style="background: #ff007f;" onclick="changeTheme('#ff007f')"></div>
-        <div class="color-dot" style="background: #7000ff;" onclick="changeTheme('#7000ff')"></div>
-        <div class="color-dot" style="background: #fff; color: black; display: flex; align-items: center; justify-content: center;" onclick="document.body.classList.toggle('light-mode')">🌓</div>
+    <div class="video-background">
+        <iframe src="https://vidplay.io/watch/WTVgHK" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
     </div>
+    <div class="overlay"></div>
 
     <header>
         <div class="logo-box">
             <img src="https://i.ibb.co/hRLJPvgR/ab8795e806c60e55c86fb7a0513a06ef.jpg" alt="Grizator Logo">
         </div>
-        <h1>Grizator AI World</h1>
+        <h1>Grizator AI</h1>
         <div id="typing"></div>
     </header>
 
-    <div class="main-content">
-        <div class="grid-layout">
-            <div class="ai-card">
-                <div class="card-icon"><i class="fas fa-brain"></i></div>
-                <h3>Neural Core</h3>
-                <p>Advanced synaptic processing with deep learning integration.</p>
-                <button class="glow-btn" onclick="playSound()">Activate</button>
-            </div>
-            <div class="ai-card">
-                <div class="card-icon"><i class="fas fa-satellite-dish"></i></div>
-                <h3>Global Sync</h3>
-                <p>Quantum-link communication for instant data transfer worldwide.</p>
-                <button class="glow-btn" onclick="playSound()">Connect</button>
-            </div>
-            <div class="ai-card">
-                <div class="card-icon"><i class="fas fa-shield-virus"></i></div>
-                <h3>Cyber Defense</h3>
-                <p>AI-driven firewall protocols with autonomous threat detection.</p>
-                <button class="glow-btn" onclick="playSound()">Shield</button>
-            </div>
-            <div class="ai-card">
-                <img src="https://i.ibb.co/Kc4ZL87C/4a6636f36dd70dbf9f0cb576eb019a99.jpg" style="width: 100%; border-radius: 10px; border: 1px solid var(--primary);">
-                <h3>Vision AI</h3>
-                <p>Next-gen image processing and object recognition.</p>
-                <button class="glow-btn" onclick="playSound()">Scan</button>
-            </div>
+    <div class="grid-layout">
+        <div class="ai-card">
+            <div class="card-icon"><i class="fas fa-microchip"></i></div>
+            <h3>Neural Core</h3>
+            <p>High speed data processing and AI analytics.</p>
+            <button class="glow-btn">Initialize</button>
+        </div>
+        <div class="ai-card">
+            <div class="card-icon"><i class="fas fa-network-wired"></i></div>
+            <h3>Global Sync</h3>
+            <p>Syncing with quantum satellites in real-time.</p>
+            <button class="glow-btn">Connect</button>
+        </div>
+        <div class="ai-card">
+            <div class="card-icon"><i class="fas fa-user-shield"></i></div>
+            <h3>Cyber Shield</h3>
+            <p>Deep-layer encryption and security protocols.</p>
+            <button class="glow-btn">Activate</button>
         </div>
     </div>
 
     <div class="share-bar">
         <i class="fab fa-facebook share-btn"></i>
-        <i class="fab fa-x-twitter share-btn"></i>
         <i class="fab fa-instagram share-btn"></i>
         <i class="fab fa-whatsapp share-btn"></i>
     </div>
 
-    <audio id="click-sound" src="https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3"></audio>
-
     <script>
         // 16. Typing Effect
-        const text = "Welcome to the world of Grizator AI Exploration...";
+        const text = "Welcome to the website grizator...";
         let i = 0;
         function typing() {
             if (i < text.length) {
@@ -199,23 +153,15 @@
                 setTimeout(typing, 100);
             }
         }
-        window.onload = () => { typing(); setTimeout(() => document.getElementById('loader').style.display='none', 2000); };
+        window.onload = typing;
 
-        // 13. Sound Effect
-        function playSound() { document.getElementById("click-sound").play(); }
-
-        // 15. Theme Changer
-        function changeTheme(color) {
-            document.documentElement.style.setProperty('--primary', color);
-            localStorage.setItem('themeColor', color);
-        }
-
-        // 11. Parallax (Move cards on mouse move)
-        document.addEventListener('mousemove', (e) => {
-            const cards = document.querySelectorAll('.ai-card');
-            const x = (window.innerWidth / 2 - e.pageX) / 50;
-            const y = (window.innerHeight / 2 - e.pageY) / 50;
-            cards.forEach(card => card.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`);
+        // Custom Sound Effect (Optional)
+        const btns = document.querySelectorAll('.glow-btn');
+        btns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (navigator.vibrate) navigator.vibrate(50);
+                console.log("Button clicked with haptic feedback");
+            });
         });
     </script>
 </body>
