@@ -1,170 +1,232 @@
-
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Clock - Day & Night</title>
+    <title>AI Ultimate Clock Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --ai-glow: #00d2ff;
+            --bg-overlay: rgba(0, 0, 0, 0.5);
         }
 
         body {
             margin: 0;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
-            font-family: 'Segoe UI', Roboto, sans-serif;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
             color: white;
-            overflow: hidden;
-            padding: 10px;
-            /* خلفية افتراضية قبل تحميل الصور */
-            background-color: #0f0c29;
             background-size: cover;
             background-position: center;
-            transition: background-image 1s ease-in-out; /* انتقال ناعم بين الصور */
+            transition: 0.5s;
+            overflow-x: hidden;
+            text-align: center;
         }
 
-        /* طبقة مظلمة خفيفة باش يبان التوقيت واضح فوق الصور */
-        body::before {
-            content: "";
-            position: absolute;
+        body.recording-mode .controls, body.recording-mode .events-section {
+            display: none !important;
+        }
+
+        .overlay {
+            position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.4);
+            background: var(--bg-overlay);
             z-index: -1;
         }
 
-        .language-switcher {
-            position: absolute;
-            top: 20px;
+        /* المربعات والوهج */
+        .clock-container {
             display: flex;
-            gap: 10px;
-            z-index: 10;
-        }
-
-        .lang-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--ai-glow);
-            color: white;
-            padding: 6px 12px;
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 14px;
-            backdrop-filter: blur(5px);
-        }
-
-        .date-container {
-            font-size: clamp(1.2rem, 5vw, 2rem);
-            margin-bottom: 30px;
-            text-align: center;
-            font-weight: bold;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
-        }
-
-        .clock {
-            display: flex;
-            gap: 10px;
-            width: 100%;
+            gap: 15px;
+            margin: 20px;
+            flex-wrap: wrap;
             justify-content: center;
         }
 
         .time-box {
-            background: rgba(0, 0, 0, 0.7);
-            padding: 15px 5px;
-            border-radius: 12px;
-            border: 2px solid var(--ai-glow);
-            box-shadow: 0 0 20px var(--ai-glow);
-            flex: 1;
-            max-width: 110px;
-            text-align: center;
-            backdrop-filter: blur(5px);
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            border: 3px solid var(--ai-glow);
+            box-shadow: 0 0 30px var(--ai-glow);
+            min-width: 120px;
         }
 
-        .number {
-            font-size: clamp(2rem, 10vw, 4.5rem);
-            font-weight: 900;
-            display: block;
+        .number { font-size: 4rem; font-weight: 900; }
+        .last-seconds { color: #ff4757; animation: blink 1s infinite; }
+
+        @keyframes blink { 50% { opacity: 0.5; } }
+
+        /* أزرار التحكم */
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            padding: 20px;
+            max-width: 800px;
         }
 
-        .label {
-            font-size: clamp(0.6rem, 2vw, 0.8rem);
-            text-transform: uppercase;
-            opacity: 0.9;
+        button {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid var(--ai-glow);
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 8px;
+            font-family: sans-serif;
         }
 
-        @media (max-width: 400px) {
-            .clock { gap: 5px; }
-            .time-box { max-width: 90px; }
+        button:hover { background: var(--ai-glow); }
+
+        .countdown-section {
+            font-size: 0.9rem;
+            margin-top: 20px;
+            background: rgba(0,0,0,0.6);
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .unix-time { font-family: monospace; font-size: 0.8rem; margin-top: 10px; opacity: 0.7; }
+
+        @media (max-width: 600px) {
+            .number { font-size: 2.5rem; }
+            .time-box { min-width: 80px; padding: 10px; }
         }
     </style>
 </head>
-<body id="bg-body">
+<body id="main-body">
+    <div class="overlay"></div>
 
-    <div class="language-switcher">
-        <button class="lang-btn" onclick="setLang('ar')">العربية</button>
-        <button class="lang-btn" onclick="setLang('en')">English</button>
-        <button class="lang-btn" onclick="setLang('fr')">Français</button>
+    <div class="controls">
+        <button onclick="toggleLang()">🌐 Language/اللغة</button>
+        <button onclick="toggleFS()">🖥️ Full Screen</button>
+        <button onclick="toggleRecording()">🎥 Rec Mode</button>
+        <button onclick="toggleTheme()">🌓 Dark/Light</button>
+        <button onclick="shareMoment()">📤 Share</button>
+        <select id="tz-select" onchange="updateClock()" style="background:black; color:white; border:1px solid var(--ai-glow)">
+            <option value="local">Local Time</option>
+            <option value="UTC">UTC Time</option>
+        </select>
     </div>
 
-    <div class="date-container" id="date-display"></div>
+    <div id="date-display" style="font-size: 1.5rem; margin-bottom: 10px;"></div>
 
-    <div class="clock">
+    <div class="clock-container">
         <div class="time-box">
-            <span class="number" id="hours">00</span>
-            <span class="label" id="h-label">Hours</span>
+            <span class="number" id="h">00</span>
+            <div id="h-label">HOURS</div>
         </div>
         <div class="time-box">
-            <span class="number" id="minutes">00</span>
-            <span class="label" id="m-label">Minutes</span>
+            <span class="number" id="m">00</span>
+            <div id="m-label">MINUTES</div>
         </div>
         <div class="time-box">
-            <span class="number" id="seconds">00</span>
-            <span class="label" id="s-label">Seconds</span>
+            <span class="number" id="s">00</span>
+            <div id="s-label">SECONDS</div>
         </div>
     </div>
+
+    <div class="countdown-section" id="countdowns">
+        </div>
+
+    <div class="unix-time">Unix Timestamp: <span id="unix">0</span></div>
+
+    <audio id="beep" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3"></audio>
 
     <script>
-        let currentLang = 'en';
-        const translations = {
-            en: { h: 'Hours', m: 'Min', s: 'Sec', locale: 'en-US' },
-            fr: { h: 'Heures', m: 'Min', s: 'Sec', locale: 'fr-FR' },
-            ar: { h: 'ساعات', m: 'دقائق', s: 'ثواني', locale: 'ar-MA' }
-        };
-
+        let langIndex = 0;
+        const langs = ['en', 'ar', 'fr'];
         const dayImg = "https://i.ibb.co/Kc4ZL87C/4a6636f36dd70dbf9f0cb576eb019a99.jpg";
         const nightImg = "https://i.ibb.co/svQbTgJT/7445693c1280fe8687cae803a44b9e29.jpg";
 
-        function setLang(lang) {
-            currentLang = lang;
-            document.getElementById('h-label').textContent = translations[lang].h;
-            document.getElementById('m-label').textContent = translations[lang].m;
-            document.getElementById('s-label').textContent = translations[lang].s;
+        // حفظ وتحميل الإعدادات
+        if(localStorage.getItem('lang')) langIndex = langs.indexOf(localStorage.getItem('lang'));
+
+        function toggleLang() {
+            langIndex = (langIndex + 1) % 3;
+            localStorage.setItem('lang', langs[langIndex]);
             updateClock();
+        }
+
+        function toggleFS() {
+            if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+            else document.exitFullscreen();
+        }
+
+        function toggleRecording() {
+            document.body.classList.toggle('recording-mode');
+        }
+
+        function toggleTheme() {
+            const overlay = document.querySelector('.overlay');
+            overlay.style.background = overlay.style.background.includes('0.5') ? 'rgba(0,0,0,0.2)' : 'rgba(0,0,0,0.5)';
+        }
+
+        function shareMoment() {
+            const text = `I'm watching the time at ${document.getElementById('h').innerText}:${document.getElementById('m').innerText}!`;
+            if (navigator.share) navigator.share({ title: 'AI Clock', text: text, url: window.location.href });
         }
 
         function updateClock() {
             const now = new Date();
-            const hours = now.getHours();
+            const tz = document.getElementById('tz-select').value;
+            
+            let h = tz === 'UTC' ? now.getUTCHours() : now.getHours();
+            let m = tz === 'UTC' ? now.getUTCMinutes() : now.getMinutes();
+            let s = tz === 'UTC' ? now.getUTCSeconds() : now.getSeconds();
 
             // تحديث الأرقام
-            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
-            document.getElementById('minutes').textContent = String(now.getMinutes()).padStart(2, '0');
-            document.getElementById('seconds').textContent = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('h').innerText = String(h).padStart(2, '0');
+            document.getElementById('m').innerText = String(m).padStart(2, '0');
+            document.getElementById('s').innerText = String(s).padStart(2, '0');
+            
+            // تغيير لون الثواني آخر 10 ثواني
+            if (s >= 50) document.getElementById('s').classList.add('last-seconds');
+            else document.getElementById('s').classList.remove('last-seconds');
 
-            // تحديث التاريخ
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            document.getElementById('date-display').textContent = now.toLocaleDateString(translations[currentLang].locale, options);
-
-            // منطق تغيير الخلفية
-            const body = document.getElementById('bg-body');
-            if (hours >= 6 && hours < 18) {
-                body.style.backgroundImage = `url('${dayImg}')`;
-            } else {
-                body.style.backgroundImage = `url('${nightImg}')`;
+            // صوت واهتزاز عند 00:00:00
+            if (h === 0 && m === 0 && s === 0) {
+                document.getElementById('beep').play();
+                if (navigator.vibrate) navigator.vibrate(500);
             }
+
+            // تحديث التاريخ واللغة
+            const currentLang = langs[langIndex];
+            const locales = { en: 'en-US', ar: 'ar-MA', fr: 'fr-FR' };
+            document.getElementById('date-display').innerText = now.toLocaleDateString(locales[currentLang], { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+
+            // خلفية نهار/ليل
+            document.body.style.backgroundImage = `url('${(h >= 6 && h < 18) ? dayImg : nightImg}')`;
+
+            // Unix Timestamp
+            document.getElementById('unix').innerText = Math.floor(now.getTime() / 1000);
+
+            // حساب العدادات القادمة
+            updateCountdowns(now);
+        }
+
+        function updateCountdowns(now) {
+            const nextDay = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+            const nextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
+            const nextYear = new Date(now.getFullYear() + 1, 0, 1);
+
+            document.getElementById('countdowns').innerHTML = `
+                <div>Next Day in: ${getDiff(nextDay, now)}</div>
+                <div>Next Month in: ${getDiff(nextMonth, now)}</div>
+                <div>Next Year in: ${getDiff(nextYear, now)}</div>
+            `;
+        }
+
+        function getDiff(future, now) {
+            const diff = future - now;
+            const hh = Math.floor(diff / 3600000);
+            const mm = Math.floor((diff % 3600000) / 60000);
+            const ss = Math.floor((diff % 60000) / 1000);
+            return `${hh}h ${mm}m ${ss}s`;
         }
 
         setInterval(updateClock, 1000);
