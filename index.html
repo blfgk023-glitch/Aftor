@@ -3,158 +3,324 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Ultimate Clock Pro - Stable</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&display=swap" rel="stylesheet">
+    <title>Grizator AI World</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+    
     <style>
-        :root { --ai-glow: #00d2ff; --bg-overlay: rgba(0, 0, 0, 0.5); }
-        body {
-            margin: 0; min-height: 100vh; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; font-family: 'Orbitron', sans-serif;
-            color: white; background-size: cover; background-position: center;
-            transition: 0.5s; overflow-x: hidden; text-align: center;
+        :root {
+            --primary: #00d2ff;
+            --secondary: #ffffff;
+            --bg-dark: #060b28;
+            --glass: rgba(255, 255, 255, 0.1);
         }
-        body.recording-mode .controls, body.recording-mode .countdown-section { display: none !important; }
-        .overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-overlay); z-index: -1; }
-        .clock-container { display: flex; gap: 15px; margin: 20px; flex-wrap: wrap; justify-content: center; }
-        .time-box { background: rgba(0, 0, 0, 0.8); padding: 20px; border-radius: 15px; border: 3px solid var(--ai-glow); box-shadow: 0 0 30px var(--ai-glow); min-width: 120px; }
-        .number { font-size: 4rem; font-weight: 900; }
-        .last-seconds { color: #ff4757; animation: blink 1s infinite; }
-        @keyframes blink { 50% { opacity: 0.5; } }
-        .controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; padding: 20px; max-width: 800px; }
-        button { background: rgba(255,255,255,0.1); border: 1px solid var(--ai-glow); color: white; padding: 10px; cursor: pointer; border-radius: 8px; font-family: sans-serif; }
-        button:hover { background: var(--ai-glow); }
-        .countdown-section { font-size: 0.9rem; margin-top: 20px; background: rgba(0,0,0,0.6); padding: 15px; border-radius: 10px; }
-        .unix-time { font-family: monospace; font-size: 0.8rem; margin-top: 10px; opacity: 0.7; }
-        @media (max-width: 600px) { .number { font-size: 2.5rem; } .time-box { min-width: 80px; padding: 10px; } }
+
+        /* 1. خلفية متدرجة متحركة + 13. Video/GIF Background */
+        body {
+            margin: 0;
+            padding: 0;
+            background: var(--bg-dark);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            cursor: none; /* 11. Custom Cursor */
+        }
+
+        .bg-video {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover;
+            z-index: -2;
+            opacity: 0.4;
+            filter: saturate(1.5);
+        }
+
+        /* 6. Particles Background (Simple CSS version) */
+        .particles {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle, var(--primary) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            opacity: 0.2;
+            animation: moveParticles 20s linear infinite;
+        }
+
+        @keyframes moveParticles {
+            from { transform: translateY(0); }
+            to { transform: translateY(-1000px); }
+        }
+
+        /* 19. Scroll Progress Bar */
+        #scroll-bar {
+            position: fixed;
+            top: 0; left: 0; height: 5px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            z-index: 1000; width: 0%;
+        }
+
+        /* 11. Custom Cursor Trail */
+        .cursor {
+            width: 20px; height: 20px;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        /* 3. Glassmorphism Navbar */
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 15px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            z-index: 100;
+            box-sizing: border-box;
+        }
+
+        .logo img {
+            width: 50px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 15px var(--primary); /* 8. Neon Glow */
+        }
+
+        /* 14. Typing Effect Container */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4rem;
+            margin: 0;
+            background: linear-gradient(90deg, #fff, var(--primary), #fff);
+            background-size: 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientText 3s linear infinite; /* 16. Gradient Text */
+        }
+
+        @keyframes gradientText {
+            0% { background-position: 0%; }
+            100% { background-position: 200%; }
+        }
+
+        /* 15. Cards Flip Animation */
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            padding: 100px 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .flip-card {
+            background-color: transparent;
+            width: 300px; height: 350px;
+            perspective: 1000px;
+        }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%; height: 100%;
+            text-align: center;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        .flip-card:hover .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%; height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 20px rgba(0,210,255,0.2); /* 2. Glow */
+        }
+
+        /* 9. Border Animation on Cards */
+        .flip-card-front::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 20px;
+            padding: 2px;
+            background: linear-gradient(45deg, var(--primary), transparent, var(--secondary));
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            animation: rotateBorder 4s linear infinite;
+        }
+
+        @keyframes rotateBorder {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+
+        .flip-card-back {
+            background: linear-gradient(135deg, var(--primary), #000);
+            transform: rotateY(180deg);
+        }
+
+        /* 5. Gradient Button Animation */
+        .btn {
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--primary));
+            background-size: 200%;
+            color: #000;
+            font-weight: bold;
+            font-family: 'Orbitron';
+            cursor: pointer;
+            transition: 0.5s;
+            text-transform: uppercase;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background-position: right;
+            transform: scale(1.1); /* 20. Hover Zoom */
+            box-shadow: 0 0 30px var(--primary);
+        }
+
+        /* 17. Wave Separator */
+        .waves {
+            width: 100%;
+            height: 100px;
+            background: url('https://cdn.discordapp.com/attachments/1068841772535099412/1068841800000000000/wave.png'); /* Replace with wave SVG */
+        }
+
     </style>
 </head>
-<body id="main-body">
-    <div class="overlay"></div>
+<body>
 
-    <div class="controls">
-        <button onclick="setLang('ar')">العربية</button>
-        <button onclick="setLang('en')">English</button>
-        <button onclick="setLang('fr')">Français</button>
-        <button onclick="toggleFS()">🖥️ Full Screen</button>
-        <button onclick="toggleRecording()">🎥 Rec Mode</button>
-        <button onclick="toggleTheme()">🌓 Dark/Light</button>
-        <button onclick="shareMoment()">📤 Share</button>
-        <select id="tz-select" onchange="updateClock()" style="background:black; color:white; border:1px solid var(--ai-glow); border-radius:8px; padding:5px;">
-            <option value="local">Local Time</option>
-            <option value="UTC">UTC Time</option>
-        </select>
+    <div id="scroll-bar"></div>
+    <div class="cursor"></div>
+    <div class="particles"></div>
+
+    <nav>
+        <div class="logo">
+            <img src="https://i.ibb.co/hRLJPvgR/ab8795e806c60e55c86fb7a0513a06ef.jpg" alt="Logo">
+        </div>
+        <div class="menu">
+            <i class="fas fa-moon" id="day-night-icon" onclick="toggleTheme()" style="cursor:pointer; font-size: 1.5rem;"></i>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1 id="typing-text"></h1>
+        <p style="opacity: 0.8; letter-spacing: 5px;">AI FUTURE EXPLORATION</p>
+        <button class="btn">Explore Now</button>
+    </section>
+
+    <div class="container">
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <i class="fas fa-microchip" style="font-size: 3rem; color: var(--primary);"></i>
+                    <h3>AI Processing</h3>
+                </div>
+                <div class="flip-card-back">
+                    <p>Advanced neural networks integration.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <i class="fas fa-user-astronaut" style="font-size: 3rem; color: var(--primary);"></i>
+                    <h3>User Interface</h3>
+                </div>
+                <div class="flip-card-back">
+                    <p>Future-ready UX/UI designs.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="flip-card">
+            <div class="flip-card-inner">
+                <div class="flip-card-front">
+                    <i class="fas fa-shield-halved" style="font-size: 3rem; color: var(--primary);"></i>
+                    <h3>Secure Data</h3>
+                </div>
+                <div class="flip-card-back">
+                    <p>Quantum encryption protocols.</p>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div id="date-display" style="font-size: 1.5rem; margin-bottom: 10px;"></div>
-
-    <div class="clock-container">
-        <div class="time-box"><span class="number" id="h">00</span><div id="h-label">HOURS</div></div>
-        <div class="time-box"><span class="number" id="m">00</span><div id="m-label">MINUTES</div></div>
-        <div class="time-box"><span class="number" id="s">00</span><div id="s-label">SECONDS</div></div>
-    </div>
-
-    <div class="countdown-section" id="countdowns"></div>
-    <div class="unix-time">Unix Timestamp: <span id="unix">0</span></div>
-    <audio id="beep" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3"></audio>
 
     <script>
-        // الإعدادات الافتراضية
-        let currentLang = localStorage.getItem('userLang') || 'en';
-        const translations = {
-            en: { h: 'HOURS', m: 'MINUTES', s: 'SECONDS', nextDay: 'Next Day in', nextMonth: 'Next Month in', nextYear: 'Next Year in', locale: 'en-US' },
-            fr: { h: 'HEURES', m: 'MINUTES', s: 'SECONDES', nextDay: 'Jour Suivant dans', nextMonth: 'Mois Prochain dans', nextYear: 'An Prochain dans', locale: 'fr-FR' },
-            ar: { h: 'ساعات', m: 'دقائق', s: 'ثواني', nextDay: 'اليوم التالي خلال', nextMonth: 'الشهر التالي خلال', nextYear: 'السنة التالية خلال', locale: 'ar-MA' }
+        // 11. Custom Cursor Follow
+        const cursor = document.querySelector('.cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // 14. Text Typing Effect
+        const textElement = document.getElementById('typing-text');
+        const text = "Welcome to the website grizator";
+        let index = 0;
+
+        function typeEffect() {
+            if (index < text.length) {
+                textElement.innerHTML += text.charAt(index);
+                index++;
+                setTimeout(typeEffect, 100);
+            }
+        }
+        window.onload = typeEffect;
+
+        // 19. Scroll Progress Bar
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            document.getElementById("scroll-bar").style.width = scrolled + "%";
         };
 
-        const dayImg = "https://i.ibb.co/Kc4ZL87C/4a6636f36dd70dbf9f0cb576eb019a99.jpg";
-        const nightImg = "https://i.ibb.co/svQbTgJT/7445693c1280fe8687cae803a44b9e29.jpg";
-
-        function setLang(lang) {
-            currentLang = lang;
-            localStorage.setItem('userLang', lang); // حفظ في المتصفح
-            applyLangStrings();
-            updateClock();
-        }
-
-        function applyLangStrings() {
-            const t = translations[currentLang];
-            document.getElementById('h-label').innerText = t.h;
-            document.getElementById('m-label').innerText = t.m;
-            document.getElementById('s-label').innerText = t.s;
-        }
-
-        function toggleFS() {
-            if (!document.fullscreenElement) document.documentElement.requestFullscreen();
-            else if (document.exitFullscreen) document.exitFullscreen();
-        }
-
-        function toggleRecording() { document.body.classList.toggle('recording-mode'); }
-
+        // 18. Day/Night Mode (Simple Toggle)
         function toggleTheme() {
-            const overlay = document.querySelector('.overlay');
-            overlay.style.background = overlay.style.background.includes('0.5') ? 'rgba(0,0,0,0.2)' : 'rgba(0,0,0,0.5)';
-        }
-
-        function shareMoment() {
-            const text = `I'm watching the time! Current: ${document.getElementById('h').innerText}:${document.getElementById('m').innerText}`;
-            if (navigator.share) navigator.share({ title: 'AI Clock', text: text, url: window.location.href });
-        }
-
-        function updateClock() {
-            const now = new Date();
-            const tz = document.getElementById('tz-select').value;
-            
-            let h = tz === 'UTC' ? now.getUTCHours() : now.getHours();
-            let m = tz === 'UTC' ? now.getUTCMinutes() : now.getMinutes();
-            let s = tz === 'UTC' ? now.getUTCSeconds() : now.getSeconds();
-
-            document.getElementById('h').innerText = String(h).padStart(2, '0');
-            document.getElementById('m').innerText = String(m).padStart(2, '0');
-            document.getElementById('s').innerText = String(s).padStart(2, '0');
-            
-            if (s >= 50) document.getElementById('s').classList.add('last-seconds');
-            else document.getElementById('s').classList.remove('last-seconds');
-
-            if (h === 0 && m === 0 && s === 0) {
-                document.getElementById('beep').play();
-                if (navigator.vibrate) navigator.vibrate(500);
+            document.body.classList.toggle('light-mode');
+            const icon = document.getElementById('day-night-icon');
+            if (document.body.classList.contains('light-mode')) {
+                icon.classList.replace('fa-moon', 'fa-sun');
+                document.documentElement.style.setProperty('--bg-dark', '#f0f0f0');
+                document.body.style.color = '#000';
+            } else {
+                icon.classList.replace('fa-sun', 'fa-moon');
+                document.documentElement.style.setProperty('--bg-dark', '#060b28');
+                document.body.style.color = '#fff';
             }
-
-            // تحديث التاريخ باللغة المختارة
-            const t = translations[currentLang];
-            document.getElementById('date-display').innerText = now.toLocaleDateString(t.locale, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
-
-            // الخلفية
-            document.body.style.backgroundImage = `url('${(h >= 6 && h < 18) ? dayImg : nightImg}')`;
-
-            document.getElementById('unix').innerText = Math.floor(now.getTime() / 1000);
-            updateCountdowns(now, t);
         }
-
-        function updateCountdowns(now, t) {
-            const nextDay = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
-            const nextMonth = new Date(now.getFullYear(), now.getMonth() + 1, 1);
-            const nextYear = new Date(now.getFullYear() + 1, 0, 1);
-
-            document.getElementById('countdowns').innerHTML = `
-                <div>${t.nextDay}: ${getDiff(nextDay, now)}</div>
-                <div>${t.nextMonth}: ${getDiff(nextMonth, now)}</div>
-                <div>${t.nextYear}: ${getDiff(nextYear, now)}</div>
-            `;
-        }
-
-        function getDiff(future, now) {
-            const diff = future - now;
-            const hh = Math.floor(diff / 3600000);
-            const mm = Math.floor((diff % 3600000) / 60000);
-            const ss = Math.floor((diff % 60000) / 1000);
-            return `${hh}h ${mm}m ${ss}s`;
-        }
-
-        // تشغيل أولي
-        applyLangStrings();
-        setInterval(updateClock, 1000);
-        updateClock();
     </script>
 </body>
 </html>
