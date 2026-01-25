@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grizator Apps | عالم التطبيقات</title>
+    <title>Grizator | App Store</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
     
@@ -11,8 +11,8 @@
         :root {
             --primary-neon: #00f2ff;
             --bg-color: #030712;
-            --card-bg: rgba(15, 23, 42, 0.8);
-            --border-glow: rgba(0, 242, 255, 0.3);
+            --card-bg: rgba(15, 23, 42, 0.85);
+            --border-glow: rgba(0, 242, 255, 0.4);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -25,21 +25,20 @@
             min-height: 100vh;
         }
 
-        /* 1. الخلفية (الصورة اللي عطيتي) */
+        /* الخلفية (الصورة المختارة) */
         .main-background {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: url('https://i.ibb.co/DfwCLSLQ/72720391da27bdca8ea8dfe8e5f6a35f.jpg') no-repeat center center;
             background-size: cover;
             z-index: -2;
-            filter: brightness(0.4);
+            filter: brightness(0.5);
         }
 
-        /* تأثير الضوء الأزرق في الخلفية */
         .light-glow {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 20%, rgba(0, 242, 255, 0.15), transparent 70%);
+            background: radial-gradient(circle at 50% 20%, rgba(0, 242, 255, 0.2), transparent 75%);
             z-index: -1;
         }
 
@@ -50,115 +49,152 @@
             align-items: center;
             padding: 20px 8%;
             backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .nav-links { display: flex; gap: 30px; list-style: none; font-family: 'Orbitron'; font-size: 0.9rem; }
-        .nav-links li { cursor: pointer; transition: 0.3s; }
+        .nav-links li { cursor: pointer; transition: 0.3s; color: #cbd5e1; }
         .nav-links li:hover { color: var(--primary-neon); text-shadow: 0 0 10px var(--primary-neon); }
 
-        .logo-main img { width: 50px; border-radius: 50%; border: 2px solid var(--primary-neon); }
+        .logo-main img { 
+            width: 55px; 
+            height: 55px; 
+            border-radius: 50%; 
+            border: 2px solid var(--primary-neon); 
+            box-shadow: 0 0 15px var(--primary-neon);
+        }
 
-        /* Hero Section */
+        /* Header Section */
         header {
-            padding: 60px 8% 20px;
-            max-width: 800px;
+            padding: 80px 8% 20px;
+            max-width: 900px;
         }
 
         h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: 3.5rem;
-            margin-bottom: 10px;
-            letter-spacing: 2px;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
-        }
-
-        .sub-text { font-size: 1.5rem; color: #cbd5e1; margin-bottom: 30px; }
-
-        .btn-search {
-            background: #0ea5e9;
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            margin-bottom: 15px;
             color: white;
-            border: none;
-            padding: 12px 35px;
-            border-radius: 8px;
-            font-size: 1rem;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 5px;
         }
-        .btn-search:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(14, 165, 233, 0.4); }
 
-        /* Main Dashboard Grid */
+        .typing-container {
+            font-size: 1.4rem;
+            color: var(--primary-neon);
+            min-height: 35px;
+            margin-bottom: 40px;
+            font-weight: bold;
+        }
+
+        /* Dashboard Grid */
         .dashboard {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1.2fr 0.8fr;
             gap: 30px;
-            padding: 40px 8%;
+            padding: 20px 8% 60px;
             max-width: 1400px;
         }
 
-        /* قائمة التطبيقات (اليسار) */
+        /* القائمة اليسرى */
         .app-list {
             background: var(--card-bg);
             border: 1px solid var(--border-glow);
-            border-radius: 20px;
+            border-radius: 24px;
             padding: 30px;
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(25px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
-        .list-item {
+        .list-header {
+            color: #94a3b8;
+            margin-bottom: 25px;
+            font-size: 0.9rem;
             display: flex;
             justify-content: space-between;
+        }
+
+        .app-item {
+            display: flex;
             align-items: center;
             padding: 20px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            transition: 0.3s;
-            cursor: pointer;
+            margin-bottom: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            text-decoration: none;
+            color: white;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .list-item:hover { background: rgba(0, 242, 255, 0.05); border-radius: 10px; }
 
-        .list-item i { color: var(--primary-neon); font-size: 1.5rem; margin-left: 20px; }
-        .app-info { flex: 1; text-align: right; }
-        .app-info h3 { font-size: 1.1rem; margin-bottom: 5px; }
+        .app-item:hover {
+            transform: scale(1.02);
+            background: rgba(0, 242, 255, 0.1);
+            border-color: var(--primary-neon);
+            box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
+        }
 
-        /* بطاقة العرض (اليمين) */
-        .showcase-card {
-            background: linear-gradient(135deg, rgba(0, 242, 255, 0.1), rgba(0,0,0,0.5));
+        .app-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 242, 255, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 20px;
+            color: var(--primary-neon);
+            font-size: 1.5rem;
+        }
+
+        .app-details { flex: 1; text-align: right; }
+        .app-details h3 { font-size: 1.2rem; margin-bottom: 4px; }
+        .app-details p { font-size: 0.85rem; color: #94a3b8; }
+
+        .btn-go { color: var(--primary-neon); font-size: 1.2rem; }
+
+        /* البطاقة اليمنى */
+        .featured-card {
+            background: linear-gradient(135deg, rgba(0, 242, 255, 0.15), rgba(0,0,0,0.6));
             border: 1px solid var(--primary-neon);
-            border-radius: 20px;
+            border-radius: 24px;
             position: relative;
-            overflow: hidden;
+            padding: 40px;
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
-            padding: 40px;
+            min-height: 400px;
+            overflow: hidden;
         }
 
-        .showcase-card::before {
+        .featured-card::before {
             content: '';
             position: absolute;
-            top: 0; right: 0; width: 100%; height: 100%;
-            background: url('https://i.ibb.co/DfwCLSLQ/72720391da27bdca8ea8dfe8e5f6a35f.jpg') center center;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://i.ibb.co/DfwCLSLQ/72720391da27bdca8ea8dfe8e5f6a35f.jpg') center;
             background-size: cover;
+            opacity: 0.3;
             z-index: -1;
-            opacity: 0.6;
         }
 
-        .download-icon {
+        .download-badge {
             position: absolute;
-            top: 20px; left: 20px;
+            top: 30px; left: 30px;
             background: white;
             color: black;
-            width: 40px; height: 40px;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        /* Media Queries */
-        @media (max-width: 900px) {
+        /* Responsive */
+        @media (max-width: 1000px) {
             .dashboard { grid-template-columns: 1fr; }
-            h1 { font-size: 2.5rem; }
+            header { text-align: center; }
         }
     </style>
 </head>
@@ -168,68 +204,69 @@
     <div class="light-glow"></div>
 
     <nav>
-        <i class="fas fa-search" style="font-size: 1.2rem; cursor: pointer;"></i>
+        <i class="fas fa-search" style="font-size: 1.2rem; cursor: pointer; color: var(--primary-neon);"></i>
         <ul class="nav-links">
-            <li>Holit</li>
-            <li>Mage</li>
-            <li>Optiet</li>
-            <li>Grizator</li>
+            <li>Premium</li>
+            <li>VPNs</li>
+            <li>Tools</li>
+            <li>Home</li>
         </ul>
         <div class="logo-main">
-            <img src="https://i.ibb.co/hRLJPvgR/ab8795e806c60e55c86fb7a0513a06ef.jpg" alt="Logo">
+            <img src="https://i.ibb.co/hRLJPvgR/ab8795e806c60e55c86fb7a0513a06ef.jpg" alt="Grizator Logo">
         </div>
     </nav>
 
     <header>
-        <h1>GRIZATOR APPS</h1>
-        <p class="sub-text" id="typing-text"></p>
-        <button class="btn-search">
-            <i class="fas fa-search"></i>
-            Eregrition
-        </button>
+        <h1>Grizator</h1>
+        <div class="typing-container" id="typewriter"></div>
     </header>
 
     <div class="dashboard">
         
         <div class="app-list">
-            <p style="color: #94a3b8; margin-bottom: 20px; font-size: 0.9rem;">Eazign orrous</p>
+            <div class="list-header">
+                <span>النسخ المتوفرة</span>
+                <span>Select Application</span>
+            </div>
             
-            <div class="list-item">
-                <i class="fas fa-play"></i>
-                <div class="app-info">
-                    <h3>Play Store App 1</h3>
+            <a href="https://play.google.com/store/apps/details?id=dastan.prince.bdfreevpn" target="_blank" class="app-item">
+                <div class="app-icon"><i class="fas fa-shield-alt"></i></div>
+                <div class="app-details">
+                    <h3>BD NET VPN</h3>
+                    <p>Free Secure Tunneling</p>
                 </div>
-                <i class="fas fa-chevron-down" style="font-size: 0.8rem; opacity: 0.5;"></i>
-            </div>
+                <div class="btn-go"><i class="fas fa-external-link-alt"></i></div>
+            </a>
 
-            <div class="list-item">
-                <i class="fab fa-whatsapp"></i>
-                <div class="app-info">
-                    <h3>WhatsApp Plus</h3>
+            <a href="https://play.google.com/store/apps/details?id=com.mxtunnel.pro" target="_blank" class="app-item">
+                <div class="app-icon"><i class="fas fa-bolt"></i></div>
+                <div class="app-details">
+                    <h3>MX Tunnel Pro</h3>
+                    <p>High Speed VPN Service</p>
                 </div>
-            </div>
+                <div class="btn-go"><i class="fas fa-external-link-alt"></i></div>
+            </a>
 
-            <div class="list-item">
-                <i class="fas fa-play"></i>
-                <div class="app-info">
-                    <h3>Premium Tools</h3>
+            <a href="https://play.google.com/store/apps/details?id=com.boss.actunnelvpn" target="_blank" class="app-item">
+                <div class="app-icon"><i class="fas fa-lock"></i></div>
+                <div class="app-details">
+                    <h3>AC Tunnel VPN</h3>
+                    <p>Safe & Stable Connection</p>
                 </div>
-                <i class="fas fa-chevron-down" style="font-size: 0.8rem; opacity: 0.5;"></i>
-            </div>
+                <div class="btn-go"><i class="fas fa-external-link-alt"></i></div>
+            </a>
         </div>
 
-        <div class="showcase-card">
-            <div class="download-icon">
-                <i class="fas fa-download"></i>
+        <div class="featured-card">
+            <div class="download-badge">
+                <i class="fas fa-download"></i> Google Play
             </div>
             <div style="text-align: right;">
-                <h2 style="font-family: 'Orbitron';">Grizator Apps</h2>
-                <p style="font-size: 0.8rem; opacity: 0.8; margin-bottom: 20px;">Catlvhopiaos - Dolertior utliesat detios</p>
-                
-                <div style="display: flex; gap: 10px; justify-content: flex-end;">
-                    <img src="https://i.ibb.co/hRLJPvgR/ab8795e806c60e55c86fb7a0513a06ef.jpg" width="40" style="border-radius: 8px;">
-                    <img src="https://i.ibb.co/hRLJPvgR/ab8795e806c60e55c86fb7a0513a06ef.jpg" width="40" style="border-radius: 8px;">
-                    <img src="https://i.ibb.co/hRLJPvgR/ab8795e806c60e55c86fb7a0513a06ef.jpg" width="40" style="border-radius: 8px;">
+                <h2 style="font-family: 'Orbitron'; margin-bottom: 10px; color: var(--primary-neon);">VPN Collection</h2>
+                <p style="opacity: 0.8; line-height: 1.6;">جرب أفضل تطبيقات الـ VPN لعام 2026. سرعة، أمان، وحماية كاملة لخصوصيتك بضغطة واحدة.</p>
+                <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: flex-end;">
+                    <div style="width: 40px; height: 40px; background: rgba(0,242,255,0.2); border-radius: 8px; border: 1px solid var(--primary-neon);"></div>
+                    <div style="width: 40px; height: 40px; background: rgba(0,242,255,0.2); border-radius: 8px; border: 1px solid var(--primary-neon);"></div>
                 </div>
             </div>
         </div>
@@ -237,17 +274,17 @@
     </div>
 
     <script>
-        // تأثير الكتابة (Typing Effect)
-        const text = "Discover and download the best curated apps.";
+        // تأثير الكتابة
+        const text = "Download the best Apps for your Phone.";
         let i = 0;
-        function type() {
+        function typing() {
             if (i < text.length) {
-                document.getElementById("typing-text").innerHTML += text.charAt(i);
+                document.getElementById("typewriter").innerHTML += text.charAt(i);
                 i++;
-                setTimeout(type, 50);
+                setTimeout(typing, 60);
             }
         }
-        window.onload = type;
+        window.onload = typing;
     </script>
 </body>
 </html>
