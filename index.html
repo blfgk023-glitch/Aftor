@@ -3,136 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grizator | متجر التطبيقات المختارة</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    
+    <title>Grizator Apps | Platform</title>
     <style>
-        :root {
-            --primary: #00f2ff;
-            --bg-dark: #0a0e23;
-            --transition: all 0.4s ease;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        body {
-            margin: 0; background: var(--bg-dark); color: white;
-            font-family: 'Cairo', sans-serif; overflow-x: hidden;
+        body, html {
+            height: 100%;
+            width: 100%;
+            overflow-x: hidden;
+            background-color: #000; /* لون احتياطي */
         }
 
-        .background-animate {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(125deg, #0a0e23, #1a1f3c, #001a33);
-            background-size: 400% 400%; animation: gradientBG 15s ease infinite; z-index: -2;
-        }
-        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-
-        nav {
-            padding: 20px 50px; display: flex; justify-content: space-between; align-items: center;
-            backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .logo img { width: 60px; height: 60px; border-radius: 50%; border: 2px solid var(--primary); box-shadow: 0 0 20px var(--primary); }
-
-        .hero { text-align: center; padding: 50px 20px; }
-        h1 { font-family: 'Orbitron', sans-serif; font-size: clamp(1.8rem, 6vw, 3rem); text-shadow: 0 0 20px var(--primary); }
-
-        .search-container { margin: 20px auto; max-width: 500px; position: relative; }
-        .search-container input {
-            width: 100%; padding: 15px; border-radius: 30px; border: 1px solid var(--primary);
-            background: rgba(255,255,255,0.1); color: white; text-align: center; outline: none;
+        /* حاوية الفيديو الخلفية */
+        .video-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2; /* كيكون لتحت كاع */
+            overflow: hidden;
         }
 
-        /* ستايل البطاقة كـ رابط */
-        .app-link { text-decoration: none; color: inherit; display: block; height: 100%; }
-
-        .swiper { width: 100%; padding: 40px 0; }
-        .swiper-slide {
-            width: 280px; height: 420px; border-radius: 25px;
-            border: 1px solid rgba(0, 242, 255, 0.2); overflow: hidden;
-            transition: var(--transition); cursor: pointer;
+        /* تعديل الـ iframe باش يجي Full Screen */
+        .video-wrapper iframe {
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none; /* باش ما يضغطوش على الفيديو */
+            transform: scale(1.4); /* باش نحيدو الجوانب السوداء إلا كانت */
         }
-        .swiper-slide:hover { border-color: var(--primary); box-shadow: 0 0 30px var(--primary); transform: scale(1.05); }
 
-        .swiper-slide img { width: 100%; height: 100%; object-fit: cover; }
+        /* طبقة شفافة (Overlay) باش يبان المحتوى ناضي */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4); /* ضبابة كحلة خفيفة */
+            z-index: -1;
+        }
 
-        .card-overlay {
-            position: absolute; bottom: 0; width: 100%; padding: 20px;
-            background: linear-gradient(transparent, rgba(0,0,0,0.8));
-            text-align: center; box-sizing: border-box;
+        /* تجربة محتوى بسيط دابا */
+        .content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+            font-family: sans-serif;
+            text-align: center;
         }
     </style>
 </head>
 <body>
 
-    <div class="background-animate"></div>
-
-    <nav>
-        <div class="logo"><img src="https://i.ibb.co/hRLJPvgR/ab8795e806c60e55c86fb7a0513a06ef.jpg"></div>
-        <div style="font-family: 'Orbitron';">GRIZATOR APPS</div>
-    </nav>
-
-    <section class="hero">
-        <h1 id="main-title"></h1>
-        <div class="search-container">
-            <input type="text" id="appSearch" onkeyup="filterApps()" placeholder="ابحث عن تطبيقك المفضل...">
-        </div>
-    </section>
-
-    <div class="swiper mySwiper">
-        <div class="swiper-wrapper">
-            
-            <div class="swiper-slide" data-tags="فيديو مونتاج تصميم">
-                <a href="رابط_تطبيق_1_هنا" class="app-link">
-                    <img src="https://i.ibb.co/Zzr3RXVJ/eeaa7e1b564ad94b3d522bfd0845a7e0.jpg">
-                    <div class="card-overlay"><h4>Video Editor AI</h4></div>
-                </a>
-            </div>
-
-            <div class="swiper-slide" data-tags="العاب سرعة مغامرة">
-                <a href="رابط_تطبيق_2_هنا" class="app-link">
-                    <img src="https://i.ibb.co/SDmCB9ST/996a155305cdadf15ee5af4318616d75.jpg">
-                    <div class="card-overlay"><h4>Turbo Game</h4></div>
-                </a>
-            </div>
-
-            </div>
+    <div class="video-wrapper">
+        <iframe 
+            src="https://streamable.com/e/36xhpk?autoplay=1&nocontrols=1&loop=1&muted=1" 
+            frameborder="0" 
+            allow="autoplay; fullscreen" 
+            allowfullscreen>
+        </iframe>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script>
-        // تأثير الكتابة
-        const text = "Welcome to the website grizator | App Store";
-        let i = 0;
-        function typing() {
-            if (i < text.length) {
-                document.getElementById("main-title").innerHTML += text.charAt(i);
-                i++; setTimeout(typing, 80);
-            }
-        }
+    <div class="overlay"></div>
 
-        // إعداد السلايدر
-        var swiper = new Swiper(".mySwiper", {
-            effect: "coverflow",
-            centeredSlides: true,
-            slidesPerView: "auto",
-            coverflowEffect: { rotate: 20, stretch: 0, depth: 200, modifier: 1, slideShadows: true },
-            loop: true,
-            autoplay: { delay: 3000 }
-        });
+    <div class="content">
+        <h1>الخلفية واجدة.. شنو غنديرو فوق منها دابا؟</h1>
+    </div>
 
-        // وظيفة البحث
-        function filterApps() {
-            let input = document.getElementById('appSearch').value.toLowerCase();
-            let slides = document.querySelectorAll('.swiper-slide');
-            slides.forEach(slide => {
-                let tags = slide.getAttribute('data-tags').toLowerCase();
-                slide.style.display = tags.includes(input) ? "block" : "none";
-            });
-            swiper.update();
-        }
-
-        window.onload = typing;
-    </script>
 </body>
 </html>
