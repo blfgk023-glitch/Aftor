@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grizator | عالم الصور</title>
+    <title>Grizator AI World | عالم خلفيات الهاتف</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
@@ -13,6 +13,7 @@
             --primary: #00f2ff;
             --bg-dark: #0a0e23;
             --glass: rgba(255, 255, 255, 0.05);
+            --transition: all 0.4s ease;
         }
 
         body {
@@ -23,7 +24,7 @@
             overflow-x: hidden;
         }
 
-        /* 1. الخلفية المتدرجة المتحركة */
+        /* خلفية متحركة */
         .background-animate {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -38,71 +39,108 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Header & Logo */
+        /* نافبار شفاف */
         nav {
             padding: 20px 50px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
+            background: rgba(0,0,0,0.3);
             border-bottom: 1px solid rgba(255,255,255,0.1);
+            position: sticky;
+            top: 0; z-index: 1000;
         }
 
         .logo img {
             width: 60px; height: 60px;
             border-radius: 50%;
             border: 2px solid var(--primary);
-            box-shadow: 0 0 15px var(--primary);
+            box-shadow: 0 0 20px var(--primary);
         }
 
-        /* Hero Section */
+        /* الهيرو سيكشن */
         .hero {
             text-align: center;
-            padding: 80px 20px;
+            padding: 60px 20px;
         }
 
         h1 {
             font-family: 'Orbitron', sans-serif;
-            font-size: clamp(2rem, 8vw, 4rem);
+            font-size: clamp(1.8rem, 6vw, 3.5rem);
             text-shadow: 0 0 20px var(--primary);
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         .typing-container {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             color: var(--primary);
             min-height: 40px;
             font-weight: bold;
+            margin-bottom: 30px;
         }
 
-        /* 3. Slider Section (مثل صورة العقارات) */
+        /* شريط البحث النيون */
+        .search-container {
+            margin: 0 auto;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 18px 25px;
+            border-radius: 35px;
+            border: 1px solid var(--primary);
+            background: rgba(255,255,255,0.08);
+            color: white;
+            outline: none;
+            backdrop-filter: blur(10px);
+            font-size: 1.1rem;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .search-container input:focus {
+            box-shadow: 0 0 25px var(--primary);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .search-container i {
+            position: absolute;
+            right: 25px; top: 22px;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        /* السلايدر (البطاقات) */
         .slider-section {
-            padding: 50px 0;
+            padding: 40px 0;
             width: 100%;
         }
 
         .swiper {
             width: 100%;
-            padding-top: 50px;
+            padding-top: 20px;
             padding-bottom: 50px;
         }
 
         .swiper-slide {
             background-position: center;
             background-size: cover;
-            width: 300px;
-            height: 450px;
-            border-radius: 20px;
-            border: 1px solid rgba(0, 242, 255, 0.3);
+            width: 320px;
+            height: 480px;
+            border-radius: 25px;
+            border: 1px solid rgba(0, 242, 255, 0.2);
             overflow: hidden;
             position: relative;
-            transition: 0.5s;
+            transition: var(--transition);
         }
 
         .swiper-slide:hover {
             border-color: var(--primary);
-            box-shadow: 0 0 30px var(--primary);
-            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(0, 242, 255, 0.4);
+            transform: scale(1.03);
         }
 
         .swiper-slide img {
@@ -114,34 +152,31 @@
         .card-info {
             position: absolute;
             bottom: 0; width: 100%;
-            padding: 20px;
+            padding: 25px;
             background: linear-gradient(transparent, rgba(0,0,0,0.9));
             text-align: right;
+            box-sizing: border-box;
         }
 
-        /* Search Bar (مثل الصورة الثالثة) */
-        .search-container {
-            margin: 40px auto;
-            max-width: 600px;
-            position: relative;
+        .card-info h4 { margin: 0; font-size: 1.2rem; color: #fff; }
+
+        .btn-download {
+            background: var(--primary);
+            color: #000;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+            cursor: pointer;
+            font-size: 0.9rem;
         }
 
-        .search-container input {
-            width: 100%;
-            padding: 15px 25px;
-            border-radius: 30px;
-            border: 1px solid var(--primary);
-            background: rgba(255,255,255,0.1);
-            color: white;
-            outline: none;
-            backdrop-filter: blur(5px);
-        }
-
-        /* Footer */
         footer {
-            padding: 50px;
+            padding: 40px;
             text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.1);
+            background: rgba(0,0,0,0.2);
+            border-top: 1px solid rgba(255,255,255,0.05);
         }
     </style>
 </head>
@@ -151,11 +186,9 @@
 
     <nav>
         <div class="logo">
-            <img src="https://i.ibb.co/hRLJPvgR/ab8795e806c60e55c86fb7a0513a06ef.jpg" alt="Logo">
+            <img src="https://i.ibb.co/hRLJPvgR/ab8795e806c60e55c86fb7a0513a06ef.jpg" alt="Grizator Logo">
         </div>
-        <div class="nav-links">
-            <i class="fas fa-bars" style="font-size: 1.5rem; cursor: pointer;"></i>
-        </div>
+        <div style="font-family: 'Orbitron'; font-weight: 900; letter-spacing: 2px;">GRIZATOR</div>
     </nav>
 
     <section class="hero">
@@ -163,50 +196,80 @@
         <div class="typing-container" id="title-2"></div>
         
         <div class="search-container">
-            <input type="text" placeholder="ابحث عن جميع صور العالم...">
-            <i class="fas fa-search" style="position: absolute; left: 20px; top: 18px; color: var(--primary);"></i>
+            <i class="fas fa-search"></i>
+            <input type="text" id="imageSearch" onkeyup="filterImages()" placeholder="ابحث عن: فضاء، تقنية، خلفيات...">
         </div>
     </section>
 
     <div class="slider-section">
         <div class="swiper mySwiper">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <img src="https://i.ibb.co/Zzr3RXVJ/eeaa7e1b564ad94b3d522bfd0845a7e0.jpg" alt="Img 1">
-                    <div class="card-info"><h4>AI Vision 01</h4></div>
+            <div class="swiper-wrapper" id="imageGallery">
+                
+                <div class="swiper-slide" data-tags="فضاء رائد فضاء ذكاء اصطناعي تكنولوجيا astronaut ai space">
+                    <img src="https://i.ibb.co/Zzr3RXVJ/eeaa7e1b564ad94b3d522bfd0845a7e0.jpg">
+                    <div class="card-info">
+                        <h4>عالم الفضاء الرقمي</h4>
+                        <button class="btn-download"><i class="fas fa-download"></i> تحميل</button>
+                    </div>
                 </div>
-                <div class="swiper-slide">
-                    <img src="https://i.ibb.co/SDmCB9ST/996a155305cdadf15ee5af4318616d75.jpg" alt="Img 2">
-                    <div class="card-info"><h4>Cyber World</h4></div>
+
+                <div class="swiper-slide" data-tags="طبيعة شجر غابة اخضر طبيعية nature forest">
+                    <img src="https://i.ibb.co/SDmCB9ST/996a155305cdadf15ee5af4318616d75.jpg">
+                    <div class="card-info">
+                        <h4>جمال الطبيعة</h4>
+                        <button class="btn-download"><i class="fas fa-download"></i> تحميل</button>
+                    </div>
                 </div>
-                <div class="swiper-slide">
-                    <img src="https://i.ibb.co/24BJm0Q/753545f28f3b7b3524a1a69137a4d358.jpg" alt="Img 3">
-                    <div class="card-info"><h4>Neon Space</h4></div>
+
+                <div class="swiper-slide" data-tags="فضاء سديم نجوم فلك مجرة nebula galaxy stars">
+                    <img src="https://i.ibb.co/24BJm0Q/753545f28f3b7b3524a1a69137a4d358.jpg">
+                    <div class="card-info">
+                        <h4>سديم النجوم</h4>
+                        <button class="btn-download"><i class="fas fa-download"></i> تحميل</button>
+                    </div>
                 </div>
-                <div class="swiper-slide">
-                    <img src="https://i.ibb.co/9mq0bdK8/b9824142d3db284b59756c5893cebf54.jpg" alt="Img 4">
-                    <div class="card-info"><h4>Future Tech</h4></div>
+
+                <div class="swiper-slide" data-tags="تكنولوجيا كود برمجة ازرق شاشة tech coding matrix">
+                    <img src="https://i.ibb.co/9mq0bdK8/b9824142d3db284b59756c5893cebf54.jpg">
+                    <div class="card-info">
+                        <h4>البرمجة المستقبلية</h4>
+                        <button class="btn-download"><i class="fas fa-download"></i> تحميل</button>
+                    </div>
                 </div>
-                <div class="swiper-slide">
-                    <img src="https://i.ibb.co/Zz0RMb9g/4b6a28f530581296c05fcf26e9088aae.jpg" alt="Img 5">
-                    <div class="card-info"><h4>Grizator Art</h4></div>
+
+                <div class="swiper-slide" data-tags="روبوت آلة ذكاء اصطناعي مستقبل robot android ai">
+                    <img src="https://i.ibb.co/Zz0RMb9g/4b6a28f530581296c05fcf26e9088aae.jpg">
+                    <div class="card-info">
+                        <h4>روبوت ذكي</h4>
+                        <button class="btn-download"><i class="fas fa-download"></i> تحميل</button>
+                    </div>
                 </div>
-                <div class="swiper-slide">
-                    <img src="https://i.ibb.co/1tKrfB28/704de7aecd96bb7196f54bb11775d9f2.jpg" alt="Img 6">
-                    <div class="card-info"><h4>World Images</h4></div>
+
+                <div class="swiper-slide" data-tags="سيارات سرعة رياضة نيون محرك car speed neon">
+                    <img src="https://i.ibb.co/1tKrfB28/704de7aecd96bb7196f54bb11775d9f2.jpg">
+                    <div class="card-info">
+                        <h4>سيارة النيون</h4>
+                        <button class="btn-download"><i class="fas fa-download"></i> تحميل</button>
+                    </div>
                 </div>
+
             </div>
             <div class="swiper-pagination"></div>
         </div>
     </div>
 
     <footer>
-        <p>© 2026 Grizator AI World | جميع الحقوق محفوظة</p>
+        <p>© 2026 Grizator AI World | منصة جميع صور العالم</p>
+        <div style="font-size: 1.5rem; gap: 20px; display: flex; justify-content: center; margin-top: 15px;">
+            <i class="fab fa-instagram" style="cursor: pointer;"></i>
+            <i class="fab fa-facebook" style="cursor: pointer;"></i>
+            <i class="fab fa-whatsapp" style="cursor: pointer;"></i>
+        </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        // 1. Typing Effect Logic
+        // تأثير الكتابة التلقائية
         const title1 = "Welcome to the website grizator";
         const title2 = "Phone backgrounds | جميع صور العالم";
         let i = 0, j = 0;
@@ -225,22 +288,38 @@
             }
         }
 
-        // 2. Swiper Slider Configuration (Coverflow effect like the image)
+        // إعداد السلايدر
         var swiper = new Swiper(".mySwiper", {
             effect: "coverflow",
             grabCursor: true,
             centeredSlides: true,
             slidesPerView: "auto",
             coverflowEffect: {
-                rotate: 30,
+                rotate: 20,
                 stretch: 0,
-                depth: 100,
+                depth: 200,
                 modifier: 1,
                 slideShadows: true,
             },
             loop: true,
-            autoplay: { delay: 2500, disableOnInteraction: false },
+            autoplay: { delay: 3000, disableOnInteraction: false },
         });
+
+        // ميزة البحث بالكلمات الدلالية
+        function filterImages() {
+            let input = document.getElementById('imageSearch').value.toLowerCase();
+            let slides = document.querySelectorAll('.swiper-slide');
+            
+            slides.forEach(slide => {
+                let tags = slide.getAttribute('data-tags').toLowerCase();
+                if (tags.includes(input)) {
+                    slide.style.display = "block";
+                } else {
+                    slide.style.display = "none";
+                }
+            });
+            swiper.update(); // تحديث السلايدر بعد التصفية
+        }
 
         window.onload = type1;
     </script>
