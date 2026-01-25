@@ -1,19 +1,28 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>معرض صوري الاحترافي</title>
+    <title>AI Dynamic Clock</title>
     <style>
-        /* خلفية متحركة كأنها ذكاء اصطناعي */
+        :root {
+            --ai-glow: #00d2ff;
+            --bg-speed: 20s;
+        }
+
         body {
             margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #00d2ff);
             background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            animation: gradientBG var(--bg-speed) ease infinite;
             color: white;
-            min-height: 100vh;
+            overflow: hidden;
         }
 
         @keyframes gradientBG {
@@ -22,95 +31,121 @@
             100% { background-position: 0% 50%; }
         }
 
-        header {
-            text-align: center;
-            padding: 50px 20px;
+        .language-switcher {
+            position: absolute;
+            top: 20px;
+            display: flex;
+            gap: 10px;
         }
 
-        h1 {
-            font-size: 2.5rem;
-            text-shadow: 0 0 10px rgba(0,210,255,0.7);
-        }
-
-        /* شبكة الصور */
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .card {
+        .lang-btn {
             background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            border: 1px solid var(--ai-glow);
+            color: white;
+            padding: 8px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .lang-btn:hover { background: var(--ai-glow); }
+
+        .date-container {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .clock {
+            display: flex;
+            gap: 15px;
+            perspective: 1000px;
+        }
+
+        .time-box {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
             border-radius: 15px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: transform 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-        }
-
-        .card img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-        }
-
-        .card-info {
-            padding: 15px;
+            border: 2px solid var(--ai-glow);
+            box-shadow: 0 0 20px var(--ai-glow), inset 0 0 10px var(--ai-glow);
+            min-width: 120px;
             text-align: center;
         }
 
-        .download-btn {
-            display: inline-block;
-            background: #00d2ff;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: background 0.3s;
+        .number {
+            font-size: 5rem;
+            font-weight: 900;
+            display: block;
         }
 
-        .download-btn:hover {
-            background: #0089ba;
+        .label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            opacity: 0.7;
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>معرض الصور الخاص بي</h1>
-        <p>استكشف وحمل الصور بجودة عالية</p>
-    </header>
+    <div class="language-switcher">
+        <button class="lang-btn" onclick="setLang('ar')">العربية</button>
+        <button class="lang-btn" onclick="setLang('en')">English</button>
+        <button class="lang-btn" onclick="setLang('fr')">Français</button>
+    </div>
 
-    <div class="gallery">
-        <div class="card">
-            <img src="image1.jpg" alt="صورة 1">
-            <div class="card-info">
-                <a href="image1.jpg" download class="download-btn">تحميل الصورة</a>
-            </div>
+    <div class="date-container" id="date-display"></div>
+
+    <div class="clock">
+        <div class="time-box">
+            <span class="number" id="hours">00</span>
+            <span class="label" id="h-label">Hours</span>
         </div>
-
-        <div class="card">
-            <img src="image2.jpg" alt="صورة 2">
-            <div class="card-info">
-                <a href="image2.jpg" download class="download-btn">تحميل الصورة</a>
-            </div>
+        <div class="time-box">
+            <span class="number" id="minutes">00</span>
+            <span class="label" id="m-label">Minutes</span>
         </div>
-
-        <div class="card">
-            <img src="image3.jpg" alt="صورة 3">
-            <div class="card-info">
-                <a href="image3.jpg" download class="download-btn">تحميل الصورة</a>
-            </div>
+        <div class="time-box">
+            <span class="number" id="seconds">00</span>
+            <span class="label" id="s-label">Seconds</span>
         </div>
     </div>
 
+    <script>
+        let currentLang = 'en';
+        
+        const translations = {
+            en: { h: 'Hours', m: 'Minutes', s: 'Seconds', locale: 'en-US' },
+            fr: { h: 'Heures', m: 'Minutes', s: 'Secondes', locale: 'fr-FR' },
+            ar: { h: 'ساعات', m: 'دقائق', s: 'ثواني', locale: 'ar-MA' }
+        };
+
+        function setLang(lang) {
+            currentLang = lang;
+            document.getElementById('h-label').textContent = translations[lang].h;
+            document.getElementById('m-label').textContent = translations[lang].m;
+            document.getElementById('s-label').textContent = translations[lang].s;
+            updateClock();
+        }
+
+        function updateClock() {
+            const now = new Date();
+            
+            // تحديث الوقت
+            document.getElementById('hours').textContent = String(now.getHours()).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(now.getSeconds()).padStart(2, '0');
+
+            // تحديث التاريخ بناءً على اللغة
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('date-display').textContent = now.toLocaleDateString(translations[currentLang].locale, options);
+            
+            // تغيير سرعة حركة الخلفية حسب الثواني (لمسة ذكاء اصطناعي)
+            document.documentElement.style.setProperty('--bg-speed', (10 + (now.getSeconds() / 2)) + 's');
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock(); // تشغيل فوري
+    </script>
 </body>
 </html>
