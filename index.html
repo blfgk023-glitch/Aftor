@@ -3,80 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grizator Apps | Platform</title>
+    <title>Grizator Apps</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body, html { 
+            height: 100%; width: 100%; 
+            overflow: hidden; background-color: #000;
+            display: flex; justify-content: center; align-items: center;
         }
 
-        body, html {
-            height: 100%;
-            width: 100%;
-            overflow-x: hidden;
-            background-color: #000; /* لون احتياطي */
+        /* حاوية الفيديو */
+        .video-background {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -2; pointer-events: none;
         }
 
-        /* حاوية الفيديو الخلفية */
-        .video-wrapper {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2; /* كيكون لتحت كاع */
-            overflow: hidden;
+        .video-background iframe {
+            width: 100vw; height: 100vh;
+            transform: scale(1.6); /* لتغطية الشاشة بالكامل */
         }
 
-        /* تعديل الـ iframe باش يجي Full Screen */
-        .video-wrapper iframe {
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none; /* باش ما يضغطوش على الفيديو */
-            transform: scale(1.4); /* باش نحيدو الجوانب السوداء إلا كانت */
-        }
-
-        /* طبقة شفافة (Overlay) باش يبان المحتوى ناضي */
+        /* طبقة حماية للمحتوى */
         .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.4); /* ضبابة كحلة خفيفة */
-            z-index: -1;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.3); z-index: -1;
         }
 
-        /* تجربة محتوى بسيط دابا */
-        .content {
-            position: relative;
-            z-index: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            color: white;
-            font-family: sans-serif;
+        /* ستايل اللوغو */
+        .logo-container {
             text-align: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .logo-container img {
+            width: 150px; height: 150px;
+            border-radius: 50%;
+            border: 4px solid #00f2ff;
+            box-shadow: 0 0 20px #00f2ff, 0 0 40px #00f2ff;
+            transition: 0.5s;
+        }
+
+        .logo-container img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px #fff, 0 0 60px #00f2ff;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
-    <div class="video-wrapper">
-        <iframe 
-            src="https://streamable.com/e/36xhpk?autoplay=1&nocontrols=1&loop=1&muted=1" 
-            frameborder="0" 
-            allow="autoplay; fullscreen" 
-            allowfullscreen>
-        </iframe>
+    <div class="video-background">
+        <iframe src="https://streamable.com/e/36xhpk?autoplay=1&muted=1&nocontrols=1&loop=1" frameborder="0" allow="autoplay; fullscreen"></iframe>
     </div>
 
     <div class="overlay"></div>
 
-    <div class="content">
-        <h1>الخلفية واجدة.. شنو غنديرو فوق منها دابا؟</h1>
+    <div class="logo-container">
+        <img src="https://i.ibb.co/hRLJPvgR/ab8795e806c60e55c86fb7a0513a06ef.jpg" alt="Grizator Logo">
     </div>
 
 </body>
