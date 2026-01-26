@@ -29,25 +29,42 @@
             min-height: 100vh;
         }
 
-        /* 🌌 خلفية نيون متحركة */
+        /* 🌌 خلفية نيون */
         .neon-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle at 50% 50%, #0a1128 0%, #02040a 100%);
             z-index: -2;
         }
 
+        /* 🖼️ البانر الجديد (Hero Banner) */
+        .hero-banner {
+            width: 100%;
+            max-height: 400px; /* تحديد الطول المناسب */
+            overflow: hidden;
+            position: relative;
+            border-bottom: 2px solid var(--ai-cyan);
+            box-shadow: 0 5px 30px rgba(0, 242, 255, 0.2);
+        }
+
+        .hero-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* كيجعل الصورة تغطي العرض كامل */
+            display: block;
+        }
+
         nav {
-            padding: 20px 5%; display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 5%; display: flex; justify-content: space-between; align-items: center;
             backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);
             position: sticky; top: 0; z-index: 1000;
         }
 
         .logo-box { display: flex; align-items: center; gap: 10px; }
-        .logo-box img { width: 40px; border-radius: 50%; border: 1px solid var(--ai-cyan); }
-        .logo { font-family: 'Orbitron'; font-weight: 900; font-size: 1.3rem; color: var(--ai-cyan); text-shadow: 0 0 15px var(--ai-cyan); }
+        .logo-box img { width: 35px; border-radius: 50%; border: 1px solid var(--ai-cyan); }
+        .logo { font-family: 'Orbitron'; font-weight: 900; font-size: 1.2rem; color: var(--ai-cyan); text-shadow: 0 0 15px var(--ai-cyan); }
 
-        .hero { text-align: center; padding: 50px 20px; }
-        .hero h1 { font-family: 'Orbitron'; font-size: 2.2rem; margin-bottom: 10px; color: #fff; }
+        .hero { text-align: center; padding: 40px 20px; }
+        .hero h1 { font-family: 'Orbitron'; font-size: 2rem; margin-bottom: 10px; color: #fff; }
         .hero p { opacity: 0.6; font-size: 0.9rem; }
 
         /* 🏠 شبكة البطاقات */
@@ -62,7 +79,6 @@
             text-align: center; transition: 0.3s; transform-style: preserve-3d;
         }
 
-        /* صور اللوغو داخل البطاقات */
         .net-img {
             width: 100px; height: 100px; border-radius: 20px; 
             margin-bottom: 20px; object-fit: cover;
@@ -70,7 +86,7 @@
             box-shadow: 0 0 20px var(--accent);
         }
 
-        /* ⚡ تأثير AI Scan */
+        /* ⚡ AI Scan Line */
         .network-card::after {
             content: ""; position: absolute; top: -100%; left: 0; width: 100%; height: 80%;
             background: linear-gradient(to bottom, transparent, var(--accent), transparent);
@@ -105,7 +121,6 @@
         }
         .install-btn:active { transform: scale(0.95); }
 
-        /* 🤖 Scanner Overlay */
         #ai-scanner {
             position: fixed; inset: 0; background: rgba(2,4,10,0.98); z-index: 2000;
             display: none; flex-direction: column; align-items: center; justify-content: center;
@@ -120,12 +135,16 @@
 
 <div class="neon-bg"></div>
 
+<div class="hero-banner">
+    <img src="https://i.ibb.co/jP3vg7W6/53f82bb793ff10b6730f1abbcdeb33a7.jpg" alt="Grizator AI Banner">
+</div>
+
 <nav>
     <div class="logo-box">
         <img src="https://i.ibb.co/F4x0F7Bc/In-Shot-20260125-221439000.jpg" alt="Logo">
         <span class="logo">GRIZATOR AI</span>
     </div>
-    <div style="font-family: 'Orbitron'; font-size: 0.7rem; color: var(--ai-cyan);">SYSTEM: ONLINE</div>
+    <div style="font-family: 'Orbitron'; font-size: 0.6rem; color: var(--ai-cyan);">SYSTEM: ONLINE</div>
 </nav>
 
 <div class="container">
@@ -169,7 +188,6 @@
 </div>
 
 <script>
-    // تفعيل تأثير الـ 3D
     VanillaTilt.init(document.querySelectorAll(".network-card"), {
         max: 15, speed: 400, glare: true, "max-glare": 0.2
     });
@@ -214,10 +232,8 @@
         document.getElementById('home-view').style.display = 'none';
         document.getElementById('apps-view').style.display = 'block';
         document.getElementById('rec-text').innerText = `Based on your ${net.toUpperCase()} network, AI recommends these 🔥`;
-        
         const list = document.getElementById('app-list');
         list.innerHTML = '';
-        
         vpnData[net].forEach(app => {
             list.innerHTML += `
                 <div class="app-card">
