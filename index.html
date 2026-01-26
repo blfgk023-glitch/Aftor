@@ -3,23 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grizator AI | Network Intelligence</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <title>Grizator AI | VPN Hub Morocco</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Cairo:wght@400;900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
     
     <style>
         :root {
-            --bg: #010409;
+            --bg: #02040a;
             --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.08);
+            --border: rgba(255, 255, 255, 0.1);
             --ai-cyan: #00f2ff;
             --inwi: #bc13fe;
             --orange: #ff7900;
             --iam: #0070ff;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -32,82 +29,91 @@
             min-height: 100vh;
         }
 
+        /* 🌌 خلفية نيون متحركة */
         .neon-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 50%, #0d1117 0%, #010409 100%);
+            background: radial-gradient(circle at 50% 50%, #0a1128 0%, #02040a 100%);
             z-index: -2;
         }
 
         nav {
-            padding: 20px 8%; display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 5%; display: flex; justify-content: space-between; align-items: center;
             backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);
             position: sticky; top: 0; z-index: 1000;
         }
 
-        .logo { font-family: 'Orbitron'; font-weight: 900; font-size: 1.4rem; color: var(--ai-cyan); text-shadow: 0 0 15px var(--ai-cyan); }
+        .logo-box { display: flex; align-items: center; gap: 10px; }
+        .logo-box img { width: 40px; border-radius: 50%; border: 1px solid var(--ai-cyan); }
+        .logo { font-family: 'Orbitron'; font-weight: 900; font-size: 1.3rem; color: var(--ai-cyan); text-shadow: 0 0 15px var(--ai-cyan); }
 
-        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .hero { text-align: center; padding: 50px 20px; }
+        .hero h1 { font-family: 'Orbitron'; font-size: 2.2rem; margin-bottom: 10px; color: #fff; }
+        .hero p { opacity: 0.6; font-size: 0.9rem; }
 
-        /* Home View */
-        .hero { text-align: center; margin-bottom: 50px; }
-        .hero h1 { font-family: 'Orbitron'; font-size: 2.2rem; margin-bottom: 15px; }
-        
+        /* 🏠 شبكة البطاقات */
         .network-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
+            gap: 25px; padding: 0 8% 60px;
         }
 
         .network-card {
-            background: var(--glass); border: 1px solid var(--border); border-radius: 30px;
+            background: var(--glass); border: 1px solid var(--border); border-radius: 35px;
             padding: 40px 20px; cursor: pointer; position: relative; overflow: hidden;
-            text-align: center; transition: 0.3s;
+            text-align: center; transition: 0.3s; transform-style: preserve-3d;
         }
 
-        .net-img { width: 90px; height: 90px; border-radius: 20px; margin-bottom: 20px; border: 2px solid var(--accent); box-shadow: 0 0 15px var(--accent); }
+        /* صور اللوغو داخل البطاقات */
+        .net-img {
+            width: 100px; height: 100px; border-radius: 20px; 
+            margin-bottom: 20px; object-fit: cover;
+            border: 2px solid var(--accent);
+            box-shadow: 0 0 20px var(--accent);
+        }
+
+        /* ⚡ تأثير AI Scan */
+        .network-card::after {
+            content: ""; position: absolute; top: -100%; left: 0; width: 100%; height: 80%;
+            background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+            opacity: 0.15; animation: scan 3s infinite linear;
+        }
+        @keyframes scan { 0% { top: -100%; } 100% { top: 100%; } }
+
         .inwi-card { --accent: var(--inwi); }
         .orange-card { --accent: var(--orange); }
         .iam-card { --accent: var(--iam); }
 
-        /* Apps View */
-        #apps-view { display: none; animation: slideIn 0.5s ease; }
-        @keyframes slideIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .badge-ai {
+            position: absolute; top: 15px; left: 15px; font-size: 0.6rem;
+            padding: 5px 12px; border-radius: 20px; background: var(--accent);
+            font-weight: bold; color: #fff;
+        }
+
+        /* 📦 عرض النتائج */
+        #apps-view { display: none; padding: 40px 8%; animation: fadeIn 0.6s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         .app-card {
-            background: var(--glass); border: 1px solid var(--border); border-radius: 28px;
-            padding: 25px; margin-bottom: 25px; position: relative; transition: 0.3s;
+            background: var(--glass); border: 1px solid var(--border); border-radius: 25px;
+            padding: 25px; margin-bottom: 20px; position: relative;
         }
-
-        .app-card:hover { border-color: var(--ai-cyan); background: rgba(255,255,255,0.05); }
-
-        /* 🟢 Badges & Meters */
-        .badge { display: inline-block; padding: 4px 12px; border-radius: 10px; font-size: 0.75rem; font-weight: bold; margin-bottom: 10px; }
-        .badge-best { background: rgba(16, 185, 129, 0.2); color: var(--success); border: 1px solid var(--success); }
-        .badge-warning { background: rgba(245, 158, 11, 0.2); color: var(--warning); border: 1px solid var(--warning); margin-top: 10px; }
-
-        .ai-reason { font-size: 0.85rem; color: var(--ai-cyan); font-style: italic; margin-bottom: 15px; display: block; }
-        
-        .stability-container { margin: 15px 0; }
-        .stability-label { font-size: 0.75rem; opacity: 0.7; display: flex; justify-content: space-between; margin-bottom: 5px; }
-        .stability-bar { height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
-        .stability-fill { height: 100%; background: var(--ai-cyan); box-shadow: 0 0 10px var(--ai-cyan); }
-
-        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 15px 0; font-size: 0.8rem; }
-        .info-item { background: rgba(255,255,255,0.03); padding: 8px; border-radius: 10px; }
+        .trust-score { font-family: 'Orbitron'; color: #ffcc00; font-size: 0.8rem; margin-bottom: 10px; }
 
         .install-btn {
-            background: #fff; color: #000; padding: 16px; border-radius: 18px;
+            background: #fff; color: #000; padding: 16px; border-radius: 15px;
             text-decoration: none; font-weight: 900; display: flex; align-items: center;
-            justify-content: center; gap: 10px; transition: 0.2s;
+            justify-content: center; gap: 10px; margin-top: 15px; transition: 0.2s;
         }
-        .install-btn:active { transform: scale(0.96); }
+        .install-btn:active { transform: scale(0.95); }
 
-        /* Loader */
+        /* 🤖 Scanner Overlay */
         #ai-scanner {
-            position: fixed; inset: 0; background: var(--bg); z-index: 2000;
+            position: fixed; inset: 0; background: rgba(2,4,10,0.98); z-index: 2000;
             display: none; flex-direction: column; align-items: center; justify-content: center;
         }
+        .loader { width: 50px; height: 50px; border: 3px solid var(--glass); border-top-color: var(--ai-cyan); border-radius: 50%; animation: spin 1s infinite linear; }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        .back-btn { background: none; border: 1px solid var(--border); color: #fff; padding: 12px 30px; border-radius: 50px; cursor: pointer; margin-top: 30px; }
+        .back-btn { margin-top: 40px; background: transparent; color: white; border: 1px solid var(--border); padding: 10px 25px; border-radius: 50px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -115,126 +121,116 @@
 <div class="neon-bg"></div>
 
 <nav>
-    <div class="logo">GRIZATOR AI</div>
-    <div style="font-size: 0.7rem; opacity: 0.6; font-family: 'Orbitron';">📍 Casablanca / Rabat Hub</div>
+    <div class="logo-box">
+        <img src="https://i.ibb.co/F4x0F7Bc/In-Shot-20260125-221439000.jpg" alt="Logo">
+        <span class="logo">GRIZATOR AI</span>
+    </div>
+    <div style="font-family: 'Orbitron'; font-size: 0.7rem; color: var(--ai-cyan);">SYSTEM: ONLINE</div>
 </nav>
 
 <div class="container">
     <div id="home-view">
         <header class="hero">
-            <h1>Select Your Network</h1>
-            <p>AI Intelligence matching protocols for Morocco *6</p>
+            <h1>Choose Your Network.</h1>
+            <p>AI finds the most stable VPN for Morocco *6</p>
         </header>
 
         <div class="network-grid">
-            <div class="network-card inwi-card" data-tilt onclick="analyzeNetwork('inwi')">
+            <div class="network-card inwi-card" data-tilt onclick="selectNetwork('inwi')">
+                <span class="badge-ai">Gaming Optimized</span>
                 <img src="https://i.ibb.co/JWHMCRdS/In-Shot-20260126-093834338.jpg" alt="Inwi" class="net-img">
-                <h2 style="font-family:'Orbitron'">INWI</h2>
-                <div style="font-size:0.7rem; margin-top:10px; color:var(--success)">✅ 4G Compatibility: Excellent</div>
+                <h2 style="font-family: 'Orbitron';">INWI</h2>
             </div>
 
-            <div class="network-card orange-card" data-tilt onclick="analyzeNetwork('orange')">
+            <div class="network-card orange-card" data-tilt onclick="selectNetwork('orange')">
+                <span class="badge-ai">High Stability</span>
                 <img src="https://i.ibb.co/23z8x035/In-Shot-20260126-093754730.jpg" alt="Orange" class="net-img">
-                <h2 style="font-family:'Orbitron'">ORANGE</h2>
-                <div style="font-size:0.7rem; margin-top:10px; color:var(--warning)">⚠️ 4G Compatibility: Average</div>
+                <h2 style="font-family: 'Orbitron';">ORANGE</h2>
             </div>
 
-            <div class="network-card iam-card" data-tilt onclick="analyzeNetwork('iam')">
+            <div class="network-card iam-card" data-tilt onclick="selectNetwork('iam')">
+                <span class="badge-ai">Ultra Speed</span>
                 <img src="https://i.ibb.co/mFzx3KHg/In-Shot-20260126-093339759.jpg" alt="IAM" class="net-img">
-                <h2 style="font-family:'Orbitron'">MAROC TÉLÉCOM</h2>
-                <div style="font-size:0.7rem; margin-top:10px; color:var(--danger)">❌ 4G Compatibility: Weak</div>
+                <h2 style="font-family: 'Orbitron';">MAROC TÉLÉCOM</h2>
             </div>
         </div>
     </div>
 
     <div id="apps-view">
+        <p id="rec-text" style="text-align: center; color: var(--ai-cyan); margin-bottom: 30px; font-weight: bold;"></p>
         <div id="app-list"></div>
-        <center><button class="back-btn" onclick="location.reload()">Find Better Match Again</button></center>
+        <center><button class="back-btn" onclick="location.reload()">Back to Networks</button></center>
     </div>
 </div>
 
 <div id="ai-scanner">
-    <div style="width: 50px; height: 50px; border: 3px solid var(--border); border-top-color: var(--ai-cyan); border-radius: 50%; animation: spin 1s infinite linear;"></div>
-    <p id="scan-text" style="margin-top: 20px; font-family:'Orbitron'; color:var(--ai-cyan)"></p>
+    <div class="loader"></div>
+    <p id="scan-text" style="margin-top: 20px; font-family: 'Orbitron'; color: var(--ai-cyan); letter-spacing: 2px;"></p>
 </div>
 
 <script>
-    VanillaTilt.init(document.querySelectorAll(".network-card"), { max: 15, speed: 400 });
+    // تفعيل تأثير الـ 3D
+    VanillaTilt.init(document.querySelectorAll(".network-card"), {
+        max: 15, speed: 400, glare: true, "max-glare": 0.2
+    });
 
-    const db = {
+    const vpnData = {
         iam: [
-            { name: "BD FREE VPN", link: "https://play.google.com/store/apps/details?id=dastan.prince.bdfreevpn", reason: "AI Selected: Best stability for IAM 4G protocols", stability: 92, confidence: "Extreme", success: "94-97%", test: "🧪 4G/ADSL", issue: "" },
-            { name: "AC TUNNEL VPN", link: "https://play.google.com/store/apps/details?id=com.boss.actunnelvpn", reason: "AI Selected: High-speed relay nodes in Rabat", stability: 85, confidence: "High", success: "88-91%", test: "🧪 4G Only", issue: "⚠️ High battery usage" }
+            { name: "BD FREE VPN", link: "https://play.google.com/store/apps/details?id=dastan.prince.bdfreevpn", trust: "9.8" },
+            { name: "AC TUNNEL VPN", link: "https://play.google.com/store/apps/details?id=com.boss.actunnelvpn", trust: "9.5" },
+            { name: "MORE TUNNEL VPN", link: "https://play.google.com/store/apps/details?id=com.more.tunnel.vpn", trust: "9.2" }
         ],
         inwi: [
-            { name: "MX TUNNEL PRO", link: "https://play.google.com/store/apps/details?id=com.mxtunnel.pro", reason: "🤖 Selected: Ultra-low ping + No-disconnect algorithm", stability: 98, confidence: "Extreme", success: "96-99%", test: "🧪 4G / 5G Ready", issue: "", best: true },
-            { name: "JN TUNNEL", link: "https://play.google.com/store/apps/details?id=com.jahrteam.jntunnel", reason: "AI Selected: Bypass limited bandwidth on INWI", stability: 82, confidence: "High", success: "85-89%", test: "🧪 4G Only", issue: "⚠️ Drops speed at night in some regions" }
+            { name: "MX TUNNEL PRO", link: "https://play.google.com/store/apps/details?id=com.mxtunnel.pro", trust: "9.7" },
+            { name: "MSY VPN LITE", link: "https://play.google.com/store/apps/details?id=com.msyvpn.lite", trust: "9.4" },
+            { name: "JN TUNNEL", link: "https://play.google.com/store/apps/details?id=com.jahrteam.jntunnel", trust: "9.1" }
         ],
         orange: [
-            { name: "S TUNNEL", link: "https://play.google.com/store/apps/details?id=com.stunnel.dev", reason: "🤖 Selected: Custom Orange *6 handshake logic", stability: 88, confidence: "High", success: "90-93%", test: "🧪 4G / Fiber", issue: "", best: true },
-            { name: "VIP OMAN", link: "https://play.google.com/store/apps/details?id=dastan.prince.vipoman", reason: "AI Selected: Optimized for Orange servers in Casablanca", stability: 75, confidence: "Medium", success: "78-82%", test: "🧪 4G Only", issue: "⚠️ Frequent reconnects on low signal" }
+            { name: "S TUNNEL", link: "https://play.google.com/store/apps/details?id=com.stunnel.dev", trust: "9.6" },
+            { name: "VIP OMAN", link: "https://play.google.com/store/apps/details?id=dastan.prince.vipoman", trust: "9.3" },
+            { name: "RJC TUNNEL VPN", link: "https://play.google.com/store/apps/details?id=com.rjctunnel.vpn", trust: "9.0" }
         ]
     };
 
-    function analyzeNetwork(net) {
+    function selectNetwork(net) {
         const scanner = document.getElementById('ai-scanner');
-        const text = document.getElementById('scan-text');
+        const scanText = document.getElementById('scan-text');
         scanner.style.display = 'flex';
         
-        let steps = ["ANALYZING MOROCCO SERVERS...", "TESTING 4G PACKETS...", "AI MATCHING COMPLETE"];
+        let steps = ["SCANNING NETWORK...", "MATCHING PROTOCOLS...", "AI FINALIZING..."];
         let i = 0;
         let interval = setInterval(() => {
-            text.innerText = steps[i];
+            scanText.innerText = steps[i];
             i++;
             if(i >= steps.length) {
                 clearInterval(interval);
                 scanner.style.display = 'none';
-                renderApps(net);
+                showResults(net);
             }
-        }, 900);
+        }, 800);
     }
 
-    function renderApps(net) {
+    function showResults(net) {
         document.getElementById('home-view').style.display = 'none';
         document.getElementById('apps-view').style.display = 'block';
-        const list = document.getElementById('app-list');
-        list.innerHTML = `<h3 style="margin-bottom:20px; text-align:center; font-family:'Orbitron'">🏆 AI Recommendations for ${net.toUpperCase()}</h3>`;
+        document.getElementById('rec-text').innerText = `Based on your ${net.toUpperCase()} network, AI recommends these 🔥`;
         
-        db[net].forEach(app => {
+        const list = document.getElementById('app-list');
+        list.innerHTML = '';
+        
+        vpnData[net].forEach(app => {
             list.innerHTML += `
                 <div class="app-card">
-                    ${app.best ? `<span class="badge badge-best">🏆 BEST CHOICE FOR ${net.toUpperCase()} USERS</span>` : ''}
-                    <h2 style="font-family:'Orbitron'; margin-bottom:5px;">${app.name}</h2>
-                    <span class="ai-reason">${app.reason}</span>
-                    
-                    <div class="stability-container">
-                        <div class="stability-label">
-                            <span>Connection Stability</span>
-                            <span>${app.stability}%</span>
-                        </div>
-                        <div class="stability-bar">
-                            <div class="stability-fill" style="width: ${app.stability}%"></div>
-                        </div>
-                    </div>
-
-                    <div class="info-grid">
-                        <div class="info-item"><b>AI Confidence:</b> ${app.confidence}</div>
-                        <div class="info-item"><b>Success Rate:</b> ${app.success}</div>
-                        <div class="info-item"><b>Test Environment:</b> ${app.test}</div>
-                        <div class="info-item"><b>Tested In:</b> Casa / Rabat</div>
-                    </div>
-
-                    ${app.issue ? `<div class="badge-warning">${app.issue}</div>` : ''}
-
-                    <a href="${app.link}" target="_blank" class="install-btn" style="margin-top:20px;">
-                        🚀 Launch & Install via Play Store
+                    <div class="trust-score">AI TRUST SCORE: ${app.trust}/10 ⭐</div>
+                    <h2 style="font-family:'Orbitron'; margin-bottom: 5px;">${app.name}</h2>
+                    <p style="font-size: 0.8rem; opacity: 0.6;">Tested on Moroccan *6 Servers.</p>
+                    <a href="${app.link}" target="_blank" class="install-btn">
+                        🚀 Install from Play Store
                     </a>
                 </div>
             `;
         });
     }
-
-    @keyframes spin { to { transform: rotate(360deg); } }
 </script>
 
 </body>
