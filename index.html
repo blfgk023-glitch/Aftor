@@ -3,206 +3,212 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grizator | Interactive VPN</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Cairo:wght@400;900&display=swap" rel="stylesheet">
+    <title>Grizator AI | Network Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
-    
     <style>
         :root {
-            --iam-red: #ff0000;
-            --inwi-purple: #bc13fe;
-            --orange-color: #ff8a00;
-            --ai-blue: #00f2ff;
-            --ai-dark: #020617;
+            --primary: #00f2ff;
+            --secondary: #7000ff;
+            --bg: #050505;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; }
 
         body {
-            background-color: var(--ai-dark);
-            color: white;
+            background: var(--bg);
+            color: #fff;
             font-family: 'Cairo', sans-serif;
-            min-height: 100vh;
             overflow-x: hidden;
-            /* 3️⃣ خلفية Gradient متحركة */
-            background: linear-gradient(45deg, #020617, #0a1631, #1a0b2e, #020617);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
+            min-height: 100vh;
         }
 
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* 🌌 تأثير النجوم الصغار */
-        .stars {
+        /* 1️⃣ & 2️⃣ AI Glass + Breathing Background */
+        .ai-background {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; pointer-events: none;
-            background: transparent url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/123163/stars.png') repeat;
+            background: radial-gradient(circle at 50% 50%, #0a1128 0%, #050505 100%);
+            z-index: -2;
         }
 
+        .glow-orb {
+            position: absolute; width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(0, 242, 255, 0.1), transparent 70%);
+            border-radius: 50%; filter: blur(50px);
+            animation: move 20s infinite alternate; z-index: -1;
+        }
+
+        @keyframes move {
+            from { transform: translate(-10%, -10%); }
+            to { transform: translate(110%, 110%); }
+        }
+
+        /* 🖱️ Custom Cursor */
+        #cursor {
+            width: 20px; height: 20px; background: var(--primary);
+            border-radius: 50%; position: fixed; pointer-events: none;
+            box-shadow: 0 0 20px var(--primary); z-index: 9999;
+            transition: transform 0.1s ease;
+        }
+
+        /* 7️⃣ Header & Logo */
         nav {
-            padding: 15px 8%;
-            display: flex; justify-content: space-between; align-items: center;
-            backdrop-filter: blur(15px); border-bottom: 1px solid rgba(0, 242, 255, 0.2);
-            position: sticky; top: 0; z-index: 1000;
+            padding: 20px 5%; display: flex; justify-content: space-between;
+            align-items: center; backdrop-filter: blur(20px); border-bottom: 1px solid var(--glass-border);
         }
 
-        .brand { display: flex; align-items: center; gap: 12px; }
-        .brand img { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--ai-blue); }
-        .brand span { font-family: 'Orbitron'; font-weight: 900; color: white; letter-spacing: 1px; }
+        .logo-box { display: flex; align-items: center; gap: 15px; }
+        .logo-box img { width: 50px; border-radius: 50%; border: 2px solid var(--primary); }
+        .logo-box h1 { font-family: 'Orbitron'; font-size: 1.5rem; letter-spacing: 2px; }
 
-        .menu-btn { font-size: 1.8rem; cursor: pointer; color: var(--ai-blue); }
-
-        /* 4️⃣ تأثير الدخول (Animation) */
-        header { 
-            text-align: center; padding: 60px 20px; 
-            animation: slideDown 1s ease-out forwards;
+        /* 6️⃣ Dashboard Elements */
+        .dashboard {
+            padding: 40px 8%; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px;
         }
 
-        @keyframes slideDown {
-            from { transform: translateY(-50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        .card {
+            background: var(--glass); border: 1px solid var(--glass-border);
+            border-radius: 25px; padding: 30px; backdrop-filter: blur(20px);
+            position: relative; overflow: hidden; transition: 0.5s;
         }
 
-        .main-title { 
-            font-family: 'Cairo'; font-weight: 900; font-size: clamp(1.8rem, 6vw, 3rem);
-            color: #f1ff00; text-shadow: 0 0 20px rgba(241, 255, 0, 0.6);
+        .card:hover { transform: translateY(-10px); border-color: var(--primary); }
+
+        .status-bar { width: 100%; height: 5px; background: rgba(255,255,255,0.1); border-radius: 10px; margin: 15px 0; overflow: hidden; }
+        .status-fill { height: 100%; background: var(--primary); width: 0%; transition: 2s ease-in-out; }
+
+        .metrics { display: flex; justify-content: space-between; font-family: 'Orbitron'; font-size: 0.8rem; opacity: 0.7; }
+
+        /* 3️⃣ & 4️⃣ Smart Buttons & Feedback */
+        .ai-btn {
+            width: 100%; padding: 15px; margin-top: 20px;
+            background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border);
+            border-radius: 15px; color: #fff; font-weight: bold;
+            transition: 0.3s; position: relative;
         }
 
-        /* 2️⃣ حركة البطاقات */
-        .grid-container {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px; padding: 0 8% 100px;
+        .ai-btn:hover { background: var(--primary); color: #000; box-shadow: 0 0 30px var(--primary); }
+
+        /* 🔟 AI Feedback Overlay */
+        #ai-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); z-index: 10000; display: none;
+            flex-direction: column; justify-content: center; align-items: center;
         }
 
-        .network-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 25px; padding: 30px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            opacity: 0; transform: translateY(30px);
-            animation: cardFadeIn 0.6s forwards;
-        }
+        .loader { width: 80px; height: 80px; border: 5px solid var(--glass); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s infinite linear; }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* ظهور البطاقات واحدة بوحدة */
-        .network-card:nth-child(1) { animation-delay: 0.3s; }
-        .network-card:nth-child(2) { animation-delay: 0.5s; }
-        .network-card:nth-child(3) { animation-delay: 0.7s; }
+        #ai-text { margin-top: 20px; font-family: 'Orbitron'; color: var(--primary); font-size: 1.2rem; }
 
-        @keyframes cardFadeIn {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .network-card:hover {
-            transform: translateY(-15px);
-            border-color: var(--card-color);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px var(--card-color);
-        }
-
-        .iam { --card-color: var(--iam-red); }
-        .inwi { --card-color: var(--inwi-purple); }
-        .orange { --card-color: var(--orange-color); }
-
-        .card-title { font-family: 'Orbitron'; font-size: 1.5rem; text-align: center; margin-bottom: 25px; color: white; }
-
-        /* 1️⃣ إضاءة مع الضغط + اهتزاز */
-        .app-link {
-            display: flex; align-items: center; justify-content: center;
-            background: rgba(255, 255, 255, 0.07);
-            border-radius: 15px; padding: 18px; margin-bottom: 12px;
-            text-decoration: none; color: white; transition: 0.2s;
-            border: 1px solid transparent;
-        }
-
-        .app-link:active {
-            transform: scale(0.95) rotate(2deg); /* اهتزاز خفيف */
-            background: var(--card-color);
-            box-shadow: 0 0 30px var(--card-color); /* Glow قوي */
-        }
-
-        .app-link i { font-size: 1.6rem; color: var(--card-color); transition: 0.2s; }
-        .app-link:active i { color: white; }
-
-        /* Dropdown Menu */
-        .dropdown {
-            position: absolute; top: 100%; right: 0; width: 220px;
-            background: rgba(10, 22, 49, 0.98); border: 1px solid var(--ai-blue);
-            border-radius: 12px; display: none; flex-direction: column; overflow: hidden;
-        }
-        .dropdown a { padding: 15px; color: white; text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .dropdown a:hover { background: var(--ai-blue); color: black; }
+        @media (max-width: 768px) { .dashboard { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
-    <div class="stars"></div>
+    <div id="cursor"></div>
+    <div class="ai-background"></div>
+    <div class="glow-orb"></div>
 
     <nav>
-        <div style="position: relative;">
-            <div class="menu-btn" onclick="toggleMenu(); playClick();"><i class="fas fa-bars"></i></div>
-            <div class="dropdown" id="menu">
-                <a href="#">مشاركة الموقع</a>
-                <a href="#">تواصل معنا</a>
-            </div>
-        </div>
-        <div class="brand">
-            <span>GRIZATOR</span>
+        <div class="logo-box">
             <img src="https://i.ibb.co/F4x0F7Bc/In-Shot-20260125-221439000.jpg" alt="Logo">
+            <h1>GRIZATOR AI</h1>
         </div>
+        <div id="time" style="font-family: 'Orbitron'; color: var(--primary);">00:00:00</div>
     </nav>
 
-    <header>
-        <h1 class="main-title">Grizator VPN Hub</h1>
-        <p style="color: var(--ai-blue); margin-top: 10px; font-weight: bold;">تحويل نجمة 6 إلى نجمة 3</p>
+    <header style="text-align: center; padding: 60px 20px;">
+        <h2 style="font-family: 'Orbitron'; font-size: 2.5rem; text-shadow: 0 0 20px var(--primary);">NETWORK OPERATIONAL</h2>
+        <p style="opacity: 0.6;">AI-Driven VPN Optimization for *6 Protocols</p>
     </header>
 
-    <div class="grid-container">
-        <div class="network-card iam">
-            <div class="card-title">Maroc Telecom</div>
-            <a href="https://play.google.com/store/apps/details?id=dastan.prince.bdfreevpn" class="app-link" onclick="playClick()"><i class="fab fa-google-play"></i></a>
-            <a href="https://play.google.com/store/apps/details?id=com.boss.actunnelvpn" class="app-link" onclick="playClick()"><i class="fab fa-google-play"></i></a>
-            <a href="https://play.google.com/store/apps/details?id=com.more.tunnel.vpn" class="app-link" onclick="playClick()"><i class="fab fa-google-play"></i></a>
+    <div class="dashboard">
+        <div class="card" style="--primary: #ff3e3e;">
+            <h3>MAROC TELECOM</h3>
+            <div class="status-bar"><div class="status-fill" style="width: 94%;"></div></div>
+            <div class="metrics">
+                <span>PING: 24ms</span>
+                <span>STABILITY: 98%</span>
+            </div>
+            <button class="ai-btn" onclick="startAI('MAROC TELECOM')">INITIALIZE CONNECTION</button>
         </div>
 
-        <div class="network-card inwi">
-            <div class="card-title">Inwi</div>
-            <a href="https://play.google.com/store/apps/details?id=com.mxtunnel.pro" class="app-link" onclick="playClick()"><i class="fab fa-google-play"></i></a>
-            <a href="https://play.google.com/store/apps/details?id=com.msyvpn.lite" class="app-link" onclick="playClick()"><i class="fab fa-google-play"></i></a>
-            <a href="https://play.google.com/store/apps/details?id=com.jahrteam.jntunnel" class="app-link" onclick="playClick()"><i class="fab fa-google-play"></i></a>
+        <div class="card" style="--primary: #bc13fe;">
+            <h3>INWI NETWORK</h3>
+            <div class="status-bar"><div class="status-fill" style="width: 88%;"></div></div>
+            <div class="metrics">
+                <span>PING: 31ms</span>
+                <span>STABILITY: 92%</span>
+            </div>
+            <button class="ai-btn" onclick="startAI('INWI NETWORK')">INITIALIZE CONNECTION</button>
         </div>
 
-        <div class="network-card orange">
-            <div class="card-title">Orange</div>
-            <a href="https://play.google.com/store/apps/details?id=com.stunnel.dev" class="app-link" onclick="playClick()"><i class="fab fa-google-play"></i></a>
-            <a href="https://play.google.com/store/apps/details?id=dastan.prince.vipoman" class="app-link" onclick="playClick()"><i class="fab fa-google-play"></i></a>
-            <a href="https://play.google.com/store/apps/details?id=com.rjctunnel.vpn" class="app-link" onclick="playClick()"><i class="fab fa-google-play"></i></a>
+        <div class="card" style="--primary: #ff8a00;">
+            <h3>ORANGE PROTOCOL</h3>
+            <div class="status-bar"><div class="status-fill" style="width: 91%;"></div></div>
+            <div class="metrics">
+                <span>PING: 28ms</span>
+                <span>STABILITY: 95%</span>
+            </div>
+            <button class="ai-btn" onclick="startAI('ORANGE PROTOCOL')">INITIALIZE CONNECTION</button>
         </div>
     </div>
 
-    <audio id="clickSound" src="https://www.soundjay.com/buttons/sounds/button-16.mp3" preload="auto"></audio>
+    <div id="ai-overlay">
+        <div class="loader"></div>
+        <div id="ai-text">ANALYZING NETWORK...</div>
+    </div>
 
     <script>
-        function toggleMenu() {
-            const menu = document.getElementById('menu');
-            menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+        // Custom Cursor Logic
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // AI Feedback Simulation
+        function startAI(network) {
+            const overlay = document.getElementById('ai-overlay');
+            const text = document.getElementById('ai-text');
+            overlay.style.display = 'flex';
+            
+            const steps = [
+                `ANALYZING ${network}...`,
+                "AI ROUTING TRAFFIC...",
+                "OPTIMIZING PACKETS...",
+                "CONNECTION STABILIZED ✅"
+            ];
+
+            let i = 0;
+            const interval = setInterval(() => {
+                text.innerText = steps[i];
+                i++;
+                if (i >= steps.length) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        overlay.style.display = 'none';
+                        alert("AI Optimization Complete! Opening App...");
+                    }, 1000);
+                }
+            }, 1200);
         }
 
-        function playClick() {
-            const sound = document.getElementById('clickSound');
-            sound.currentTime = 0;
-            sound.play();
-        }
+        // Real-time Clock
+        setInterval(() => {
+            document.getElementById('time').innerText = new Date().toLocaleTimeString();
+        }, 1000);
 
-        // إغلاق المنيو
-        window.onclick = function(e) {
-            if (!e.target.closest('.menu-btn')) {
-                document.getElementById('menu').style.display = 'none';
-            }
-        }
+        // Auto Status Fill
+        window.onload = () => {
+            document.querySelectorAll('.status-fill').forEach(el => {
+                const w = el.style.width;
+                el.style.width = '0';
+                setTimeout(() => el.style.width = w, 500);
+            });
+        };
     </script>
 </body>
 </html>
