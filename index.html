@@ -1,214 +1,254 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grizator AI | Network Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <title>Grizator AI | Precision VPN Selection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Plus+Jakarta+Sans:wght@300;500;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
     <style>
         :root {
-            --primary: #00f2ff;
-            --secondary: #7000ff;
-            --bg: #050505;
+            --bg: #030712;
             --glass: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --border: rgba(255, 255, 255, 0.08);
+            --inwi: #bc13fe;
+            --orange: #ff7900;
+            --iam: #0070ff;
+            --ai-cyan: #00f2ff;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none !important; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background: var(--bg);
-            color: #fff;
-            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg);
+            color: white;
+            font-family: 'Plus Jakarta Sans', sans-serif;
             overflow-x: hidden;
             min-height: 100vh;
         }
 
-        /* 1️⃣ & 2️⃣ AI Glass + Breathing Background */
-        .ai-background {
+        /* Background Effects */
+        .ambient-glow {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 50%, #0a1128 0%, #050505 100%);
-            z-index: -2;
+            background: radial-gradient(circle at 50% -20%, #1e1b4b 0%, transparent 70%);
+            z-index: -1;
         }
 
-        .glow-orb {
-            position: absolute; width: 400px; height: 400px;
-            background: radial-gradient(circle, rgba(0, 242, 255, 0.1), transparent 70%);
-            border-radius: 50%; filter: blur(50px);
-            animation: move 20s infinite alternate; z-index: -1;
-        }
-
-        @keyframes move {
-            from { transform: translate(-10%, -10%); }
-            to { transform: translate(110%, 110%); }
-        }
-
-        /* 🖱️ Custom Cursor */
-        #cursor {
-            width: 20px; height: 20px; background: var(--primary);
-            border-radius: 50%; position: fixed; pointer-events: none;
-            box-shadow: 0 0 20px var(--primary); z-index: 9999;
-            transition: transform 0.1s ease;
-        }
-
-        /* 7️⃣ Header & Logo */
+        /* Navigation */
         nav {
-            padding: 20px 5%; display: flex; justify-content: space-between;
-            align-items: center; backdrop-filter: blur(20px); border-bottom: 1px solid var(--glass-border);
+            padding: 25px 8%; display: flex; justify-content: space-between; align-items: center;
+            backdrop-filter: blur(10px); border-bottom: 1px solid var(--border);
+            position: sticky; top: 0; z-index: 100;
+        }
+        .logo { font-family: 'Orbitron'; font-weight: 900; font-size: 1.4rem; color: var(--ai-cyan); letter-spacing: 2px; }
+        .update-badge { font-size: 0.7rem; background: var(--glass); padding: 5px 12px; border-radius: 20px; border: 1px solid var(--border); }
+
+        /* Main Container */
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; text-align: center; }
+
+        /* Hero Section */
+        .hero h1 { font-family: 'Orbitron'; font-size: clamp(1.8rem, 5vw, 3.2rem); margin-bottom: 20px; line-height: 1.2; }
+        .hero p { opacity: 0.6; margin-bottom: 50px; font-size: 1.1rem; }
+
+        /* Network Selector Grid */
+        .network-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;
+            transition: all 0.5s ease;
         }
 
-        .logo-box { display: flex; align-items: center; gap: 15px; }
-        .logo-box img { width: 50px; border-radius: 50%; border: 2px solid var(--primary); }
-        .logo-box h1 { font-family: 'Orbitron'; font-size: 1.5rem; letter-spacing: 2px; }
-
-        /* 6️⃣ Dashboard Elements */
-        .dashboard {
-            padding: 40px 8%; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px;
+        .network-card {
+            background: var(--glass); border: 1px solid var(--border); border-radius: 32px;
+            padding: 50px 30px; cursor: pointer; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative; overflow: hidden;
         }
 
-        .card {
-            background: var(--glass); border: 1px solid var(--glass-border);
-            border-radius: 25px; padding: 30px; backdrop-filter: blur(20px);
-            position: relative; overflow: hidden; transition: 0.5s;
+        .network-card:hover { transform: translateY(-10px); border-color: var(--accent); box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5); }
+        .network-card i { font-size: 3rem; margin-bottom: 20px; color: var(--accent); }
+        .network-card h2 { font-family: 'Orbitron'; letter-spacing: 2px; }
+
+        .inwi-card { --accent: var(--inwi); }
+        .orange-card { --accent: var(--orange); }
+        .iam-card { --accent: var(--iam); }
+
+        /* Apps View (Hidden initially) */
+        #apps-view { display: none; opacity: 0; transform: translateY(30px); transition: 0.5s; }
+
+        .ai-status-bar {
+            display: inline-flex; align-items: center; gap: 15px; background: var(--glass);
+            padding: 12px 25px; border-radius: 100px; margin-bottom: 40px; border: 1px solid var(--border);
         }
 
-        .card:hover { transform: translateY(-10px); border-color: var(--primary); }
+        .pulse-dot { width: 8px; height: 8px; background: #10b981; border-radius: 50%; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(2.5); opacity: 0; } }
 
-        .status-bar { width: 100%; height: 5px; background: rgba(255,255,255,0.1); border-radius: 10px; margin: 15px 0; overflow: hidden; }
-        .status-fill { height: 100%; background: var(--primary); width: 0%; transition: 2s ease-in-out; }
+        .app-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 25px; }
 
-        .metrics { display: flex; justify-content: space-between; font-family: 'Orbitron'; font-size: 0.8rem; opacity: 0.7; }
-
-        /* 3️⃣ & 4️⃣ Smart Buttons & Feedback */
-        .ai-btn {
-            width: 100%; padding: 15px; margin-top: 20px;
-            background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border);
-            border-radius: 15px; color: #fff; font-weight: bold;
-            transition: 0.3s; position: relative;
+        .app-card {
+            background: var(--glass); border: 1px solid var(--border); border-radius: 24px;
+            padding: 25px; text-align: left; transition: 0.3s;
         }
 
-        .ai-btn:hover { background: var(--primary); color: #000; box-shadow: 0 0 30px var(--primary); }
+        .app-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+        .app-icon { width: 60px; height: 60px; background: #111827; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
 
-        /* 🔟 AI Feedback Overlay */
-        #ai-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.9); z-index: 10000; display: none;
-            flex-direction: column; justify-content: center; align-items: center;
+        .app-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .stat-item { background: rgba(255,255,255,0.02); padding: 10px; border-radius: 12px; font-size: 0.8rem; }
+        .stat-label { opacity: 0.5; display: block; margin-bottom: 4px; }
+
+        .install-btn {
+            width: 100%; padding: 16px; border-radius: 14px; border: none; font-weight: 700;
+            background: white; color: black; cursor: pointer; transition: 0.3s;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            text-decoration: none;
         }
 
-        .loader { width: 80px; height: 80px; border: 5px solid var(--glass); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s infinite linear; }
+        .install-btn:hover { transform: scale(1.02); box-shadow: 0 0 20px rgba(255,255,255,0.2); }
+
+        /* Loading Screen */
+        #ai-loader {
+            position: fixed; inset: 0; background: var(--bg); z-index: 1000;
+            display: none; flex-direction: column; align-items: center; justify-content: center;
+        }
+
+        .loader-ring { width: 80px; height: 80px; border: 3px solid var(--border); border-top-color: var(--ai-cyan); border-radius: 50%; animation: spin 1s infinite linear; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        #ai-text { margin-top: 20px; font-family: 'Orbitron'; color: var(--primary); font-size: 1.2rem; }
+        .back-btn { margin-top: 40px; background: none; border: 1px solid var(--border); color: white; padding: 10px 25px; border-radius: 100px; cursor: pointer; transition: 0.3s; }
+        .back-btn:hover { background: var(--glass); }
 
-        @media (max-width: 768px) { .dashboard { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) { .hero h1 { font-size: 2rem; } .container { padding: 20px; } }
     </style>
 </head>
 <body>
 
-    <div id="cursor"></div>
-    <div class="ai-background"></div>
-    <div class="glow-orb"></div>
+<div class="ambient-glow"></div>
 
-    <nav>
-        <div class="logo-box">
-            <img src="https://i.ibb.co/F4x0F7Bc/In-Shot-20260125-221439000.jpg" alt="Logo">
-            <h1>GRIZATOR AI</h1>
-        </div>
-        <div id="time" style="font-family: 'Orbitron'; color: var(--primary);">00:00:00</div>
-    </nav>
+<nav>
+    <div class="logo">GRIZATOR AI</div>
+    <div class="update-badge">Last AI Update: 5 min ago</div>
+</nav>
 
-    <header style="text-align: center; padding: 60px 20px;">
-        <h2 style="font-family: 'Orbitron'; font-size: 2.5rem; text-shadow: 0 0 20px var(--primary);">NETWORK OPERATIONAL</h2>
-        <p style="opacity: 0.6;">AI-Driven VPN Optimization for *6 Protocols</p>
-    </header>
+<div class="container" id="main-container">
+    <div id="home-view">
+        <header class="hero">
+            <h1>Choose Your Network.<br><span style="color: var(--ai-cyan)">AI Finds the Best VPN.</span></h1>
+            <p>Morocco's leading AI-driven tunnel selector for *6 protocols.</p>
+        </header>
 
-    <div class="dashboard">
-        <div class="card" style="--primary: #ff3e3e;">
-            <h3>MAROC TELECOM</h3>
-            <div class="status-bar"><div class="status-fill" style="width: 94%;"></div></div>
-            <div class="metrics">
-                <span>PING: 24ms</span>
-                <span>STABILITY: 98%</span>
+        <div class="network-grid">
+            <div class="network-card inwi-card" onclick="showApps('inwi')">
+                <i class="fas fa-tower-broadcast"></i>
+                <h2>INWI</h2>
+                <p style="margin-top:10px; opacity: 0.6;">8 Apps Tested Today</p>
             </div>
-            <button class="ai-btn" onclick="startAI('MAROC TELECOM')">INITIALIZE CONNECTION</button>
-        </div>
-
-        <div class="card" style="--primary: #bc13fe;">
-            <h3>INWI NETWORK</h3>
-            <div class="status-bar"><div class="status-fill" style="width: 88%;"></div></div>
-            <div class="metrics">
-                <span>PING: 31ms</span>
-                <span>STABILITY: 92%</span>
+            <div class="network-card orange-card" onclick="showApps('orange')">
+                <i class="fas fa-signal"></i>
+                <h2>ORANGE</h2>
+                <p style="margin-top:10px; opacity: 0.6;">12 Apps Tested Today</p>
             </div>
-            <button class="ai-btn" onclick="startAI('INWI NETWORK')">INITIALIZE CONNECTION</button>
-        </div>
-
-        <div class="card" style="--primary: #ff8a00;">
-            <h3>ORANGE PROTOCOL</h3>
-            <div class="status-bar"><div class="status-fill" style="width: 91%;"></div></div>
-            <div class="metrics">
-                <span>PING: 28ms</span>
-                <span>STABILITY: 95%</span>
+            <div class="network-card iam-card" onclick="showApps('iam')">
+                <i class="fas fa-wifi"></i>
+                <h2>MAROC TÉLÉCOM</h2>
+                <p style="margin-top:10px; opacity: 0.6;">15 Apps Tested Today</p>
             </div>
-            <button class="ai-btn" onclick="startAI('ORANGE PROTOCOL')">INITIALIZE CONNECTION</button>
         </div>
     </div>
 
-    <div id="ai-overlay">
-        <div class="loader"></div>
-        <div id="ai-text">ANALYZING NETWORK...</div>
-    </div>
+    <div id="apps-view">
+        <div class="ai-status-bar">
+            <div class="pulse-dot"></div>
+            <span id="ai-status-text">AI Optimized for Network</span>
+        </div>
 
-    <script>
-        // Custom Cursor Logic
-        const cursor = document.getElementById('cursor');
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
+        <div class="app-grid" id="app-list">
+            </div>
+
+        <button class="back-btn" onclick="goHome()">
+            <i class="fas fa-arrow-left"></i> Find Best VPN for My Network Again
+        </button>
+    </div>
+</div>
+
+<div id="ai-loader">
+    <div class="loader-ring"></div>
+    <p id="loader-text" style="margin-top: 20px; font-family: 'Orbitron'; font-size: 0.9rem; color: var(--ai-cyan)"></p>
+</div>
+
+<script>
+    const vpnData = {
+        iam: [
+            { name: "BD FREE VPN", link: "https://play.google.com/store/apps/details?id=dastan.prince.bdfreevpn", speed: "94 Mbps", trust: "9.8/10" },
+            { name: "AC TUNNEL VPN", link: "https://play.google.com/store/apps/details?id=com.boss.actunnelvpn", speed: "89 Mbps", trust: "9.5/10" },
+            { name: "MORE TUNNEL VPN", link: "https://play.google.com/store/apps/details?id=com.more.tunnel.vpn", speed: "82 Mbps", trust: "9.2/10" }
+        ],
+        inwi: [
+            { name: "MX TUNNEL PRO", link: "https://play.google.com/store/apps/details?id=com.mxtunnel.pro", speed: "91 Mbps", trust: "9.7/10" },
+            { name: "MSY VPN LITE", link: "https://play.google.com/store/apps/details?id=com.msyvpn.lite", speed: "85 Mbps", trust: "9.4/10" },
+            { name: "JN TUNNEL", link: "https://play.google.com/store/apps/details?id=com.jahrteam.jntunnel", speed: "88 Mbps", trust: "9.1/10" }
+        ],
+        orange: [
+            { name: "S TUNNEL", link: "https://play.google.com/store/apps/details?id=com.stunnel.dev", speed: "92 Mbps", trust: "9.6/10" },
+            { name: "VIP OMAN", link: "https://play.google.com/store/apps/details?id=dastan.prince.vipoman", speed: "87 Mbps", trust: "9.3/10" },
+            { name: "RJC TUNNEL VPN", link: "https://play.google.com/store/apps/details?id=com.rjctunnel.vpn", speed: "84 Mbps", trust: "9.0/10" }
+        ]
+    };
+
+    function showApps(network) {
+        const loader = document.getElementById('ai-loader');
+        const loaderText = document.getElementById('loader-text');
+        
+        loader.style.display = 'flex';
+        loaderText.innerText = `AI ANALYZING BEST VPNS FOR ${network.toUpperCase()}...`;
+
+        setTimeout(() => {
+            loader.style.display = 'none';
+            document.getElementById('home-view').style.display = 'none';
+            const appsView = document.getElementById('apps-view');
+            appsView.style.display = 'block';
+            setTimeout(() => { appsView.style.opacity = '1'; appsView.style.transform = 'translateY(0)'; }, 50);
+
+            renderApps(network);
+        }, 1500);
+    }
+
+    function renderApps(network) {
+        const list = document.getElementById('app-list');
+        const statusText = document.getElementById('ai-status-text');
+        list.innerHTML = '';
+        
+        statusText.innerText = `AI Verified on ${network.toUpperCase()} Moroccan Servers`;
+        
+        vpnData[network].forEach(app => {
+            list.innerHTML += `
+                <div class="app-card">
+                    <div class="app-header">
+                        <div class="app-icon"><i class="fas fa-shield-halved" style="color:var(--ai-cyan)"></i></div>
+                        <div>
+                            <h3 style="font-family:'Orbitron'; font-size:1rem;">${app.name}</h3>
+                            <span style="font-size:0.7rem; color:#10b981;">● Status: Excellent</span>
+                        </div>
+                    </div>
+                    <div class="app-stats">
+                        <div class="stat-item"><span class="stat-label">SPEED⚡</span>${app.speed}</div>
+                        <div class="stat-item"><span class="stat-label">TRUST SCORE⭐</span>${app.trust}</div>
+                        <div class="stat-item" style="grid-column: span 2;"><span class="stat-label">CONNECTION 🔗</span>Secured & Encrypted</div>
+                    </div>
+                    <a href="${app.link}" target="_blank" class="install-btn">
+                        Install on Play Store <i class="fab fa-google-play"></i>
+                    </a>
+                </div>
+            `;
         });
+    }
 
-        // AI Feedback Simulation
-        function startAI(network) {
-            const overlay = document.getElementById('ai-overlay');
-            const text = document.getElementById('ai-text');
-            overlay.style.display = 'flex';
-            
-            const steps = [
-                `ANALYZING ${network}...`,
-                "AI ROUTING TRAFFIC...",
-                "OPTIMIZING PACKETS...",
-                "CONNECTION STABILIZED ✅"
-            ];
+    function goHome() {
+        document.getElementById('apps-view').style.opacity = '0';
+        setTimeout(() => {
+            document.getElementById('apps-view').style.display = 'none';
+            document.getElementById('home-view').style.display = 'block';
+        }, 500);
+    }
+</script>
 
-            let i = 0;
-            const interval = setInterval(() => {
-                text.innerText = steps[i];
-                i++;
-                if (i >= steps.length) {
-                    clearInterval(interval);
-                    setTimeout(() => {
-                        overlay.style.display = 'none';
-                        alert("AI Optimization Complete! Opening App...");
-                    }, 1000);
-                }
-            }, 1200);
-        }
-
-        // Real-time Clock
-        setInterval(() => {
-            document.getElementById('time').innerText = new Date().toLocaleTimeString();
-        }, 1000);
-
-        // Auto Status Fill
-        window.onload = () => {
-            document.querySelectorAll('.status-fill').forEach(el => {
-                const w = el.style.width;
-                el.style.width = '0';
-                setTimeout(() => el.style.width = w, 500);
-            });
-        };
-    </script>
 </body>
 </html>
