@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grizator AI | Next-Gen VPN Hub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <title>Grizator AI | VPN Hub Morocco</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Cairo:wght@400;900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
     
@@ -14,7 +14,6 @@
             --glass: rgba(255, 255, 255, 0.03);
             --border: rgba(255, 255, 255, 0.1);
             --ai-cyan: #00f2ff;
-            --ai-purple: #bc13fe;
             --inwi: #bc13fe;
             --orange: #ff7900;
             --iam: #0070ff;
@@ -37,42 +36,45 @@
             z-index: -2;
         }
 
-        /* 📡 عداد مباشر وهمي */
-        .live-counter {
-            background: var(--glass); padding: 10px 20px; border-radius: 50px;
-            border: 1px solid var(--border); font-family: 'Orbitron';
-            font-size: 0.8rem; display: inline-flex; align-items: center; gap: 10px;
-        }
-
         nav {
             padding: 20px 5%; display: flex; justify-content: space-between; align-items: center;
             backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);
             position: sticky; top: 0; z-index: 1000;
         }
 
-        .logo { font-family: 'Orbitron'; font-weight: 900; font-size: 1.5rem; color: var(--ai-cyan); text-shadow: 0 0 15px var(--ai-cyan); }
+        .logo-box { display: flex; align-items: center; gap: 10px; }
+        .logo-box img { width: 40px; border-radius: 50%; border: 1px solid var(--ai-cyan); }
+        .logo { font-family: 'Orbitron'; font-weight: 900; font-size: 1.3rem; color: var(--ai-cyan); text-shadow: 0 0 15px var(--ai-cyan); }
 
-        /* 🏠 الصفحة الرئيسية */
-        .hero { text-align: center; padding: 60px 20px; }
-        .hero h1 { font-family: 'Orbitron'; font-size: 2.5rem; margin-bottom: 15px; background: linear-gradient(to right, #fff, var(--ai-cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero { text-align: center; padding: 50px 20px; }
+        .hero h1 { font-family: 'Orbitron'; font-size: 2.2rem; margin-bottom: 10px; color: #fff; }
+        .hero p { opacity: 0.6; font-size: 0.9rem; }
 
+        /* 🏠 شبكة البطاقات */
         .network-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px; padding: 0 8% 100px;
+            gap: 25px; padding: 0 8% 60px;
         }
 
-        /* 3D Cards + AI Scan */
         .network-card {
-            background: var(--glass); border: 1px solid var(--border); border-radius: 30px;
-            padding: 40px; cursor: pointer; position: relative; overflow: hidden;
-            transform-style: preserve-3d; transition: 0.3s; text-align: center;
+            background: var(--glass); border: 1px solid var(--border); border-radius: 35px;
+            padding: 40px 20px; cursor: pointer; position: relative; overflow: hidden;
+            text-align: center; transition: 0.3s; transform-style: preserve-3d;
         }
 
-        /* ⚡ AI Scan Line Effect */
+        /* صور اللوغو داخل البطاقات */
+        .net-img {
+            width: 100px; height: 100px; border-radius: 20px; 
+            margin-bottom: 20px; object-fit: cover;
+            border: 2px solid var(--accent);
+            box-shadow: 0 0 20px var(--accent);
+        }
+
+        /* ⚡ تأثير AI Scan */
         .network-card::after {
-            content: ""; position: absolute; top: -100%; left: 0; width: 100%; height: 100%;
+            content: ""; position: absolute; top: -100%; left: 0; width: 100%; height: 80%;
             background: linear-gradient(to bottom, transparent, var(--accent), transparent);
-            opacity: 0.2; animation: scan 3s infinite linear;
+            opacity: 0.15; animation: scan 3s infinite linear;
         }
         @keyframes scan { 0% { top: -100%; } 100% { top: 100%; } }
 
@@ -81,45 +83,37 @@
         .iam-card { --accent: var(--iam); }
 
         .badge-ai {
-            position: absolute; top: 15px; right: 15px; font-size: 0.6rem;
+            position: absolute; top: 15px; left: 15px; font-size: 0.6rem;
             padding: 5px 12px; border-radius: 20px; background: var(--accent);
-            font-weight: bold; text-transform: uppercase;
+            font-weight: bold; color: #fff;
         }
 
-        /* 🤖 شاشة التحميل الذكية */
-        #ai-scanner {
-            position: fixed; inset: 0; background: rgba(2,4,10,0.95); z-index: 2000;
-            display: none; flex-direction: column; align-items: center; justify-content: center;
-        }
-
-        /* 📦 عرض التطبيقات */
-        #apps-view { display: none; padding: 40px 8%; animation: fadeIn 0.8s ease; }
+        /* 📦 عرض النتائج */
+        #apps-view { display: none; padding: 40px 8%; animation: fadeIn 0.6s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-
-        .recommendation-text { font-size: 1.2rem; margin-bottom: 30px; text-align: center; color: var(--ai-cyan); font-weight: bold; }
 
         .app-card {
             background: var(--glass); border: 1px solid var(--border); border-radius: 25px;
-            padding: 25px; margin-bottom: 20px; display: flex; flex-direction: column;
-            transition: 0.3s; position: relative;
+            padding: 25px; margin-bottom: 20px; position: relative;
         }
-        .app-card:hover { border-color: var(--ai-cyan); box-shadow: 0 0 20px rgba(0, 242, 255, 0.1); }
-
-        .trust-score { font-family: 'Orbitron'; color: #ffcc00; font-size: 0.9rem; margin-bottom: 10px; }
+        .trust-score { font-family: 'Orbitron'; color: #ffcc00; font-size: 0.8rem; margin-bottom: 10px; }
 
         .install-btn {
-            background: white; color: black; padding: 18px; border-radius: 15px;
+            background: #fff; color: #000; padding: 16px; border-radius: 15px;
             text-decoration: none; font-weight: 900; display: flex; align-items: center;
-            justify-content: center; gap: 10px; transition: 0.2s; margin-top: 15px;
+            justify-content: center; gap: 10px; margin-top: 15px; transition: 0.2s;
         }
-        .install-btn:active { transform: scale(0.95); filter: brightness(0.8); }
+        .install-btn:active { transform: scale(0.95); }
 
-        .back-home { margin-top: 50px; background: transparent; color: white; border: 1px solid var(--border); padding: 12px 30px; border-radius: 50px; cursor: pointer; }
+        /* 🤖 Scanner Overlay */
+        #ai-scanner {
+            position: fixed; inset: 0; background: rgba(2,4,10,0.98); z-index: 2000;
+            display: none; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .loader { width: 50px; height: 50px; border: 3px solid var(--glass); border-top-color: var(--ai-cyan); border-radius: 50%; animation: spin 1s infinite linear; }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* Today's Best VPN Badge */
-        .today-best { border: 2px solid gold !important; position: relative; }
-        .today-best::before { content: "🏆 TODAY'S BEST"; position: absolute; top: -12px; left: 20px; background: gold; color: black; padding: 2px 10px; border-radius: 5px; font-size: 0.6rem; font-weight: bold; }
-
+        .back-btn { margin-top: 40px; background: transparent; color: white; border: 1px solid var(--border); padding: 10px 25px; border-radius: 50px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -127,89 +121,83 @@
 <div class="neon-bg"></div>
 
 <nav>
-    <div class="logo">GRIZATOR AI</div>
-    <div class="live-counter">
-        <span class="pulse-dot"></span>
-        Apps Analyzed: <span id="count">1247</span>
+    <div class="logo-box">
+        <img src="https://i.ibb.co/F4x0F7Bc/In-Shot-20260125-221439000.jpg" alt="Logo">
+        <span class="logo">GRIZATOR AI</span>
     </div>
+    <div style="font-family: 'Orbitron'; font-size: 0.7rem; color: var(--ai-cyan);">SYSTEM: ONLINE</div>
 </nav>
 
 <div class="container">
     <div id="home-view">
         <header class="hero">
             <h1>Choose Your Network.</h1>
-            <p style="opacity: 0.6;">AI-Powered Protocol Matching for Morocco.</p>
+            <p>AI finds the most stable VPN for Morocco *6</p>
         </header>
 
         <div class="network-grid">
             <div class="network-card inwi-card" data-tilt onclick="selectNetwork('inwi')">
-                <span class="badge-ai">🟢 Best for Gaming</span>
-                <i class="fas fa-bolt" style="font-size: 3rem; color: var(--inwi); margin-bottom: 20px;"></i>
-                <h2>INWI</h2>
-                <p style="font-size: 0.8rem; opacity: 0.5; margin-top: 10px;">98% Success Rate</p>
+                <span class="badge-ai">Gaming Optimized</span>
+                <img src="https://i.ibb.co/JWHMCRdS/In-Shot-20260126-093834338.jpg" alt="Inwi" class="net-img">
+                <h2 style="font-family: 'Orbitron';">INWI</h2>
             </div>
 
             <div class="network-card orange-card" data-tilt onclick="selectNetwork('orange')">
-                <span class="badge-ai">🔵 Best for Stability</span>
-                <i class="fas fa-shield-virus" style="font-size: 3rem; color: var(--orange); margin-bottom: 20px;"></i>
-                <h2>ORANGE</h2>
-                <p style="font-size: 0.8rem; opacity: 0.5; margin-top: 10px;">96% Success Rate</p>
+                <span class="badge-ai">High Stability</span>
+                <img src="https://i.ibb.co/23z8x035/In-Shot-20260126-093754730.jpg" alt="Orange" class="net-img">
+                <h2 style="font-family: 'Orbitron';">ORANGE</h2>
             </div>
 
             <div class="network-card iam-card" data-tilt onclick="selectNetwork('iam')">
-                <span class="badge-ai">🟡 Best for Speed</span>
-                <i class="fas fa-rocket" style="font-size: 3rem; color: var(--iam); margin-bottom: 20px;"></i>
-                <h2>MAROC TÉLÉCOM</h2>
-                <p style="font-size: 0.8rem; opacity: 0.5; margin-top: 10px;">99% Success Rate</p>
+                <span class="badge-ai">Ultra Speed</span>
+                <img src="https://i.ibb.co/mFzx3KHg/In-Shot-20260126-093339759.jpg" alt="IAM" class="net-img">
+                <h2 style="font-family: 'Orbitron';">MAROC TÉLÉCOM</h2>
             </div>
         </div>
     </div>
 
     <div id="apps-view">
-        <p class="recommendation-text" id="ai-rec-text"></p>
+        <p id="rec-text" style="text-align: center; color: var(--ai-cyan); margin-bottom: 30px; font-weight: bold;"></p>
         <div id="app-list"></div>
-        <center><button class="back-home" onclick="goHome()">Back to Intelligence Hub</button></center>
+        <center><button class="back-btn" onclick="location.reload()">Back to Networks</button></center>
     </div>
 </div>
 
 <div id="ai-scanner">
-    <div style="width: 60px; height: 60px; border: 4px solid var(--glass); border-top-color: var(--ai-cyan); border-radius: 50%; animation: spin 1s infinite linear;"></div>
-    <p id="scan-text" style="margin-top: 20px; font-family: 'Orbitron'; color: var(--ai-cyan);"></p>
+    <div class="loader"></div>
+    <p id="scan-text" style="margin-top: 20px; font-family: 'Orbitron'; color: var(--ai-cyan); letter-spacing: 2px;"></p>
 </div>
 
 <script>
-    // Initialize 3D Tilt
+    // تفعيل تأثير الـ 3D
     VanillaTilt.init(document.querySelectorAll(".network-card"), {
         max: 15, speed: 400, glare: true, "max-glare": 0.2
     });
 
     const vpnData = {
         iam: [
-            { name: "BD FREE VPN", link: "https://play.google.com/store/apps/details?id=dastan.prince.bdfreevpn", trust: "9.8", best: true },
-            { name: "AC TUNNEL VPN", link: "https://play.google.com/store/apps/details?id=com.boss.actunnelvpn", trust: "9.5", best: false },
-            { name: "MORE TUNNEL VPN", link: "https://play.google.com/store/apps/details?id=com.more.tunnel.vpn", trust: "9.2", best: false }
+            { name: "BD FREE VPN", link: "https://play.google.com/store/apps/details?id=dastan.prince.bdfreevpn", trust: "9.8" },
+            { name: "AC TUNNEL VPN", link: "https://play.google.com/store/apps/details?id=com.boss.actunnelvpn", trust: "9.5" },
+            { name: "MORE TUNNEL VPN", link: "https://play.google.com/store/apps/details?id=com.more.tunnel.vpn", trust: "9.2" }
         ],
         inwi: [
-            { name: "MX TUNNEL PRO", link: "https://play.google.com/store/apps/details?id=com.mxtunnel.pro", trust: "9.7", best: true },
-            { name: "MSY VPN LITE", link: "https://play.google.com/store/apps/details?id=com.msyvpn.lite", trust: "9.4", best: false },
-            { name: "JN TUNNEL", link: "https://play.google.com/store/apps/details?id=com.jahrteam.jntunnel", trust: "9.1", best: false }
+            { name: "MX TUNNEL PRO", link: "https://play.google.com/store/apps/details?id=com.mxtunnel.pro", trust: "9.7" },
+            { name: "MSY VPN LITE", link: "https://play.google.com/store/apps/details?id=com.msyvpn.lite", trust: "9.4" },
+            { name: "JN TUNNEL", link: "https://play.google.com/store/apps/details?id=com.jahrteam.jntunnel", trust: "9.1" }
         ],
         orange: [
-            { name: "S TUNNEL", link: "https://play.google.com/store/apps/details?id=com.stunnel.dev", trust: "9.6", best: true },
-            { name: "VIP OMAN", link: "https://play.google.com/store/apps/details?id=dastan.prince.vipoman", trust: "9.3", best: false },
-            { name: "RJC TUNNEL VPN", link: "https://play.google.com/store/apps/details?id=com.rjctunnel.vpn", trust: "9.0", best: false }
+            { name: "S TUNNEL", link: "https://play.google.com/store/apps/details?id=com.stunnel.dev", trust: "9.6" },
+            { name: "VIP OMAN", link: "https://play.google.com/store/apps/details?id=dastan.prince.vipoman", trust: "9.3" },
+            { name: "RJC TUNNEL VPN", link: "https://play.google.com/store/apps/details?id=com.rjctunnel.vpn", trust: "9.0" }
         ]
     };
 
     function selectNetwork(net) {
-        // Haptic Feedback Simulation
-        if (window.navigator.vibrate) window.navigator.vibrate(50);
-
         const scanner = document.getElementById('ai-scanner');
         const scanText = document.getElementById('scan-text');
         scanner.style.display = 'flex';
         
-        let steps = ["SCANNING NETWORK...", "ANALYZING NODES...", "AI OPTIMIZING..."];
+        let steps = ["SCANNING NETWORK...", "MATCHING PROTOCOLS...", "AI FINALIZING..."];
         let i = 0;
         let interval = setInterval(() => {
             scanText.innerText = steps[i];
@@ -224,19 +212,18 @@
 
     function showResults(net) {
         document.getElementById('home-view').style.display = 'none';
-        const appsView = document.getElementById('apps-view');
-        appsView.style.display = 'block';
-        document.getElementById('ai-rec-text').innerText = `Based on your ${net.toUpperCase()} network, AI recommends these 🔥`;
+        document.getElementById('apps-view').style.display = 'block';
+        document.getElementById('rec-text').innerText = `Based on your ${net.toUpperCase()} network, AI recommends these 🔥`;
         
         const list = document.getElementById('app-list');
         list.innerHTML = '';
         
         vpnData[net].forEach(app => {
             list.innerHTML += `
-                <div class="app-card ${app.best ? 'today-best' : ''}">
-                    <div class="trust-score">AI Trust Score: ${app.trust}/10 ⭐</div>
-                    <h2 style="font-family:'Orbitron'; margin-bottom: 10px;">${app.name}</h2>
-                    <p style="font-size: 0.8rem; opacity: 0.6;">Optimized for Moroccan servers and *6 protocols.</p>
+                <div class="app-card">
+                    <div class="trust-score">AI TRUST SCORE: ${app.trust}/10 ⭐</div>
+                    <h2 style="font-family:'Orbitron'; margin-bottom: 5px;">${app.name}</h2>
+                    <p style="font-size: 0.8rem; opacity: 0.6;">Tested on Moroccan *6 Servers.</p>
                     <a href="${app.link}" target="_blank" class="install-btn">
                         🚀 Install from Play Store
                     </a>
@@ -244,25 +231,7 @@
             `;
         });
     }
-
-    function goHome() {
-        location.reload(); // Simplest way to reset state
-    }
-
-    // Live Counter Animation
-    setInterval(() => {
-        const countBox = document.getElementById('count');
-        let current = parseInt(countBox.innerText);
-        countBox.innerText = current + Math.floor(Math.random() * 3);
-    }, 3000);
-
 </script>
-
-<style>
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .pulse-dot { width: 8px; height: 8px; background: #00ff00; border-radius: 50%; box-shadow: 0 0 10px #00ff00; animation: p 1s infinite; }
-    @keyframes p { 0% { opacity: 0.3; } 50% { opacity: 1; } 100% { opacity: 0.3; } }
-</style>
 
 </body>
 </html>
