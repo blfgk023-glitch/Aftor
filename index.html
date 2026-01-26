@@ -29,28 +29,46 @@
             min-height: 100vh;
         }
 
-        /* 🌌 خلفية نيون */
         .neon-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: radial-gradient(circle at 50% 50%, #0a1128 0%, #02040a 100%);
             z-index: -2;
         }
 
-        /* 🖼️ البانر الجديد (Hero Banner) */
-        .hero-banner {
+        /* 🖼️ AI Image Slider CSS */
+        .slider-container {
             width: 100%;
-            max-height: 400px; /* تحديد الطول المناسب */
-            overflow: hidden;
+            height: 350px; /* طول السلايدر */
             position: relative;
+            overflow: hidden;
             border-bottom: 2px solid var(--ai-cyan);
             box-shadow: 0 5px 30px rgba(0, 242, 255, 0.2);
         }
 
-        .hero-banner img {
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover; /* كيجعل الصورة تغطي العرض كامل */
-            display: block;
+            opacity: 0;
+            transform: scale(1.1);
+            transition: opacity 1s ease-in-out, transform 1.5s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: scale(1);
+            z-index: 10;
         }
 
         nav {
@@ -67,7 +85,6 @@
         .hero h1 { font-family: 'Orbitron'; font-size: 2rem; margin-bottom: 10px; color: #fff; }
         .hero p { opacity: 0.6; font-size: 0.9rem; }
 
-        /* 🏠 شبكة البطاقات */
         .network-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 25px; padding: 0 8% 60px;
@@ -86,7 +103,6 @@
             box-shadow: 0 0 20px var(--accent);
         }
 
-        /* ⚡ AI Scan Line */
         .network-card::after {
             content: ""; position: absolute; top: -100%; left: 0; width: 100%; height: 80%;
             background: linear-gradient(to bottom, transparent, var(--accent), transparent);
@@ -104,7 +120,6 @@
             font-weight: bold; color: #fff;
         }
 
-        /* 📦 عرض النتائج */
         #apps-view { display: none; padding: 40px 8%; animation: fadeIn 0.6s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -135,8 +150,19 @@
 
 <div class="neon-bg"></div>
 
-<div class="hero-banner">
-    <img src="https://i.ibb.co/jP3vg7W6/53f82bb793ff10b6730f1abbcdeb33a7.jpg" alt="Grizator AI Banner">
+<div class="slider-container">
+    <div class="slide active">
+        <img src="https://i.ibb.co/yFj61nKy/In-Shot-20260126-183508694.jpg" alt="Slide 1">
+    </div>
+    <div class="slide">
+        <img src="https://i.ibb.co/DgMqwnsP/In-Shot-20260126-181115105.jpg" alt="Slide 2">
+    </div>
+    <div class="slide">
+        <img src="https://i.ibb.co/SD0cBPt6/In-Shot-20260126-164715018.jpg" alt="Slide 3">
+    </div>
+    <div class="slide">
+        <img src="https://i.ibb.co/B5M5ph0s/In-Shot-20260126-164315602.jpg" alt="Slide 4">
+    </div>
 </div>
 
 <nav>
@@ -188,6 +214,19 @@
 </div>
 
 <script>
+    // 🧠 Slider Logic
+    const slides = document.querySelectorAll('.slide');
+    let currentSlide = 0;
+
+    function nextSlide() {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.add('active');
+    }
+
+    setInterval(nextSlide, 3000); // تغيير كل 3 ثواني
+
+    // 🧊 3D Tilt
     VanillaTilt.init(document.querySelectorAll(".network-card"), {
         max: 15, speed: 400, glare: true, "max-glare": 0.2
     });
