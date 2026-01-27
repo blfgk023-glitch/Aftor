@@ -19,37 +19,53 @@
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { background-color: var(--bg); color: white; font-family: 'Cairo', sans-serif; overflow-x: hidden; }
 
-        /* 🌌 Animated AI Background */
+        /* 🌌 Neural Background */
         #ai-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at center, #050a18 0%, #010409 100%); }
 
-        .slider-container { width: 100%; height: 380px; position: relative; overflow: hidden; border-bottom: 2px solid var(--ai-cyan); box-shadow: 0 0 30px rgba(0, 242, 255, 0.2); }
-        .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.5s ease-in-out; }
-        .slide.active { opacity: 1; z-index: 10; }
-        .slide img { width: 100%; height: 100%; object-fit: cover; }
+        /* 🎬 Hologram Slider Engine */
+        .slider-container { width: 100%; height: 380px; position: relative; overflow: hidden; border-bottom: 2px solid var(--ai-cyan); }
+        .slide { position: absolute; inset: 0; opacity: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .slide.active { opacity: 1; z-index: 10; animation: hologramReveal 1.2s ease-out forwards; }
+        .slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8) contrast(1.1); }
+        
+        /* ⚡ Light Sweep & Hologram FX */
+        .slide.active::after {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 242, 255, 0.4), transparent);
+            transform: skewX(-25deg); animation: lightSweep 1.5s ease-in-out; z-index: 11;
+        }
+
+        @keyframes hologramReveal {
+            0% { opacity: 0; filter: brightness(2) grayscale(1) blur(10px); transform: scale(1.05); }
+            100% { opacity: 1; filter: brightness(1) grayscale(0) blur(0); transform: scale(1); }
+        }
+
+        @keyframes lightSweep {
+            0% { left: -100%; }
+            100% { left: 200%; }
+        }
+
         @media (max-width: 768px) { .slider-container { height: 240px; } }
 
+        /* 🤖 Navigation */
         nav { padding: 12px 5%; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(15px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
         .brand { display: flex; align-items: center; gap: 12px; }
         .logo-img { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--ai-cyan); box-shadow: 0 0 15px var(--ai-cyan); object-fit: cover; }
         .brand-name { font-family: 'Orbitron'; font-weight: 900; font-size: 1.3rem; color: #fff; text-shadow: 0 0 10px var(--ai-cyan); }
 
-        .menu-icon { cursor: pointer; display: flex; flex-direction: column; gap: 5px; }
-        .bar { width: 25px; height: 3px; background: var(--ai-cyan); border-radius: 2px; }
-
         .hero { text-align: center; padding: 40px 20px; }
         .hero h1 { font-family: 'Orbitron'; font-size: 2rem; margin-bottom: 10px; }
         .hero p { color: #888; font-size: 0.9rem; }
 
+        /* 📱 Cards */
         .network-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 0 8% 50px; }
         .network-card { background: var(--glass); border: 1px solid var(--border); border-radius: 30px; padding: 40px 20px; cursor: pointer; text-align: center; transition: 0.4s; position: relative; backdrop-filter: blur(5px); }
         .net-img { width: 85px; height: 85px; border-radius: 20px; margin-bottom: 15px; border: 2px solid var(--accent); box-shadow: 0 0 15px var(--accent); }
         .inwi-card { --accent: var(--inwi); } .orange-card { --accent: var(--orange); } .iam-card { --accent: var(--iam); }
 
         .download-counter { font-family: 'Orbitron'; font-size: 0.75rem; color: #00ffaa; display: flex; align-items: center; justify-content: center; gap: 5px; margin-bottom: 5px; }
-        .count-num { font-weight: bold; }
-
+        
         #apps-view { display: none; padding: 20px 8%; animation: fadeIn 0.6s ease; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         .app-card { background: var(--glass); border: 1px solid var(--border); border-radius: 20px; padding: 20px; margin-bottom: 15px; border-right: 4px solid var(--ai-cyan); }
         .install-btn { background: #fff; color: #000; padding: 12px; border-radius: 12px; text-decoration: none; font-weight: 900; display: block; text-align: center; margin-top: 10px; }
 
@@ -65,7 +81,7 @@
 
 <canvas id="ai-background"></canvas>
 
-<div class="slider-container">
+<div class="slider-container" id="slider">
     <div class="slide active"><img src="https://i.ibb.co/HLzgJbdZ/In-Shot-20260127-081616263.jpg"></div>
     <div class="slide"><img src="https://i.ibb.co/zTqKDLfw/In-Shot-20260127-082105550.jpg"></div>
     <div class="slide"><img src="https://i.ibb.co/LT3NrQG/In-Shot-20260127-073207074.jpg"></div>
@@ -77,8 +93,10 @@
         <img src="https://i.ibb.co/27Bb7mMy/In-Shot-20260127-103341799.jpg" class="logo-img">
         <span class="brand-name">Grizator</span>
     </div>
-    <div class="menu-icon">
-        <div class="bar"></div><div class="bar" style="margin:5px 0"></div><div class="bar"></div>
+    <div style="cursor:pointer">
+        <div style="width:25px;height:3px;background:var(--ai-cyan);margin:4px 0"></div>
+        <div style="width:25px;height:3px;background:var(--ai-cyan);margin:4px 0"></div>
+        <div style="width:25px;height:3px;background:var(--ai-cyan);margin:4px 0"></div>
     </div>
 </nav>
 
@@ -116,15 +134,15 @@
 </div>
 
 <script>
-    // 🌌 Subtle AI Background Engine
+    // 🌌 Neural Background
     const canvas = document.getElementById('ai-background');
     const ctx = canvas.getContext('2d');
     let dots = [];
     function initCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
     class Dot {
         constructor() {
-            this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height;
-            this.vx = (Math.random() - 0.5) * 0.3; this.vy = (Math.random() - 0.5) * 0.3;
+            this.x = Math.random()*canvas.width; this.y = Math.random()*canvas.height;
+            this.vx = (Math.random()-0.5)*0.3; this.vy = (Math.random()-0.5)*0.3;
         }
         update() {
             this.x += this.vx; this.y += this.vy;
@@ -144,34 +162,34 @@
                 let dist = Math.hypot(d.x - d2.x, d.y - d2.y);
                 if(dist < 100) {
                     ctx.strokeStyle = `rgba(0, 242, 255, ${0.1 - dist/1000})`;
-                    ctx.lineWidth = 0.5; ctx.beginPath(); ctx.moveTo(d.x, d.y); ctx.lineTo(d2.x, d2.y); ctx.stroke();
+                    ctx.beginPath(); ctx.moveTo(d.x, d.y); ctx.lineTo(d2.x, d2.y); ctx.stroke();
                 }
             });
         });
         requestAnimationFrame(render);
     }
-    initCanvas(); for(let i=0; i<50; i++) dots.push(new Dot()); render();
+    initCanvas(); for(let i=0; i<40; i++) dots.push(new Dot()); render();
 
-    // 📱 App Links
+    // 📱 App Logic
     const vpnData = {
         inwi: [
-            { name: "MC NET VPN", id: "n1", link: "https://play.google.com/store/apps/details?id=org.mcnetvpn.app" },
-            { name: "AT NET VPN", id: "n2", link: "https://play.google.com/store/apps/details?id=com.technore.atnetvpn" },
-            { name: "OSP TUNNEL", id: "n3", link: "https://play.google.com/store/apps/details?id=xyz.osptunnel.org" },
-            { name: "MORE TUNNEL", id: "n4", link: "https://play.google.com/store/apps/details?id=com.more.tunnel.vpn" },
-            { name: "DT TUNNEL", id: "n5", link: "https://play.google.com/store/apps/details?id=com.victo.dt" },
-            { name: "XRP TUNNEL PLUS", id: "n6", link: "https://play.google.com/store/apps/details?id=com.technore.xrptunnelplus" },
-            { name: "PINAS VPN", id: "n7", link: "https://play.google.com/store/apps/details?id=pinas.vpn.ph" }
+            { name: "MC NET VPN", link: "https://play.google.com/store/apps/details?id=org.mcnetvpn.app" },
+            { name: "AT NET VPN", link: "https://play.google.com/store/apps/details?id=com.technore.atnetvpn" },
+            { name: "OSP TUNNEL", link: "https://play.google.com/store/apps/details?id=xyz.osptunnel.org" },
+            { name: "MORE TUNNEL", link: "https://play.google.com/store/apps/details?id=com.more.tunnel.vpn" },
+            { name: "DT TUNNEL", link: "https://play.google.com/store/apps/details?id=com.victo.dt" },
+            { name: "XRP TUNNEL PLUS", link: "https://play.google.com/store/apps/details?id=com.technore.xrptunnelplus" },
+            { name: "PINAS VPN", link: "https://play.google.com/store/apps/details?id=pinas.vpn.ph" }
         ],
         orange: [
-            { name: "AM TUNNEL LITE", id: "o1", link: "https://play.google.com/store/apps/details?id=app.vpn.amtunnellite" },
-            { name: "MINA PRO NET", id: "o2", link: "https://play.google.com/store/apps/details?id=opencustom.minapronet.com.eg" }
+            { name: "AM TUNNEL LITE", link: "https://play.google.com/store/apps/details?id=app.vpn.amtunnellite" },
+            { name: "MINA PRO NET", link: "https://play.google.com/store/apps/details?id=opencustom.minapronet.com.eg" }
         ],
         iam: [
-            { name: "TSS TUNNEL", id: "m1", link: "https://play.google.com/store/apps/details?id=com.tss.tunnel" },
-            { name: "XRP TUNNEL PLUS", id: "m2", link: "https://play.google.com/store/apps/details?id=com.technore.xrptunnelplus" },
-            { name: "PINAS VPN", id: "m3", link: "https://play.google.com/store/apps/details?id=pinas.vpn.ph" },
-            { name: "TSS TUNNEL", id: "m4", link: "https://play.google.com/store/apps/details?id=com.tss.tunnel" }
+            { name: "TSS TUNNEL", link: "https://play.google.com/store/apps/details?id=com.tss.tunnel" },
+            { name: "XRP TUNNEL PLUS", link: "https://play.google.com/store/apps/details?id=com.technore.xrptunnelplus" },
+            { name: "PINAS VPN", link: "https://play.google.com/store/apps/details?id=pinas.vpn.ph" },
+            { name: "TSS TUNNEL", link: "https://play.google.com/store/apps/details?id=com.tss.tunnel" }
         ]
     };
 
@@ -184,7 +202,7 @@
             document.getElementById('apps-view').style.display = 'block';
             document.getElementById('app-list').innerHTML = vpnData[net].map(app => `
                 <div class="app-card">
-                    <div class="download-counter">👤 <span class="count-num">${Math.floor(Math.random()*500)+1500}</span> downloads</div>
+                    <div class="download-counter">👤 <span class="count-num">${Math.floor(Math.random()*400)+1200}</span> downloads</div>
                     <h2 style="margin:5px 0;">${app.name}</h2>
                     <a href="${app.link}" target="_blank" class="install-btn">🚀 INSTALL NOW</a>
                 </div>`).join('');
@@ -192,7 +210,7 @@
         }, 1200);
     }
 
-    window.onpopstate = function() {
+    window.onpopstate = () => {
         document.getElementById('home-view').style.display = 'block';
         document.getElementById('apps-view').style.display = 'none';
     };
@@ -203,15 +221,22 @@
                 let val = parseInt(el.innerText);
                 el.innerText = val + (Math.random() > 0.5 ? 1 : -1);
             });
-        }, 2500);
+        }, 2000);
     }
 
-    setInterval(() => {
-        const s = document.querySelectorAll('.slide');
-        let a = document.querySelector('.slide.active');
-        a.classList.remove('active');
-        (a.nextElementSibling || s[0]).classList.add('active');
-    }, 5000);
+    // 🎬 Slider logic with 5s stay
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    function nextSlide() {
+        slides[currentSlide].style.opacity = '0';
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.add('active');
+        slides[currentSlide].style.opacity = '1';
+    }
+    setInterval(nextSlide, 6500); // 1.5s animation + 5s static stay
+
+    VanillaTilt.init(document.querySelectorAll(".network-card"), { max: 10, speed: 400 });
 </script>
 </body>
 </html>
