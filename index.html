@@ -49,67 +49,55 @@
         @keyframes lightScan { 0% { left: -150%; } 100% { left: 150%; } }
 
         /* 🤖 Advanced AI Navigation */
-        nav { padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
-        .logo { font-family: 'Orbitron'; font-weight: 900; color: var(--ai-cyan); text-shadow: 0 0 10px var(--ai-cyan); }
+        nav { padding: 10px 5%; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
+        
+        /* 🖼️ Logo & Name Style */
+        .brand { display: flex; align-items: center; gap: 12px; }
+        .logo-img { 
+            width: 45px; height: 45px; border-radius: 50%; 
+            border: 2px solid var(--ai-cyan); 
+            box-shadow: 0 0 15px var(--ai-cyan); 
+            object-fit: cover;
+        }
+        .brand-name {
+            font-family: 'Orbitron'; font-weight: 900; font-size: 1.4rem;
+            color: #fff; text-shadow: 0 0 10px var(--ai-cyan), 0 0 20px var(--ai-cyan);
+            letter-spacing: 1px;
+        }
 
         /* 🍔 AI Menu Icon */
         .ai-menu-container { position: relative; }
-        .menu-icon {
-            cursor: pointer; display: flex; flex-direction: column; gap: 5px; padding: 10px;
-        }
+        .menu-icon { cursor: pointer; display: flex; flex-direction: column; gap: 5px; padding: 10px; }
         .bar {
             width: 25px; height: 3px; border-radius: 2px;
             background: linear-gradient(90deg, var(--ai-cyan), #fff, var(--ai-cyan));
-            background-size: 200% auto;
-            animation: barGlow 3s linear infinite;
+            background-size: 200% auto; animation: barGlow 3s linear infinite;
             box-shadow: 0 0 5px var(--ai-cyan);
         }
-        @keyframes barGlow {
-            0% { background-position: 0% center; }
-            100% { background-position: 200% center; }
-        }
+        @keyframes barGlow { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }
 
         /* 🪜 Smooth Slide Down Dropdown */
         .ai-dropdown {
             position: absolute; top: 55px; left: 0; width: 160px;
             background: rgba(5, 10, 16, 0.98); border: 1px solid var(--ai-cyan);
-            border-radius: 15px; overflow: hidden;
-            display: flex; flex-direction: column;
+            border-radius: 15px; overflow: hidden; display: flex; flex-direction: column;
             box-shadow: 0 10px 30px rgba(0, 242, 255, 0.3);
-            
-            /* Animation States */
-            max-height: 0;
-            opacity: 0;
-            transform: translateY(-20px);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            pointer-events: none; /* لمنع الضغط وهي مخفية */
+            max-height: 0; opacity: 0; transform: translateY(-20px);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: none;
         }
-        
-        .ai-dropdown.active {
-            max-height: 300px; /* القيمة الكافية لمحتوى اللائحة */
-            opacity: 1;
-            transform: translateY(0);
-            pointer-events: auto;
-        }
-
+        .ai-dropdown.active { max-height: 300px; opacity: 1; transform: translateY(0); pointer-events: auto; }
         .drop-item {
             padding: 15px; font-size: 0.9rem; font-weight: bold; color: white;
             text-align: center; border-bottom: 1px solid var(--border);
-            opacity: 0; transform: translateX(-20px);
-            transition: 0.4s ease;
+            opacity: 0; transform: translateX(-20px); transition: 0.4s ease;
             cursor: pointer; text-decoration: none;
         }
         .drop-item:hover { background: rgba(0, 242, 255, 0.1); color: var(--ai-cyan); }
-
-        /* ظهور العناصر واحد تلو الآخر عند تفعيل القائمة */
-        .ai-dropdown.active .drop-item {
-            opacity: 1;
-            transform: translateX(0);
-        }
+        .ai-dropdown.active .drop-item { opacity: 1; transform: translateX(0); }
         .ai-dropdown.active .drop-item:nth-child(1) { transition-delay: 0.2s; }
         .ai-dropdown.active .drop-item:nth-child(2) { transition-delay: 0.3s; }
 
-        /* باقي الستايلات */
+        /* Page Content */
         .hero { text-align: center; padding: 30px 20px; }
         .network-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 0 8% 60px; }
         .network-card { background: var(--glass); border: 1px solid var(--border); border-radius: 35px; padding: 40px 20px; cursor: pointer; text-align: center; transition: 0.3s; position: relative; overflow: hidden; }
@@ -142,7 +130,10 @@
 </div>
 
 <nav>
-    <div class="logo">GRIZATOR AI</div>
+    <div class="brand">
+        <img src="https://i.ibb.co/27Bb7mMy/In-Shot-20260127-103341799.jpg" alt="Logo" class="logo-img">
+        <span class="brand-name">Grizator</span>
+    </div>
     
     <div class="ai-menu-container">
         <div class="menu-icon" onclick="toggleMenu()">
