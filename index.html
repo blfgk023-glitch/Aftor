@@ -11,24 +11,21 @@
         :root {
             --bg: #010409;
             --ai-cyan: #00f2ff;
-            --glass: rgba(255, 255, 255, 0.02);
-            --border: rgba(0, 242, 255, 0.1);
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(0, 242, 255, 0.15);
             --inwi: #bc13fe; --orange: #ff7900; --iam: #0070ff;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { background-color: var(--bg); color: white; font-family: 'Cairo', sans-serif; overflow-x: hidden; }
 
-        /* 🌌 Neural Background */
         #ai-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at center, #050a18 0%, #010409 100%); }
 
-        /* 🎬 Hologram Slider Engine */
         .slider-container { width: 100%; height: 380px; position: relative; overflow: hidden; border-bottom: 2px solid var(--ai-cyan); }
         .slide { position: absolute; inset: 0; opacity: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .slide.active { opacity: 1; z-index: 10; animation: hologramReveal 1.2s ease-out forwards; }
         .slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8) contrast(1.1); }
         
-        /* ⚡ Light Sweep & Hologram FX */
         .slide.active::after {
             content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
             background: linear-gradient(90deg, transparent, rgba(0, 242, 255, 0.4), transparent);
@@ -39,15 +36,10 @@
             0% { opacity: 0; filter: brightness(2) grayscale(1) blur(10px); transform: scale(1.05); }
             100% { opacity: 1; filter: brightness(1) grayscale(0) blur(0); transform: scale(1); }
         }
-
-        @keyframes lightSweep {
-            0% { left: -100%; }
-            100% { left: 200%; }
-        }
+        @keyframes lightSweep { 0% { left: -100%; } 100% { left: 200%; } }
 
         @media (max-width: 768px) { .slider-container { height: 240px; } }
 
-        /* 🤖 Navigation */
         nav { padding: 12px 5%; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(15px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
         .brand { display: flex; align-items: center; gap: 12px; }
         .logo-img { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--ai-cyan); box-shadow: 0 0 15px var(--ai-cyan); object-fit: cover; }
@@ -57,20 +49,68 @@
         .hero h1 { font-family: 'Orbitron'; font-size: 2rem; margin-bottom: 10px; }
         .hero p { color: #888; font-size: 0.9rem; }
 
-        /* 📱 Cards */
-        .network-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 0 8% 50px; }
-        .network-card { background: var(--glass); border: 1px solid var(--border); border-radius: 30px; padding: 40px 20px; cursor: pointer; text-align: center; transition: 0.4s; position: relative; backdrop-filter: blur(5px); }
-        .net-img { width: 85px; height: 85px; border-radius: 20px; margin-bottom: 15px; border: 2px solid var(--accent); box-shadow: 0 0 15px var(--accent); }
-        .inwi-card { --accent: var(--inwi); } .orange-card { --accent: var(--orange); } .iam-card { --accent: var(--iam); }
+        /* 💎 Legendary Cards UI */
+        .network-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; padding: 0 8% 50px; }
+        
+        .network-card { 
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 40px;
+            padding: 50px 20px;
+            cursor: pointer;
+            text-align: center;
+            position: relative;
+            backdrop-filter: blur(15px);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* Neon Glow Frames */
+        .inwi-card { --accent: var(--inwi); }
+        .orange-card { --accent: var(--orange); }
+        .iam-card { --accent: var(--iam); }
+
+        .network-card::before {
+            content: ''; position: absolute; inset: 0;
+            border-radius: 40px; padding: 2px;
+            background: linear-gradient(135deg, transparent, var(--accent), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude; opacity: 0.5;
+        }
+
+        .network-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--accent);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 25px var(--accent);
+        }
+
+        .net-img { 
+            width: 100px; height: 100px; border-radius: 25px; margin-bottom: 20px; 
+            border: 2px solid var(--accent); 
+            box-shadow: 0 0 20px var(--accent);
+            transition: 0.5s;
+        }
+        .network-card:hover .net-img { transform: rotate(5deg) scale(1.1); filter: brightness(1.2); }
+
+        /* Energy Pulse Animation */
+        .pulse-effect {
+            position: absolute; border-radius: 50%; background: var(--accent);
+            transform: scale(0); opacity: 0.8; pointer-events: none;
+            animation: energyBurst 0.6s ease-out;
+        }
+        @keyframes energyBurst {
+            to { transform: scale(4); opacity: 0; }
+        }
 
         .download-counter { font-family: 'Orbitron'; font-size: 0.75rem; color: #00ffaa; display: flex; align-items: center; justify-content: center; gap: 5px; margin-bottom: 5px; }
         
         #apps-view { display: none; padding: 20px 8%; animation: fadeIn 0.6s ease; }
-        .app-card { background: var(--glass); border: 1px solid var(--border); border-radius: 20px; padding: 20px; margin-bottom: 15px; border-right: 4px solid var(--ai-cyan); }
-        .install-btn { background: #fff; color: #000; padding: 12px; border-radius: 12px; text-decoration: none; font-weight: 900; display: block; text-align: center; margin-top: 10px; }
+        .app-card { background: var(--glass); border: 1px solid var(--border); border-radius: 25px; padding: 25px; margin-bottom: 20px; border-right: 5px solid var(--ai-cyan); backdrop-filter: blur(10px); }
+        .install-btn { background: #fff; color: #000; padding: 14px; border-radius: 15px; text-decoration: none; font-weight: 900; display: block; text-align: center; margin-top: 10px; }
 
-        .back-btn { background: #000; border: 1px solid var(--ai-cyan); padding: 12px 45px; border-radius: 50px; cursor: pointer; margin: 30px auto; display: block; }
-        .back-text { font-family: 'Orbitron'; font-weight: 900; color: var(--ai-cyan); letter-spacing: 2px; }
+        .back-btn { background: transparent; border: 1px solid var(--ai-cyan); padding: 12px 45px; border-radius: 50px; cursor: pointer; margin: 40px auto; display: block; color: var(--ai-cyan); font-family: 'Orbitron'; font-weight: 900; }
 
         #ai-scanner { position: fixed; inset: 0; background: var(--bg); z-index: 2000; display: none; flex-direction: column; align-items: center; justify-content: center; }
         .loader { width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.1); border-top-color: var(--ai-cyan); border-radius: 50%; animation: spin 1s infinite linear; }
@@ -96,7 +136,6 @@
     <div style="cursor:pointer">
         <div style="width:25px;height:3px;background:var(--ai-cyan);margin:4px 0"></div>
         <div style="width:25px;height:3px;background:var(--ai-cyan);margin:4px 0"></div>
-        <div style="width:25px;height:3px;background:var(--ai-cyan);margin:4px 0"></div>
     </div>
 </nav>
 
@@ -106,15 +145,15 @@
         <p>All applications that convert *6 to *3</p>
     </header>
     <div class="network-grid">
-        <div class="network-card inwi-card" onclick="selectNetwork('inwi')">
+        <div class="network-card inwi-card" data-tilt data-tilt-glare="true" data-tilt-max-glare="0.3" onclick="selectNetwork(this, 'inwi')">
             <img src="https://i.ibb.co/JWHMCRdS/In-Shot-20260126-093834338.jpg" class="net-img">
             <h2 style="font-family:'Orbitron'">INWI</h2>
         </div>
-        <div class="network-card orange-card" onclick="selectNetwork('orange')">
+        <div class="network-card orange-card" data-tilt data-tilt-glare="true" data-tilt-max-glare="0.3" onclick="selectNetwork(this, 'orange')">
             <img src="https://i.ibb.co/23z8x035/In-Shot-20260126-093754730.jpg" class="net-img">
             <h2 style="font-family:'Orbitron'">ORANGE</h2>
         </div>
-        <div class="network-card iam-card" onclick="selectNetwork('iam')">
+        <div class="network-card iam-card" data-tilt data-tilt-glare="true" data-tilt-max-glare="0.3" onclick="selectNetwork(this, 'iam')">
             <img src="https://i.ibb.co/mFzx3KHg/In-Shot-20260126-093339759.jpg" class="net-img">
             <h2 style="font-family:'Orbitron'">MAROC TÉLÉCOM</h2>
         </div>
@@ -123,18 +162,16 @@
 
 <div id="apps-view">
     <div id="app-list"></div>
-    <button class="back-btn" onclick="window.history.back()">
-        <span class="back-text">𝗕𝗔𝗖𝗞</span>
-    </button>
+    <button class="back-btn" onclick="window.history.back()">𝗕𝗔𝗖𝗞</button>
 </div>
 
 <div id="ai-scanner">
     <div class="loader"></div>
-    <p style="margin-top:20px; font-family:'Orbitron'; color:var(--ai-cyan);">AI SCANNING...</p>
+    <p style="margin-top:20px; font-family:'Orbitron'; color:var(--ai-cyan);">NEURAL SYNCING...</p>
 </div>
 
 <script>
-    // 🌌 Neural Background
+    // 🌌 Neural Background (Canvas)
     const canvas = document.getElementById('ai-background');
     const ctx = canvas.getContext('2d');
     let dots = [];
@@ -170,32 +207,23 @@
     }
     initCanvas(); for(let i=0; i<40; i++) dots.push(new Dot()); render();
 
-    // 📱 App Logic
+    // 📱 App Data
     const vpnData = {
-        inwi: [
-            { name: "MC NET VPN", link: "https://play.google.com/store/apps/details?id=org.mcnetvpn.app" },
-            { name: "AT NET VPN", link: "https://play.google.com/store/apps/details?id=com.technore.atnetvpn" },
-            { name: "OSP TUNNEL", link: "https://play.google.com/store/apps/details?id=xyz.osptunnel.org" },
-            { name: "MORE TUNNEL", link: "https://play.google.com/store/apps/details?id=com.more.tunnel.vpn" },
-            { name: "DT TUNNEL", link: "https://play.google.com/store/apps/details?id=com.victo.dt" },
-            { name: "XRP TUNNEL PLUS", link: "https://play.google.com/store/apps/details?id=com.technore.xrptunnelplus" },
-            { name: "PINAS VPN", link: "https://play.google.com/store/apps/details?id=pinas.vpn.ph" }
-        ],
-        orange: [
-            { name: "AM TUNNEL LITE", link: "https://play.google.com/store/apps/details?id=app.vpn.amtunnellite" },
-            { name: "MINA PRO NET", link: "https://play.google.com/store/apps/details?id=opencustom.minapronet.com.eg" }
-        ],
-        iam: [
-            { name: "TSS TUNNEL", link: "https://play.google.com/store/apps/details?id=com.tss.tunnel" },
-            { name: "XRP TUNNEL PLUS", link: "https://play.google.com/store/apps/details?id=com.technore.xrptunnelplus" },
-            { name: "PINAS VPN", link: "https://play.google.com/store/apps/details?id=pinas.vpn.ph" },
-            { name: "TSS TUNNEL", link: "https://play.google.com/store/apps/details?id=com.tss.tunnel" }
-        ]
+        inwi: [ { name: "MC NET VPN", link: "https://play.google.com/store/apps/details?id=org.mcnetvpn.app" }, { name: "AT NET VPN", link: "https://play.google.com/store/apps/details?id=com.technore.atnetvpn" }, { name: "OSP TUNNEL", link: "https://play.google.com/store/apps/details?id=xyz.osptunnel.org" }, { name: "MORE TUNNEL", link: "https://play.google.com/store/apps/details?id=com.more.tunnel.vpn" }, { name: "DT TUNNEL", link: "https://play.google.com/store/apps/details?id=com.victo.dt" }, { name: "XRP TUNNEL PLUS", link: "https://play.google.com/store/apps/details?id=com.technore.xrptunnelplus" }, { name: "PINAS VPN", link: "https://play.google.com/store/apps/details?id=pinas.vpn.ph" } ],
+        orange: [ { name: "AM TUNNEL LITE", link: "https://play.google.com/store/apps/details?id=app.vpn.amtunnellite" }, { name: "MINA PRO NET", link: "https://play.google.com/store/apps/details?id=opencustom.minapronet.com.eg" } ],
+        iam: [ { name: "TSS TUNNEL", link: "https://play.google.com/store/apps/details?id=com.tss.tunnel" }, { name: "XRP TUNNEL PLUS", link: "https://play.google.com/store/apps/details?id=com.technore.xrptunnelplus" }, { name: "PINAS VPN", link: "https://play.google.com/store/apps/details?id=pinas.vpn.ph" }, { name: "TSS TUNNEL", link: "https://play.google.com/store/apps/details?id=com.tss.tunnel" } ]
     };
 
-    function selectNetwork(net) {
+    function selectNetwork(el, net) {
+        // Create Energy Pulse Effect
+        const pulse = document.createElement('div');
+        pulse.className = 'pulse-effect';
+        el.appendChild(pulse);
+        setTimeout(() => pulse.remove(), 600);
+
         document.getElementById('ai-scanner').style.display = 'flex';
         history.pushState({view: 'apps'}, '');
+
         setTimeout(() => {
             document.getElementById('ai-scanner').style.display = 'none';
             document.getElementById('home-view').style.display = 'none';
@@ -224,19 +252,15 @@
         }, 2000);
     }
 
-    // 🎬 Slider logic with 5s stay
     let currentSlide = 0;
     const slides = document.querySelectorAll('.slide');
-    function nextSlide() {
-        slides[currentSlide].style.opacity = '0';
+    setInterval(() => {
         slides[currentSlide].classList.remove('active');
         currentSlide = (currentSlide + 1) % slides.length;
         slides[currentSlide].classList.add('active');
-        slides[currentSlide].style.opacity = '1';
-    }
-    setInterval(nextSlide, 6500); // 1.5s animation + 5s static stay
+    }, 6500);
 
-    VanillaTilt.init(document.querySelectorAll(".network-card"), { max: 10, speed: 400 });
+    VanillaTilt.init(document.querySelectorAll(".network-card"), { max: 15, speed: 400, glare: true, "max-glare": 0.4 });
 </script>
 </body>
 </html>
