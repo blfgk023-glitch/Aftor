@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grizator AI | Cinematic VPN Hub</title>
+    <title>Grizator AI | VPN Hub Morocco</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Cairo:wght@400;900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
@@ -35,21 +35,22 @@
             z-index: -2;
         }
 
-        /* 🎬 AI Light Animation Slider */
+        /* 🎬 AI Light Animation Slider Responsive */
         .slider-container {
             width: 100%;
-            height: 380px;
+            height: 400px; /* طول مناسب لسطح المكتب */
             position: relative;
             overflow: hidden;
             border-bottom: 2px solid var(--ai-cyan);
             box-shadow: 0 5px 30px rgba(0, 242, 255, 0.3);
+            background: #000;
         }
 
         .slide {
             position: absolute;
             inset: 0;
             opacity: 0;
-            transition: opacity 1.5s ease-in-out;
+            transition: opacity 1.2s ease-in-out;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -64,7 +65,17 @@
         .slide img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: cover; /* الافتراضي للحاسوب */
+        }
+
+        /* 📱 Mobile Responsive: الهاتف فقط */
+        @media (max-width: 768px) {
+            .slider-container {
+                height: 250px; /* تقليل الطول فالهاتف باش تجي متناسقة */
+            }
+            .slide img {
+                object-fit: contain; /* الصورة تبان كاملة بلا ما تتقطع فالهاتف */
+            }
         }
 
         /* ✨ AI Glow Scan Effect */
@@ -104,69 +115,54 @@
         .logo-box img { width: 35px; border-radius: 50%; border: 1px solid var(--ai-cyan); }
         .logo { font-family: 'Orbitron'; font-weight: 900; font-size: 1.2rem; color: var(--ai-cyan); text-shadow: 0 0 15px var(--ai-cyan); }
 
-        .hero { text-align: center; padding: 40px 20px; }
-        .hero h1 { font-family: 'Orbitron'; font-size: 2rem; margin-bottom: 10px; color: #fff; }
-        .hero p { opacity: 0.6; font-size: 0.9rem; }
+        .hero { text-align: center; padding: 30px 20px; }
+        .hero h1 { font-family: 'Orbitron'; font-size: 1.8rem; margin-bottom: 10px; }
+        .hero p { opacity: 0.6; font-size: 0.8rem; }
 
         .network-grid {
             display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px; padding: 0 8% 60px;
+            gap: 20px; padding: 0 5% 60px;
         }
 
         .network-card {
-            background: var(--glass); border: 1px solid var(--border); border-radius: 35px;
-            padding: 40px 20px; cursor: pointer; position: relative; overflow: hidden;
-            text-align: center; transition: 0.3s; transform-style: preserve-3d;
+            background: var(--glass); border: 1px solid var(--border); border-radius: 30px;
+            padding: 30px 20px; cursor: pointer; position: relative; overflow: hidden;
+            text-align: center; transition: 0.3s;
         }
 
         .net-img {
-            width: 100px; height: 100px; border-radius: 20px; 
-            margin-bottom: 20px; object-fit: cover;
-            border: 2px solid var(--accent);
-            box-shadow: 0 0 20px var(--accent);
+            width: 80px; height: 80px; border-radius: 15px; margin-bottom: 15px;
+            border: 2px solid var(--accent); box-shadow: 0 0 15px var(--accent);
         }
-
-        .network-card::after {
-            content: ""; position: absolute; top: -100%; left: 0; width: 100%; height: 80%;
-            background: linear-gradient(to bottom, transparent, var(--accent), transparent);
-            opacity: 0.15; animation: scan 3s infinite linear;
-        }
-        @keyframes scan { 0% { top: -100%; } 100% { top: 100%; } }
 
         .inwi-card { --accent: var(--inwi); }
         .orange-card { --accent: var(--orange); }
         .iam-card { --accent: var(--iam); }
 
         .badge-ai {
-            position: absolute; top: 15px; left: 15px; font-size: 0.6rem;
-            padding: 5px 12px; border-radius: 20px; background: var(--accent);
-            font-weight: bold; color: #fff;
+            position: absolute; top: 12px; left: 12px; font-size: 0.6rem;
+            padding: 4px 10px; border-radius: 20px; background: var(--accent);
         }
 
-        #apps-view { display: none; padding: 40px 8%; animation: fadeIn 0.6s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        #apps-view { display: none; padding: 30px 5%; animation: fadeIn 0.6s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .app-card {
-            background: var(--glass); border: 1px solid var(--border); border-radius: 25px;
-            padding: 25px; margin-bottom: 20px; position: relative;
+            background: var(--glass); border: 1px solid var(--border); border-radius: 20px;
+            padding: 20px; margin-bottom: 15px;
         }
-        .trust-score { font-family: 'Orbitron'; color: #ffcc00; font-size: 0.8rem; margin-bottom: 10px; }
 
         .install-btn {
-            background: #fff; color: #000; padding: 16px; border-radius: 15px;
-            text-decoration: none; font-weight: 900; display: flex; align-items: center;
-            justify-content: center; gap: 10px; margin-top: 15px; transition: 0.2s;
+            background: #fff; color: #000; padding: 14px; border-radius: 12px;
+            text-decoration: none; font-weight: 900; display: flex; align-items: center; justify-content: center; gap: 10px;
         }
-        .install-btn:active { transform: scale(0.95); }
 
         #ai-scanner {
             position: fixed; inset: 0; background: rgba(2,4,10,0.98); z-index: 2000;
             display: none; flex-direction: column; align-items: center; justify-content: center;
         }
-        .loader { width: 50px; height: 50px; border: 3px solid var(--glass); border-top-color: var(--ai-cyan); border-radius: 50%; animation: spin 1s infinite linear; }
+        .loader { width: 40px; height: 40px; border: 3px solid var(--glass); border-top-color: var(--ai-cyan); border-radius: 50%; animation: spin 1s infinite linear; }
         @keyframes spin { to { transform: rotate(360deg); } }
-
-        .back-btn { margin-top: 40px; background: transparent; color: white; border: 1px solid var(--border); padding: 10px 25px; border-radius: 50px; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -193,7 +189,6 @@
         <img src="https://i.ibb.co/F4x0F7Bc/In-Shot-20260125-221439000.jpg" alt="Logo">
         <span class="logo">GRIZATOR AI</span>
     </div>
-    <div style="font-family: 'Orbitron'; font-size: 0.6rem; color: var(--ai-cyan);">SYSTEM: ONLINE</div>
 </nav>
 
 <div class="container">
@@ -207,37 +202,35 @@
             <div class="network-card inwi-card" data-tilt onclick="selectNetwork('inwi')">
                 <span class="badge-ai">Gaming Optimized</span>
                 <img src="https://i.ibb.co/JWHMCRdS/In-Shot-20260126-093834338.jpg" alt="Inwi" class="net-img">
-                <h2 style="font-family: 'Orbitron';">INWI</h2>
+                <h2 style="font-family: 'Orbitron'; font-size: 1.2rem;">INWI</h2>
             </div>
 
             <div class="network-card orange-card" data-tilt onclick="selectNetwork('orange')">
                 <span class="badge-ai">High Stability</span>
                 <img src="https://i.ibb.co/23z8x035/In-Shot-20260126-093754730.jpg" alt="Orange" class="net-img">
-                <h2 style="font-family: 'Orbitron';">ORANGE</h2>
+                <h2 style="font-family: 'Orbitron'; font-size: 1.2rem;">ORANGE</h2>
             </div>
 
             <div class="network-card iam-card" data-tilt onclick="selectNetwork('iam')">
                 <span class="badge-ai">Ultra Speed</span>
                 <img src="https://i.ibb.co/mFzx3KHg/In-Shot-20260126-093339759.jpg" alt="IAM" class="net-img">
-                <h2 style="font-family: 'Orbitron';">MAROC TÉLÉCOM</h2>
+                <h2 style="font-family: 'Orbitron'; font-size: 1.2rem;">IAM</h2>
             </div>
         </div>
     </div>
 
     <div id="apps-view">
-        <p id="rec-text" style="text-align: center; color: var(--ai-cyan); margin-bottom: 30px; font-weight: bold;"></p>
         <div id="app-list"></div>
-        <center><button class="back-btn" onclick="location.reload()">Back to Networks</button></center>
+        <center><button onclick="location.reload()" style="background:transparent; color:white; border:1px solid var(--border); padding:10px 20px; border-radius:50px; cursor:pointer;">Back</button></center>
     </div>
 </div>
 
 <div id="ai-scanner">
     <div class="loader"></div>
-    <p id="scan-text" style="margin-top: 20px; font-family: 'Orbitron'; color: var(--ai-cyan); letter-spacing: 2px;"></p>
+    <p id="scan-text" style="margin-top: 15px; font-family: 'Orbitron'; color: var(--ai-cyan); font-size: 0.8rem;"></p>
 </div>
 
 <script>
-    // 🧠 Optimized Slider Script
     const slides = document.querySelectorAll('.slide');
     let currentSlide = 0;
 
@@ -246,55 +239,32 @@
         currentSlide = (currentSlide + 1) % slides.length;
         slides[currentSlide].classList.add('active');
     }
-
-    // تكرار كل 5 ثواني
     setInterval(nextSlide, 5000);
 
-    VanillaTilt.init(document.querySelectorAll(".network-card"), {
-        max: 15, speed: 400, glare: true, "max-glare": 0.2
-    });
+    VanillaTilt.init(document.querySelectorAll(".network-card"), { max: 15, speed: 400 });
 
     const vpnData = {
-        iam: [
-            { name: "BD FREE VPN", link: "https://play.google.com/store/apps/details?id=dastan.prince.bdfreevpn", trust: "9.8" },
-            { name: "AC TUNNEL VPN", link: "https://play.google.com/store/apps/details?id=com.boss.actunnelvpn", trust: "9.5" }
-        ],
-        inwi: [
-            { name: "MX TUNNEL PRO", link: "https://play.google.com/store/apps/details?id=com.mxtunnel.pro", trust: "9.7" },
-            { name: "MSY VPN LITE", link: "https://play.google.com/store/apps/details?id=com.msyvpn.lite", trust: "9.4" }
-        ],
-        orange: [
-            { name: "S TUNNEL", link: "https://play.google.com/store/apps/details?id=com.stunnel.dev", trust: "9.6" },
-            { name: "VIP OMAN", link: "https://play.google.com/store/apps/details?id=dastan.prince.vipoman", trust: "9.3" }
-        ]
+        iam: [{ name: "BD FREE VPN", link: "https://play.google.com/store/apps/details?id=dastan.prince.bdfreevpn", trust: "9.8" }],
+        inwi: [{ name: "MX TUNNEL PRO", link: "https://play.google.com/store/apps/details?id=com.mxtunnel.pro", trust: "9.7" }],
+        orange: [{ name: "S TUNNEL", link: "https://play.google.com/store/apps/details?id=com.stunnel.dev", trust: "9.6" }]
     };
 
     function selectNetwork(net) {
-        const scanner = document.getElementById('ai-scanner');
-        scanner.style.display = 'flex';
-        document.getElementById('scan-text').innerText = "SCANNING PROTOCOLS...";
-        
+        document.getElementById('ai-scanner').style.display = 'flex';
+        document.getElementById('scan-text').innerText = "AI MATCHING...";
         setTimeout(() => {
-            scanner.style.display = 'none';
-            showResults(net);
-        }, 1500);
-    }
-
-    function showResults(net) {
-        document.getElementById('home-view').style.display = 'none';
-        document.getElementById('apps-view').style.display = 'block';
-        document.getElementById('rec-text').innerText = `Recommended for ${net.toUpperCase()}`;
-        const list = document.getElementById('app-list');
-        list.innerHTML = '';
-        vpnData[net].forEach(app => {
-            list.innerHTML += `
+            document.getElementById('ai-scanner').style.display = 'none';
+            document.getElementById('home-view').style.display = 'none';
+            document.getElementById('apps-view').style.display = 'block';
+            const list = document.getElementById('app-list');
+            list.innerHTML = vpnData[net].map(app => `
                 <div class="app-card">
-                    <div class="trust-score">AI TRUST SCORE: ${app.trust}/10 ⭐</div>
-                    <h2>${app.name}</h2>
-                    <a href="${app.link}" target="_blank" class="install-btn">🚀 Install Now</a>
+                    <div style="color:#ffcc00; font-size:0.7rem; font-family:'Orbitron';">TRUST SCORE: ${app.trust}/10</div>
+                    <h2 style="margin:10px 0;">${app.name}</h2>
+                    <a href="${app.link}" target="_blank" class="install-btn">🚀 DOWNLOAD</a>
                 </div>
-            `;
-        });
+            `).join('');
+        }, 1500);
     }
 </script>
 </body>
