@@ -20,19 +20,31 @@
 
         #ai-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at center, #050a18 0%, #010409 100%); }
 
-        /* 🎬 Video Hero Section */
+        /* 🎬 Clean Video Hero (No Controls) */
         .hero-video-container { 
             width: 100%; 
             position: relative; 
             overflow: hidden; 
             border-bottom: 2px solid var(--ai-cyan);
             box-shadow: 0 0 30px rgba(0, 242, 255, 0.2);
-            line-height: 0; /* يحذف الفراغ تحت الفيديو */
+            line-height: 0;
+            background: #000;
         }
+
+        /* منع التفاعل مع الفيديو */
+        .video-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 5;
+            background: transparent;
+        }
+
         .hero-video-container iframe {
             width: 100%;
             aspect-ratio: 16 / 9;
             border: none;
+            pointer-events: none; /* يمنع الضغط على أزرار الفيديو */
+            transform: scale(1.02); /* لإخفاء أي حواف محتملة */
         }
 
         /* 🤖 Nav */
@@ -43,7 +55,6 @@
 
         .hero-text { text-align: center; padding: 30px 20px; }
         .hero-text h1 { font-family: 'Orbitron'; font-size: 2rem; margin-bottom: 10px; }
-        .hero-text p { color: #888; font-size: 0.9rem; }
 
         /* 💎 Legendary Cards UI */
         .network-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; padding: 0 8% 50px; }
@@ -77,35 +88,24 @@
             background: rgba(255, 255, 255, 0.12);
         }
 
-        .net-img { 
-            width: 100px; height: 100px; border-radius: 25px; margin-bottom: 20px; 
-            border: 2px solid var(--accent); 
-            box-shadow: 0 0 20px var(--accent);
-            pointer-events: none;
-        }
+        .net-img { width: 100px; height: 100px; border-radius: 25px; margin-bottom: 20px; border: 2px solid var(--accent); box-shadow: 0 0 20px var(--accent); pointer-events: none; }
 
-        /* Energy Pulse */
         .pulse-effect {
             position: absolute; border-radius: 50%; background: var(--accent);
             transform: translate(-50%, -50%) scale(0); opacity: 0.7; pointer-events: none;
-            left: 50%; top: 50%;
-            animation: energyBurst 0.5s ease-out forwards;
+            left: 50%; top: 50%; animation: energyBurst 0.5s ease-out forwards;
         }
-        @keyframes energyBurst {
-            to { transform: translate(-50%, -50%) scale(4); opacity: 0; }
-        }
+        @keyframes energyBurst { to { transform: translate(-50%, -50%) scale(4); opacity: 0; } }
 
         .download-counter { font-family: 'Orbitron'; font-size: 0.75rem; color: #00ffaa; display: flex; align-items: center; justify-content: center; gap: 5px; margin-bottom: 5px; }
         
         #apps-view { display: none; padding: 20px 8%; animation: fadeIn 0.6s ease; }
         .app-card { background: var(--glass); border: 1px solid var(--border); border-radius: 25px; padding: 25px; margin-bottom: 20px; border-right: 5px solid var(--ai-cyan); backdrop-filter: blur(10px); }
         .install-btn { background: #fff; color: #000; padding: 14px; border-radius: 15px; text-decoration: none; font-weight: 900; display: block; text-align: center; margin-top: 10px; }
-
         .back-btn { background: transparent; border: 1px solid var(--ai-cyan); padding: 12px 45px; border-radius: 50px; cursor: pointer; margin: 40px auto; display: block; color: var(--ai-cyan); font-family: 'Orbitron'; font-weight: 900; }
 
         #ai-scanner { position: fixed; inset: 0; background: var(--bg); z-index: 2000; display: none; flex-direction: column; align-items: center; justify-content: center; }
         .loader { width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.1); border-top-color: var(--ai-cyan); border-radius: 50%; animation: spin 1s infinite linear; }
-        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
@@ -113,7 +113,8 @@
 <canvas id="ai-background"></canvas>
 
 <div class="hero-video-container">
-    <iframe src="https://player.cloudinary.com/embed/?cloud_name=didg4uwxv&public_id=InShot_20260127_191509607_hckiwc" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen frameborder="0"></iframe>
+    <div class="video-overlay"></div>
+    <iframe src="https://player.cloudinary.com/embed/?cloud_name=didg4uwxv&public_id=InShot_20260127_191509607_hckiwc&autoplay=true&loop=true&muted=true&controls=false" allow="autoplay; fullscreen; encrypted-media" frameborder="0"></iframe>
 </div>
 
 <nav>
@@ -159,7 +160,7 @@
 </div>
 
 <script>
-    // 🌌 Neural Background
+    // 🌌 Neural Background Logic
     const canvas = document.getElementById('ai-background');
     const ctx = canvas.getContext('2d');
     let dots = [];
@@ -203,17 +204,15 @@
         pulse.className = 'pulse-effect';
         el.appendChild(pulse);
         setTimeout(() => pulse.remove(), 500);
-
         document.getElementById('ai-scanner').style.display = 'flex';
         history.pushState({view: 'apps'}, '');
-
         setTimeout(() => {
             document.getElementById('ai-scanner').style.display = 'none';
             document.getElementById('home-view').style.display = 'none';
             document.getElementById('apps-view').style.display = 'block';
             document.getElementById('app-list').innerHTML = vpnData[net].map(app => `
                 <div class="app-card">
-                    <div class="download-counter">👤 <span class="count-num">${Math.floor(Math.random()*400)+1200}</span> downloads</div>
+                    <div class="download-counter">👤 <span class="count-num">${Math.floor(Math.random()*400)+1200}</span> active</div>
                     <h2 style="margin:5px 0;">${app.name}</h2>
                     <a href="${app.link}" target="_blank" class="install-btn">🚀 INSTALL NOW</a>
                 </div>`).join('');
