@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grizator AI | VPN Hub Morocco</title>
+    <title>Grizator AI | Cinematic VPN Hub</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Cairo:wght@400;900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
@@ -35,28 +35,30 @@
             z-index: -2;
         }
 
-        /* 🖼️ AI Image Slider Updated */
+        /* 🎬 AI Light Animation Slider */
         .slider-container {
             width: 100%;
-            height: 350px;
+            height: 380px;
             position: relative;
             overflow: hidden;
             border-bottom: 2px solid var(--ai-cyan);
-            box-shadow: 0 5px 30px rgba(0, 242, 255, 0.2);
+            box-shadow: 0 5px 30px rgba(0, 242, 255, 0.3);
         }
 
         .slide {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             opacity: 0;
-            transform: scale(1.05);
-            transition: opacity 1.2s ease-in-out, transform 2s ease-in-out;
+            transition: opacity 1.5s ease-in-out;
             display: flex;
             align-items: center;
             justify-content: center;
+            z-index: 1;
+        }
+
+        .slide.active {
+            opacity: 1;
+            z-index: 10;
         }
 
         .slide img {
@@ -65,10 +67,31 @@
             object-fit: cover;
         }
 
-        .slide.active {
-            opacity: 1;
-            transform: scale(1);
-            z-index: 10;
+        /* ✨ AI Glow Scan Effect */
+        .slide.active::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -150%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg, 
+                transparent, 
+                rgba(0, 242, 255, 0.2), 
+                var(--ai-cyan), 
+                rgba(0, 242, 255, 0.2), 
+                transparent
+            );
+            transform: skewX(-20deg);
+            animation: lightScan 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            z-index: 11;
+        }
+
+        @keyframes lightScan {
+            0% { left: -150%; opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { left: 150%; opacity: 0; }
         }
 
         nav {
@@ -214,7 +237,7 @@
 </div>
 
 <script>
-    // 🧠 Updated Slider Logic (5 Seconds)
+    // 🧠 Optimized Slider Script
     const slides = document.querySelectorAll('.slide');
     let currentSlide = 0;
 
@@ -224,7 +247,8 @@
         slides[currentSlide].classList.add('active');
     }
 
-    setInterval(nextSlide, 5000); // 5000ms = 5 ثواني
+    // تكرار كل 5 ثواني
+    setInterval(nextSlide, 5000);
 
     VanillaTilt.init(document.querySelectorAll(".network-card"), {
         max: 15, speed: 400, glare: true, "max-glare": 0.2
@@ -233,59 +257,45 @@
     const vpnData = {
         iam: [
             { name: "BD FREE VPN", link: "https://play.google.com/store/apps/details?id=dastan.prince.bdfreevpn", trust: "9.8" },
-            { name: "AC TUNNEL VPN", link: "https://play.google.com/store/apps/details?id=com.boss.actunnelvpn", trust: "9.5" },
-            { name: "MORE TUNNEL VPN", link: "https://play.google.com/store/apps/details?id=com.more.tunnel.vpn", trust: "9.2" }
+            { name: "AC TUNNEL VPN", link: "https://play.google.com/store/apps/details?id=com.boss.actunnelvpn", trust: "9.5" }
         ],
         inwi: [
             { name: "MX TUNNEL PRO", link: "https://play.google.com/store/apps/details?id=com.mxtunnel.pro", trust: "9.7" },
-            { name: "MSY VPN LITE", link: "https://play.google.com/store/apps/details?id=com.msyvpn.lite", trust: "9.4" },
-            { name: "JN TUNNEL", link: "https://play.google.com/store/apps/details?id=com.jahrteam.jntunnel", trust: "9.1" }
+            { name: "MSY VPN LITE", link: "https://play.google.com/store/apps/details?id=com.msyvpn.lite", trust: "9.4" }
         ],
         orange: [
             { name: "S TUNNEL", link: "https://play.google.com/store/apps/details?id=com.stunnel.dev", trust: "9.6" },
-            { name: "VIP OMAN", link: "https://play.google.com/store/apps/details?id=dastan.prince.vipoman", trust: "9.3" },
-            { name: "RJC TUNNEL VPN", link: "https://play.google.com/store/apps/details?id=com.rjctunnel.vpn", trust: "9.0" }
+            { name: "VIP OMAN", link: "https://play.google.com/store/apps/details?id=dastan.prince.vipoman", trust: "9.3" }
         ]
     };
 
     function selectNetwork(net) {
         const scanner = document.getElementById('ai-scanner');
-        const scanText = document.getElementById('scan-text');
         scanner.style.display = 'flex';
+        document.getElementById('scan-text').innerText = "SCANNING PROTOCOLS...";
         
-        let steps = ["SCANNING NETWORK...", "MATCHING PROTOCOLS...", "AI FINALIZING..."];
-        let i = 0;
-        let interval = setInterval(() => {
-            scanText.innerText = steps[i];
-            i++;
-            if(i >= steps.length) {
-                clearInterval(interval);
-                scanner.style.display = 'none';
-                showResults(net);
-            }
-        }, 800);
+        setTimeout(() => {
+            scanner.style.display = 'none';
+            showResults(net);
+        }, 1500);
     }
 
     function showResults(net) {
         document.getElementById('home-view').style.display = 'none';
         document.getElementById('apps-view').style.display = 'block';
-        document.getElementById('rec-text').innerText = `Based on your ${net.toUpperCase()} network, AI recommends these 🔥`;
+        document.getElementById('rec-text').innerText = `Recommended for ${net.toUpperCase()}`;
         const list = document.getElementById('app-list');
         list.innerHTML = '';
         vpnData[net].forEach(app => {
             list.innerHTML += `
                 <div class="app-card">
                     <div class="trust-score">AI TRUST SCORE: ${app.trust}/10 ⭐</div>
-                    <h2 style="font-family:'Orbitron'; margin-bottom: 5px;">${app.name}</h2>
-                    <p style="font-size: 0.8rem; opacity: 0.6;">Tested on Moroccan *6 Servers.</p>
-                    <a href="${app.link}" target="_blank" class="install-btn">
-                        🚀 Install from Play Store
-                    </a>
+                    <h2>${app.name}</h2>
+                    <a href="${app.link}" target="_blank" class="install-btn">🚀 Install Now</a>
                 </div>
             `;
         });
     }
 </script>
-
 </body>
 </html>
