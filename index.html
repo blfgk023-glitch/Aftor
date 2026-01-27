@@ -20,35 +20,32 @@
 
         #ai-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at center, #050a18 0%, #010409 100%); }
 
-        /* 🎬 Slider Engine */
-        .slider-container { width: 100%; height: 380px; position: relative; overflow: hidden; border-bottom: 2px solid var(--ai-cyan); }
-        .slide { position: absolute; inset: 0; opacity: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        .slide.active { opacity: 1; z-index: 10; animation: hologramReveal 1.2s ease-out forwards; }
-        .slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8) contrast(1.1); }
-        
-        .slide.active::after {
-            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 242, 255, 0.4), transparent);
-            transform: skewX(-25deg); animation: lightSweep 1.5s ease-in-out; z-index: 11;
+        /* 🎬 Video Hero Section */
+        .hero-video-container { 
+            width: 100%; 
+            position: relative; 
+            overflow: hidden; 
+            border-bottom: 2px solid var(--ai-cyan);
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.2);
+            line-height: 0; /* يحذف الفراغ تحت الفيديو */
+        }
+        .hero-video-container iframe {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border: none;
         }
 
-        @keyframes hologramReveal {
-            0% { opacity: 0; filter: brightness(2) grayscale(1) blur(10px); transform: scale(1.05); }
-            100% { opacity: 1; filter: brightness(1) grayscale(0) blur(0); transform: scale(1); }
-        }
-        @keyframes lightSweep { 0% { left: -100%; } 100% { left: 200%; } }
-
-        @media (max-width: 768px) { .slider-container { height: 240px; } }
-
+        /* 🤖 Nav */
         nav { padding: 12px 5%; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(15px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
         .brand { display: flex; align-items: center; gap: 12px; }
         .logo-img { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--ai-cyan); box-shadow: 0 0 15px var(--ai-cyan); object-fit: cover; }
         .brand-name { font-family: 'Orbitron'; font-weight: 900; font-size: 1.3rem; color: #fff; text-shadow: 0 0 10px var(--ai-cyan); }
 
-        .hero { text-align: center; padding: 40px 20px; }
-        .hero h1 { font-family: 'Orbitron'; font-size: 2rem; margin-bottom: 10px; }
+        .hero-text { text-align: center; padding: 30px 20px; }
+        .hero-text h1 { font-family: 'Orbitron'; font-size: 2rem; margin-bottom: 10px; }
+        .hero-text p { color: #888; font-size: 0.9rem; }
 
-        /* 💎 Legendary Cards (Glow & Glass ON - Tilt OFF) */
+        /* 💎 Legendary Cards UI */
         .network-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; padding: 0 8% 50px; }
         
         .network-card { 
@@ -65,18 +62,16 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        .inwi-card { --accent: var(--inwi); border-color: rgba(188, 19, 254, 0.3); box-shadow: 0 0 20px rgba(188, 19, 254, 0.1); }
-        .orange-card { --accent: var(--orange); border-color: rgba(255, 121, 0, 0.3); box-shadow: 0 0 20px rgba(255, 121, 0, 0.1); }
-        .iam-card { --accent: var(--iam); border-color: rgba(0, 112, 255, 0.3); box-shadow: 0 0 20px rgba(0, 112, 255, 0.1); }
+        .inwi-card { --accent: var(--inwi); border-color: rgba(188, 19, 254, 0.3); }
+        .orange-card { --accent: var(--orange); border-color: rgba(255, 121, 0, 0.3); }
+        .iam-card { --accent: var(--iam); border-color: rgba(0, 112, 255, 0.3); }
 
-        /* إضاءة النيون عند Hover */
         .network-card:hover {
             border-color: var(--accent);
             box-shadow: 0 0 30px var(--accent);
             background: rgba(255, 255, 255, 0.08);
         }
 
-        /* ⚡ التفاعل عند الضغط فقط */
         .network-card:active {
             transform: scale(0.94) rotateX(10deg);
             background: rgba(255, 255, 255, 0.12);
@@ -86,7 +81,7 @@
             width: 100px; height: 100px; border-radius: 25px; margin-bottom: 20px; 
             border: 2px solid var(--accent); 
             box-shadow: 0 0 20px var(--accent);
-            transition: 0.3s;
+            pointer-events: none;
         }
 
         /* Energy Pulse */
@@ -117,11 +112,8 @@
 
 <canvas id="ai-background"></canvas>
 
-<div class="slider-container" id="slider">
-    <div class="slide active"><img src="https://i.ibb.co/HLzgJbdZ/In-Shot-20260127-081616263.jpg"></div>
-    <div class="slide"><img src="https://i.ibb.co/zTqKDLfw/In-Shot-20260127-082105550.jpg"></div>
-    <div class="slide"><img src="https://i.ibb.co/LT3NrQG/In-Shot-20260127-073207074.jpg"></div>
-    <div class="slide"><img src="https://i.ibb.co/8LvFfHQY/In-Shot-20260127-072634988.jpg"></div>
+<div class="hero-video-container">
+    <iframe src="https://player.cloudinary.com/embed/?cloud_name=didg4uwxv&public_id=InShot_20260127_191509607_hckiwc" allow="autoplay; fullscreen; encrypted-media; picture-in-picture" allowfullscreen frameborder="0"></iframe>
 </div>
 
 <nav>
@@ -136,7 +128,7 @@
 </nav>
 
 <div id="home-view">
-    <header class="hero">
+    <header class="hero-text">
         <h1>Choose Your Network</h1>
         <p>All applications that convert *6 to *3</p>
     </header>
@@ -182,10 +174,7 @@
             if(this.x<0 || this.x>canvas.width) this.vx*=-1;
             if(this.y<0 || this.y>canvas.height) this.vy*=-1;
         }
-        draw() {
-            ctx.fillStyle = 'rgba(0, 242, 255, 0.2)';
-            ctx.beginPath(); ctx.arc(this.x, this.y, 1, 0, Math.PI*2); ctx.fill();
-        }
+        draw() { ctx.fillStyle = 'rgba(0, 242, 255, 0.2)'; ctx.beginPath(); ctx.arc(this.x, this.y, 1, 0, Math.PI*2); ctx.fill(); }
     }
     function render() {
         ctx.clearRect(0,0,canvas.width, canvas.height);
@@ -210,7 +199,6 @@
     };
 
     function selectNetwork(el, net) {
-        // Pulse Effect
         const pulse = document.createElement('div');
         pulse.className = 'pulse-effect';
         el.appendChild(pulse);
@@ -246,14 +234,6 @@
             });
         }, 2000);
     }
-
-    let currentSlide = 0;
-    const slides = document.querySelectorAll('.slide');
-    setInterval(() => {
-        slides[currentSlide].classList.remove('active');
-        currentSlide = (currentSlide + 1) % slides.length;
-        slides[currentSlide].classList.add('active');
-    }, 6500);
 </script>
 </body>
 </html>
