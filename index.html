@@ -5,29 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grizator AI | VPN Hub Morocco</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Cairo:wght@400;900&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
     
     <style>
         :root {
             --bg: #02040a;
+            --ai-cyan: #00f2ff;
             --glass: rgba(255, 255, 255, 0.03);
             --border: rgba(255, 255, 255, 0.1);
-            --ai-cyan: #00f2ff;
-            --inwi: #bc13fe;
-            --orange: #ff7900;
-            --iam: #0070ff;
+            --inwi: #bc13fe; --orange: #ff7900; --iam: #0070ff;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
-        body {
-            background-color: var(--bg);
-            color: white;
-            font-family: 'Cairo', sans-serif;
-            overflow-x: hidden;
-            min-height: 100vh;
-        }
+        body { background-color: var(--bg); color: white; font-family: 'Cairo', sans-serif; overflow-x: hidden; }
 
         .neon-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
@@ -35,133 +25,87 @@
             z-index: -2;
         }
 
-        /* 🎬 AI Light Animation Slider Responsive */
+        /* 🎬 Responsive Cinematic Slider */
         .slider-container {
-            width: 100%;
-            height: 400px; /* طول مناسب لسطح المكتب */
-            position: relative;
-            overflow: hidden;
-            border-bottom: 2px solid var(--ai-cyan);
-            box-shadow: 0 5px 30px rgba(0, 242, 255, 0.3);
+            width: 100%; height: 400px; position: relative; overflow: hidden;
+            border-bottom: 2px solid var(--ai-cyan); box-shadow: 0 5px 30px rgba(0, 242, 255, 0.3);
             background: #000;
         }
+        .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.2s ease-in-out; display: flex; align-items: center; justify-content: center; z-index: 1; }
+        .slide.active { opacity: 1; z-index: 10; }
+        .slide img { width: 100%; height: 100%; object-fit: cover; }
 
-        .slide {
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            transition: opacity 1.2s ease-in-out;
+        /* 📱 Mobile Adjustments */
+        @media (max-width: 768px) {
+            .slider-container { height: 260px; }
+            .slide img { object-fit: contain; }
+        }
+
+        /* ✨ AI Glow Scan */
+        .slide.active::after {
+            content: ""; position: absolute; top: 0; left: -150%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 242, 255, 0.4), transparent);
+            transform: skewX(-25deg); animation: lightScan 2.5s ease-in-out forwards; z-index: 11;
+        }
+        @keyframes lightScan { 0% { left: -150%; } 100% { left: 150%; } }
+
+        nav { padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
+        .logo { font-family: 'Orbitron'; font-weight: 900; color: var(--ai-cyan); text-shadow: 0 0 10px var(--ai-cyan); }
+
+        .hero { text-align: center; padding: 30px 20px; }
+        .network-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 0 8% 60px; }
+        .network-card { background: var(--glass); border: 1px solid var(--border); border-radius: 35px; padding: 40px 20px; cursor: pointer; text-align: center; transition: 0.3s; position: relative; overflow: hidden; }
+        .net-img { width: 90px; height: 90px; border-radius: 20px; margin-bottom: 15px; border: 2px solid var(--accent); box-shadow: 0 0 15px var(--accent); }
+
+        .inwi-card { --accent: var(--inwi); } .orange-card { --accent: var(--orange); } .iam-card { --accent: var(--iam); }
+
+        /* 💊 AI Capsule Back Button */
+        .back-btn {
+            background: #0a0e14;
+            color: white;
+            border: 1px solid var(--ai-cyan);
+            padding: 12px 35px;
+            border-radius: 50px; /* Capsule Shape */
+            font-size: 1.2rem;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 1;
+            margin: 40px auto;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
         }
 
-        .slide.active {
-            opacity: 1;
-            z-index: 10;
-        }
-
-        .slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover; /* الافتراضي للحاسوب */
-        }
-
-        /* 📱 Mobile Responsive: الهاتف فقط */
-        @media (max-width: 768px) {
-            .slider-container {
-                height: 250px; /* تقليل الطول فالهاتف باش تجي متناسقة */
-            }
-            .slide img {
-                object-fit: contain; /* الصورة تبان كاملة بلا ما تتقطع فالهاتف */
-            }
-        }
-
-        /* ✨ AI Glow Scan Effect */
-        .slide.active::after {
-            content: "";
+        /* Glow Sweep Animation for Back Button */
+        .back-btn::before {
+            content: '';
             position: absolute;
-            top: 0;
-            left: -150%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                90deg, 
-                transparent, 
-                rgba(0, 242, 255, 0.2), 
-                var(--ai-cyan), 
-                rgba(0, 242, 255, 0.2), 
-                transparent
-            );
-            transform: skewX(-20deg);
-            animation: lightScan 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-            z-index: 11;
+            top: 0; left: -100%;
+            width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 242, 255, 0.4), transparent);
+            transition: none;
         }
 
-        @keyframes lightScan {
-            0% { left: -150%; opacity: 0; }
-            50% { opacity: 0.8; }
-            100% { left: 150%; opacity: 0; }
+        .back-btn:hover::before, .back-btn:active::before {
+            left: 150%;
+            transition: 0.7s ease-in-out;
         }
 
-        nav {
-            padding: 15px 5%; display: flex; justify-content: space-between; align-items: center;
-            backdrop-filter: blur(20px); border-bottom: 1px solid var(--border);
-            position: sticky; top: 0; z-index: 1000;
+        .back-btn:hover {
+            box-shadow: 0 0 25px rgba(0, 242, 255, 0.5);
+            transform: scale(1.05);
         }
 
-        .logo-box { display: flex; align-items: center; gap: 10px; }
-        .logo-box img { width: 35px; border-radius: 50%; border: 1px solid var(--ai-cyan); }
-        .logo { font-family: 'Orbitron'; font-weight: 900; font-size: 1.2rem; color: var(--ai-cyan); text-shadow: 0 0 15px var(--ai-cyan); }
+        #apps-view { display: none; padding: 30px 8%; animation: fadeIn 0.8s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .hero { text-align: center; padding: 30px 20px; }
-        .hero h1 { font-family: 'Orbitron'; font-size: 1.8rem; margin-bottom: 10px; }
-        .hero p { opacity: 0.6; font-size: 0.8rem; }
+        .app-card { background: var(--glass); border: 1px solid var(--border); border-radius: 25px; padding: 25px; margin-bottom: 20px; border-right: 4px solid var(--ai-cyan); }
+        .install-btn { background: #fff; color: #000; padding: 15px; border-radius: 15px; text-decoration: none; font-weight: 900; display: block; text-align: center; margin-top: 15px; }
 
-        .network-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px; padding: 0 5% 60px;
-        }
-
-        .network-card {
-            background: var(--glass); border: 1px solid var(--border); border-radius: 30px;
-            padding: 30px 20px; cursor: pointer; position: relative; overflow: hidden;
-            text-align: center; transition: 0.3s;
-        }
-
-        .net-img {
-            width: 80px; height: 80px; border-radius: 15px; margin-bottom: 15px;
-            border: 2px solid var(--accent); box-shadow: 0 0 15px var(--accent);
-        }
-
-        .inwi-card { --accent: var(--inwi); }
-        .orange-card { --accent: var(--orange); }
-        .iam-card { --accent: var(--iam); }
-
-        .badge-ai {
-            position: absolute; top: 12px; left: 12px; font-size: 0.6rem;
-            padding: 4px 10px; border-radius: 20px; background: var(--accent);
-        }
-
-        #apps-view { display: none; padding: 30px 5%; animation: fadeIn 0.6s ease; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .app-card {
-            background: var(--glass); border: 1px solid var(--border); border-radius: 20px;
-            padding: 20px; margin-bottom: 15px;
-        }
-
-        .install-btn {
-            background: #fff; color: #000; padding: 14px; border-radius: 12px;
-            text-decoration: none; font-weight: 900; display: flex; align-items: center; justify-content: center; gap: 10px;
-        }
-
-        #ai-scanner {
-            position: fixed; inset: 0; background: rgba(2,4,10,0.98); z-index: 2000;
-            display: none; flex-direction: column; align-items: center; justify-content: center;
-        }
-        .loader { width: 40px; height: 40px; border: 3px solid var(--glass); border-top-color: var(--ai-cyan); border-radius: 50%; animation: spin 1s infinite linear; }
+        #ai-scanner { position: fixed; inset: 0; background: var(--bg); z-index: 2000; display: none; flex-direction: column; align-items: center; justify-content: center; }
+        .loader { width: 45px; height: 45px; border: 3px solid var(--glass); border-top-color: var(--ai-cyan); border-radius: 50%; animation: spin 1s infinite linear; }
         @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
@@ -170,77 +114,64 @@
 <div class="neon-bg"></div>
 
 <div class="slider-container">
-    <div class="slide active">
-        <img src="https://i.ibb.co/HLzgJbdZ/In-Shot-20260127-081616263.jpg" alt="Slide 1">
-    </div>
-    <div class="slide">
-        <img src="https://i.ibb.co/zTqKDLfw/In-Shot-20260127-082105550.jpg" alt="Slide 2">
-    </div>
-    <div class="slide">
-        <img src="https://i.ibb.co/LT3NrQG/In-Shot-20260127-073207074.jpg" alt="Slide 3">
-    </div>
-    <div class="slide">
-        <img src="https://i.ibb.co/8LvFfHQY/In-Shot-20260127-072634988.jpg" alt="Slide 4">
-    </div>
+    <div class="slide active"><img src="https://i.ibb.co/HLzgJbdZ/In-Shot-20260127-081616263.jpg"></div>
+    <div class="slide"><img src="https://i.ibb.co/zTqKDLfw/In-Shot-20260127-082105550.jpg"></div>
+    <div class="slide"><img src="https://i.ibb.co/LT3NrQG/In-Shot-20260127-073207074.jpg"></div>
+    <div class="slide"><img src="https://i.ibb.co/8LvFfHQY/In-Shot-20260127-072634988.jpg"></div>
 </div>
 
 <nav>
-    <div class="logo-box">
-        <img src="https://i.ibb.co/F4x0F7Bc/In-Shot-20260125-221439000.jpg" alt="Logo">
-        <span class="logo">GRIZATOR AI</span>
-    </div>
+    <div class="logo">GRIZATOR AI</div>
+    <div style="font-family:'Orbitron'; color:var(--ai-cyan); font-size:0.6rem;">CORE: ONLINE</div>
 </nav>
 
 <div class="container">
     <div id="home-view">
         <header class="hero">
-            <h1>Choose Your Network.</h1>
-            <p>AI finds the most stable VPN for Morocco *6</p>
+            <h1>Choose Your Network</h1>
+            <p>AI-Optimized VPN discovery for Morocco *6</p>
         </header>
 
         <div class="network-grid">
             <div class="network-card inwi-card" data-tilt onclick="selectNetwork('inwi')">
-                <span class="badge-ai">Gaming Optimized</span>
-                <img src="https://i.ibb.co/JWHMCRdS/In-Shot-20260126-093834338.jpg" alt="Inwi" class="net-img">
-                <h2 style="font-family: 'Orbitron'; font-size: 1.2rem;">INWI</h2>
+                <img src="https://i.ibb.co/JWHMCRdS/In-Shot-20260126-093834338.jpg" class="net-img">
+                <h2 style="font-family:'Orbitron'">INWI</h2>
             </div>
-
             <div class="network-card orange-card" data-tilt onclick="selectNetwork('orange')">
-                <span class="badge-ai">High Stability</span>
-                <img src="https://i.ibb.co/23z8x035/In-Shot-20260126-093754730.jpg" alt="Orange" class="net-img">
-                <h2 style="font-family: 'Orbitron'; font-size: 1.2rem;">ORANGE</h2>
+                <img src="https://i.ibb.co/23z8x035/In-Shot-20260126-093754730.jpg" class="net-img">
+                <h2 style="font-family:'Orbitron'">ORANGE</h2>
             </div>
-
             <div class="network-card iam-card" data-tilt onclick="selectNetwork('iam')">
-                <span class="badge-ai">Ultra Speed</span>
-                <img src="https://i.ibb.co/mFzx3KHg/In-Shot-20260126-093339759.jpg" alt="IAM" class="net-img">
-                <h2 style="font-family: 'Orbitron'; font-size: 1.2rem;">IAM</h2>
+                <img src="https://i.ibb.co/mFzx3KHg/In-Shot-20260126-093339759.jpg" class="net-img">
+                <h2 style="font-family:'Orbitron'">MAROC TÉLÉCOM</h2>
             </div>
         </div>
     </div>
 
     <div id="apps-view">
         <div id="app-list"></div>
-        <center><button onclick="location.reload()" style="background:transparent; color:white; border:1px solid var(--border); padding:10px 20px; border-radius:50px; cursor:pointer;">Back</button></center>
+        <button class="back-btn" onclick="location.reload()">
+            <span style="margin-left:10px;">🔙</span> رجوع
+        </button>
     </div>
 </div>
 
 <div id="ai-scanner">
     <div class="loader"></div>
-    <p id="scan-text" style="margin-top: 15px; font-family: 'Orbitron'; color: var(--ai-cyan); font-size: 0.8rem;"></p>
+    <p id="scan-text" style="margin-top:20px; font-family:'Orbitron'; color:var(--ai-cyan); letter-spacing:2px;"></p>
 </div>
 
 <script>
+    // 🎭 Slider Engine
     const slides = document.querySelectorAll('.slide');
-    let currentSlide = 0;
+    let current = 0;
+    setInterval(() => {
+        slides[current].classList.remove('active');
+        current = (current + 1) % slides.length;
+        slides[current].classList.add('active');
+    }, 5000);
 
-    function nextSlide() {
-        slides[currentSlide].classList.remove('active');
-        currentSlide = (currentSlide + 1) % slides.length;
-        slides[currentSlide].classList.add('active');
-    }
-    setInterval(nextSlide, 5000);
-
+    // 🧊 Tilt Effect
     VanillaTilt.init(document.querySelectorAll(".network-card"), { max: 15, speed: 400 });
 
     const vpnData = {
@@ -251,7 +182,7 @@
 
     function selectNetwork(net) {
         document.getElementById('ai-scanner').style.display = 'flex';
-        document.getElementById('scan-text').innerText = "AI MATCHING...";
+        document.getElementById('scan-text').innerText = "AI SCANNING...";
         setTimeout(() => {
             document.getElementById('ai-scanner').style.display = 'none';
             document.getElementById('home-view').style.display = 'none';
@@ -259,9 +190,9 @@
             const list = document.getElementById('app-list');
             list.innerHTML = vpnData[net].map(app => `
                 <div class="app-card">
-                    <div style="color:#ffcc00; font-size:0.7rem; font-family:'Orbitron';">TRUST SCORE: ${app.trust}/10</div>
+                    <div style="color:#ffcc00; font-family:'Orbitron'; font-size:0.7rem;">TRUST SCORE: ${app.trust}/10</div>
                     <h2 style="margin:10px 0;">${app.name}</h2>
-                    <a href="${app.link}" target="_blank" class="install-btn">🚀 DOWNLOAD</a>
+                    <a href="${app.link}" target="_blank" class="install-btn">🚀 INSTALL NOW</a>
                 </div>
             `).join('');
         }, 1500);
