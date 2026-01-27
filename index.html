@@ -11,80 +11,77 @@
         :root {
             --bg: #010409;
             --ai-cyan: #00f2ff;
-            --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(0, 242, 255, 0.15);
+            --glass: rgba(255, 255, 255, 0.02);
+            --border: rgba(0, 242, 255, 0.1);
             --inwi: #bc13fe; --orange: #ff7900; --iam: #0070ff;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { background-color: var(--bg); color: white; font-family: 'Cairo', sans-serif; overflow-x: hidden; min-height: 100vh; }
+        body { background-color: var(--bg); color: white; font-family: 'Cairo', sans-serif; overflow-x: hidden; }
 
-        /* 🌌 Pro AI Neural Background */
-        #ai-canvas {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; background: radial-gradient(circle at center, #0a1128 0%, #010409 100%);
-        }
+        /* 🌌 Neural Background */
+        #ai-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at center, #050a18 0%, #010409 100%); }
 
-        /* 🎬 Hologram Slider & Light Sweep */
-        .slider-container { width: 100%; height: 380px; position: relative; overflow: hidden; border-bottom: 2px solid var(--ai-cyan); box-shadow: 0 0 40px rgba(0, 242, 255, 0.2); }
-        .slide { position: absolute; inset: 0; opacity: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; transition: opacity 1.2s ease-in-out; }
-        .slide.active { opacity: 1; z-index: 10; animation: hologramIn 1.5s ease-out; }
-        .slide img { width: 100%; height: 100%; object-fit: cover; filter: contrast(1.1); }
+        /* 🎬 Hologram Slider Engine */
+        .slider-container { width: 100%; height: 380px; position: relative; overflow: hidden; border-bottom: 2px solid var(--ai-cyan); }
+        .slide { position: absolute; inset: 0; opacity: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .slide.active { opacity: 1; z-index: 10; animation: hologramReveal 1.2s ease-out forwards; }
+        .slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8) contrast(1.1); }
         
+        /* ⚡ Light Sweep & Hologram FX */
         .slide.active::after {
-            content: ''; position: absolute; top: 0; left: -100%; width: 60%; height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 242, 255, 0.5), transparent);
-            transform: skewX(-20deg); animation: lightSweep 1.8s ease-in-out; z-index: 12;
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 242, 255, 0.4), transparent);
+            transform: skewX(-25deg); animation: lightSweep 1.5s ease-in-out; z-index: 11;
         }
 
-        @keyframes hologramIn {
-            0% { filter: brightness(3) blur(15px); transform: scale(1.1); }
-            100% { filter: brightness(1) blur(0); transform: scale(1); }
+        @keyframes hologramReveal {
+            0% { opacity: 0; filter: brightness(2) grayscale(1) blur(10px); transform: scale(1.05); }
+            100% { opacity: 1; filter: brightness(1) grayscale(0) blur(0); transform: scale(1); }
         }
-        @keyframes lightSweep { 0% { left: -100%; } 100% { left: 200%; } }
+
+        @keyframes lightSweep {
+            0% { left: -100%; }
+            100% { left: 200%; }
+        }
+
         @media (max-width: 768px) { .slider-container { height: 240px; } }
 
         /* 🤖 Navigation */
-        nav { padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(15px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
+        nav { padding: 12px 5%; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(15px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
         .brand { display: flex; align-items: center; gap: 12px; }
         .logo-img { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--ai-cyan); box-shadow: 0 0 15px var(--ai-cyan); object-fit: cover; }
         .brand-name { font-family: 'Orbitron'; font-weight: 900; font-size: 1.3rem; color: #fff; text-shadow: 0 0 10px var(--ai-cyan); }
 
-        .hero { text-align: center; padding: 45px 20px; position: relative; }
-        .hero h1 { font-family: 'Orbitron'; font-size: 2.2rem; margin-bottom: 10px; background: linear-gradient(to right, #fff, var(--ai-cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero p { color: #a0a0a0; font-size: 0.95rem; letter-spacing: 1px; }
+        .hero { text-align: center; padding: 40px 20px; }
+        .hero h1 { font-family: 'Orbitron'; font-size: 2rem; margin-bottom: 10px; }
+        .hero p { color: #888; font-size: 0.9rem; }
 
-        /* 📱 Premium Cards */
-        .network-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; padding: 0 8% 60px; }
-        .network-card { 
-            background: var(--glass); border: 1px solid var(--border); border-radius: 35px; padding: 45px 20px; 
-            cursor: pointer; text-align: center; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            backdrop-filter: blur(12px); position: relative; overflow: hidden;
-        }
-        .network-card:hover { transform: translateY(-10px); border-color: var(--accent); background: rgba(255, 255, 255, 0.05); }
-        .net-img { width: 90px; height: 90px; border-radius: 22px; margin-bottom: 15px; border: 2px solid var(--accent); box-shadow: 0 0 20px var(--accent); }
+        /* 📱 Cards */
+        .network-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 0 8% 50px; }
+        .network-card { background: var(--glass); border: 1px solid var(--border); border-radius: 30px; padding: 40px 20px; cursor: pointer; text-align: center; transition: 0.4s; position: relative; backdrop-filter: blur(5px); }
+        .net-img { width: 85px; height: 85px; border-radius: 20px; margin-bottom: 15px; border: 2px solid var(--accent); box-shadow: 0 0 15px var(--accent); }
         .inwi-card { --accent: var(--inwi); } .orange-card { --accent: var(--orange); } .iam-card { --accent: var(--iam); }
 
-        .download-counter { font-family: 'Orbitron'; font-size: 0.75rem; color: #00ffaa; display: flex; align-items: center; justify-content: center; gap: 6px; margin-bottom: 8px; }
+        .download-counter { font-family: 'Orbitron'; font-size: 0.75rem; color: #00ffaa; display: flex; align-items: center; justify-content: center; gap: 5px; margin-bottom: 5px; }
+        
+        #apps-view { display: none; padding: 20px 8%; animation: fadeIn 0.6s ease; }
+        .app-card { background: var(--glass); border: 1px solid var(--border); border-radius: 20px; padding: 20px; margin-bottom: 15px; border-right: 4px solid var(--ai-cyan); }
+        .install-btn { background: #fff; color: #000; padding: 12px; border-radius: 12px; text-decoration: none; font-weight: 900; display: block; text-align: center; margin-top: 10px; }
 
-        #apps-view { display: none; padding: 25px 8%; animation: fadeInUp 0.7s ease; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .app-card { background: var(--glass); border: 1px solid var(--border); border-radius: 25px; padding: 25px; margin-bottom: 20px; border-right: 5px solid var(--ai-cyan); backdrop-filter: blur(10px); }
-        .install-btn { background: #fff; color: #000; padding: 14px; border-radius: 15px; text-decoration: none; font-weight: 900; display: block; text-align: center; margin-top: 15px; transition: 0.3s; }
-        .install-btn:hover { background: var(--ai-cyan); transform: scale(1.02); }
-
-        .back-btn { background: transparent; border: 1px solid var(--ai-cyan); padding: 12px 50px; border-radius: 50px; cursor: pointer; margin: 40px auto; display: block; color: var(--ai-cyan); font-family: 'Orbitron'; font-weight: 900; letter-spacing: 2px; }
+        .back-btn { background: #000; border: 1px solid var(--ai-cyan); padding: 12px 45px; border-radius: 50px; cursor: pointer; margin: 30px auto; display: block; }
+        .back-text { font-family: 'Orbitron'; font-weight: 900; color: var(--ai-cyan); letter-spacing: 2px; }
 
         #ai-scanner { position: fixed; inset: 0; background: var(--bg); z-index: 2000; display: none; flex-direction: column; align-items: center; justify-content: center; }
-        .loader { width: 45px; height: 45px; border: 3px solid rgba(0,242,255,0.1); border-top-color: var(--ai-cyan); border-radius: 50%; animation: spin 0.8s infinite linear; }
+        .loader { width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.1); border-top-color: var(--ai-cyan); border-radius: 50%; animation: spin 1s infinite linear; }
         @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-<canvas id="ai-canvas"></canvas>
+<canvas id="ai-background"></canvas>
 
-<div class="slider-container">
+<div class="slider-container" id="slider">
     <div class="slide active"><img src="https://i.ibb.co/HLzgJbdZ/In-Shot-20260127-081616263.jpg"></div>
     <div class="slide"><img src="https://i.ibb.co/zTqKDLfw/In-Shot-20260127-082105550.jpg"></div>
     <div class="slide"><img src="https://i.ibb.co/LT3NrQG/In-Shot-20260127-073207074.jpg"></div>
@@ -96,9 +93,10 @@
         <img src="https://i.ibb.co/27Bb7mMy/In-Shot-20260127-103341799.jpg" class="logo-img">
         <span class="brand-name">Grizator</span>
     </div>
-    <div style="cursor:pointer; display:flex; flex-direction:column; gap:5px;">
-        <div style="width:25px;height:2px;background:var(--ai-cyan);box-shadow:0 0 5px var(--ai-cyan)"></div>
-        <div style="width:20px;height:2px;background:var(--ai-cyan);box-shadow:0 0 5px var(--ai-cyan)"></div>
+    <div style="cursor:pointer">
+        <div style="width:25px;height:3px;background:var(--ai-cyan);margin:4px 0"></div>
+        <div style="width:25px;height:3px;background:var(--ai-cyan);margin:4px 0"></div>
+        <div style="width:25px;height:3px;background:var(--ai-cyan);margin:4px 0"></div>
     </div>
 </nav>
 
@@ -108,15 +106,15 @@
         <p>All applications that convert *6 to *3</p>
     </header>
     <div class="network-grid">
-        <div class="network-card inwi-card" data-tilt onclick="selectNetwork('inwi')">
+        <div class="network-card inwi-card" onclick="selectNetwork('inwi')">
             <img src="https://i.ibb.co/JWHMCRdS/In-Shot-20260126-093834338.jpg" class="net-img">
             <h2 style="font-family:'Orbitron'">INWI</h2>
         </div>
-        <div class="network-card orange-card" data-tilt onclick="selectNetwork('orange')">
+        <div class="network-card orange-card" onclick="selectNetwork('orange')">
             <img src="https://i.ibb.co/23z8x035/In-Shot-20260126-093754730.jpg" class="net-img">
             <h2 style="font-family:'Orbitron'">ORANGE</h2>
         </div>
-        <div class="network-card iam-card" data-tilt onclick="selectNetwork('iam')">
+        <div class="network-card iam-card" onclick="selectNetwork('iam')">
             <img src="https://i.ibb.co/mFzx3KHg/In-Shot-20260126-093339759.jpg" class="net-img">
             <h2 style="font-family:'Orbitron'">MAROC TÉLÉCOM</h2>
         </div>
@@ -125,85 +123,73 @@
 
 <div id="apps-view">
     <div id="app-list"></div>
-    <button class="back-btn" onclick="window.history.back()">𝗕𝗔𝗖𝗞</button>
+    <button class="back-btn" onclick="window.history.back()">
+        <span class="back-text">𝗕𝗔𝗖𝗞</span>
+    </button>
 </div>
 
 <div id="ai-scanner">
     <div class="loader"></div>
-    <p style="margin-top:20px; font-family:'Orbitron'; color:var(--ai-cyan); letter-spacing:2px;">SYNCING NEURAL NETWORK...</p>
+    <p style="margin-top:20px; font-family:'Orbitron'; color:var(--ai-cyan);">AI SCANNING...</p>
 </div>
 
 <script>
-    // 🌌 Advanced AI Neural Particle Wave Engine
-    const canvas = document.getElementById('ai-canvas');
+    // 🌌 Neural Background
+    const canvas = document.getElementById('ai-background');
     const ctx = canvas.getContext('2d');
-    let particles = [];
-    let mouse = { x: null, y: null };
-
-    window.addEventListener('mousemove', (e) => { mouse.x = e.x; mouse.y = e.y; });
-    window.addEventListener('resize', init);
-
-    function init() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        particles = [];
-        const count = (canvas.width * canvas.height) / 15000;
-        for (let i = 0; i < count; i++) {
-            particles.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                vx: (Math.random() - 0.5) * 0.5,
-                vy: (Math.random() - 0.5) * 0.5,
-                size: Math.random() * 1.5 + 0.5
-            });
+    let dots = [];
+    function initCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    class Dot {
+        constructor() {
+            this.x = Math.random()*canvas.width; this.y = Math.random()*canvas.height;
+            this.vx = (Math.random()-0.5)*0.3; this.vy = (Math.random()-0.5)*0.3;
+        }
+        update() {
+            this.x += this.vx; this.y += this.vy;
+            if(this.x<0 || this.x>canvas.width) this.vx*=-1;
+            if(this.y<0 || this.y>canvas.height) this.vy*=-1;
+        }
+        draw() {
+            ctx.fillStyle = 'rgba(0, 242, 255, 0.2)';
+            ctx.beginPath(); ctx.arc(this.x, this.y, 1, 0, Math.PI*2); ctx.fill();
         }
     }
-
-    function animate() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach((p, i) => {
-            p.x += p.vx; p.y += p.vy;
-            if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-            if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-
-            ctx.fillStyle = 'rgba(0, 242, 255, 0.3)';
-            ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill();
-
-            for (let j = i + 1; j < particles.length; j++) {
-                const p2 = particles[j];
-                const dx = p.x - p2.x; const dy = p.y - p2.y;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-                if (dist < 130) {
-                    ctx.strokeStyle = `rgba(0, 242, 255, ${0.15 - dist / 800})`;
-                    ctx.lineWidth = 0.6;
-                    ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p2.x, p2.y); ctx.stroke();
+    function render() {
+        ctx.clearRect(0,0,canvas.width, canvas.height);
+        dots.forEach(d => {
+            d.update(); d.draw();
+            dots.forEach(d2 => {
+                let dist = Math.hypot(d.x - d2.x, d.y - d2.y);
+                if(dist < 100) {
+                    ctx.strokeStyle = `rgba(0, 242, 255, ${0.1 - dist/1000})`;
+                    ctx.beginPath(); ctx.moveTo(d.x, d.y); ctx.lineTo(d2.x, d2.y); ctx.stroke();
                 }
-            }
+            });
         });
-        requestAnimationFrame(animate);
+        requestAnimationFrame(render);
     }
-    init(); animate();
+    initCanvas(); for(let i=0; i<40; i++) dots.push(new Dot()); render();
 
-    // 📱 App Database
+    // 📱 App Logic
     const vpnData = {
         inwi: [
-            { name: "MC NET VPN", id: "i1", link: "https://play.google.com/store/apps/details?id=org.mcnetvpn.app" },
-            { name: "AT NET VPN", id: "i2", link: "https://play.google.com/store/apps/details?id=com.technore.atnetvpn" },
-            { name: "OSP TUNNEL", id: "i3", link: "https://play.google.com/store/apps/details?id=xyz.osptunnel.org" },
-            { name: "MORE TUNNEL", id: "i4", link: "https://play.google.com/store/apps/details?id=com.more.tunnel.vpn" },
-            { name: "DT TUNNEL", id: "i5", link: "https://play.google.com/store/apps/details?id=com.victo.dt" },
-            { name: "XRP TUNNEL PLUS", id: "i6", link: "https://play.google.com/store/apps/details?id=com.technore.xrptunnelplus" },
-            { name: "PINAS VPN", id: "i7", link: "https://play.google.com/store/apps/details?id=pinas.vpn.ph" }
+            { name: "MC NET VPN", link: "https://play.google.com/store/apps/details?id=org.mcnetvpn.app" },
+            { name: "AT NET VPN", link: "https://play.google.com/store/apps/details?id=com.technore.atnetvpn" },
+            { name: "OSP TUNNEL", link: "https://play.google.com/store/apps/details?id=xyz.osptunnel.org" },
+            { name: "MORE TUNNEL", link: "https://play.google.com/store/apps/details?id=com.more.tunnel.vpn" },
+            { name: "DT TUNNEL", link: "https://play.google.com/store/apps/details?id=com.victo.dt" },
+            { name: "XRP TUNNEL PLUS", link: "https://play.google.com/store/apps/details?id=com.technore.xrptunnelplus" },
+            { name: "PINAS VPN", link: "https://play.google.com/store/apps/details?id=pinas.vpn.ph" }
         ],
         orange: [
-            { name: "AM TUNNEL LITE", id: "o1", link: "https://play.google.com/store/apps/details?id=app.vpn.amtunnellite" },
-            { name: "MINA PRO NET", id: "o2", link: "https://play.google.com/store/apps/details?id=opencustom.minapronet.com.eg" }
+            { name: "AM TUNNEL LITE", link: "https://play.google.com/store/apps/details?id=app.vpn.amtunnellite" },
+            { name: "MINA PRO NET", link: "https://play.google.com/store/apps/details?id=opencustom.minapronet.com.eg" }
         ],
         iam: [
-            { name: "TSS TUNNEL", id: "m1", link: "https://play.google.com/store/apps/details?id=com.tss.tunnel" },
-            { name: "XRP TUNNEL PLUS", id: "m2", link: "https://play.google.com/store/apps/details?id=com.technore.xrptunnelplus" },
-            { name: "PINAS VPN", id: "m3", link: "https://play.google.com/store/apps/details?id=pinas.vpn.ph" },
-            { name: "TSS TUNNEL", id: "m4", link: "https://play.google.com/store/apps/details?id=com.tss.tunnel" }
+            { name: "TSS TUNNEL", link: "https://play.google.com/store/apps/details?id=com.tss.tunnel" },
+            { name: "XRP TUNNEL PLUS", link: "https://play.google.com/store/apps/details?id=com.technore.xrptunnelplus" },
+            { name: "PINAS VPN", link: "https://play.google.com/store/apps/details?id=pinas.vpn.ph" },
+            { name: "TSS TUNNEL", link: "https://play.google.com/store/apps/details?id=com.tss.tunnel" }
         ]
     };
 
@@ -214,15 +200,14 @@
             document.getElementById('ai-scanner').style.display = 'none';
             document.getElementById('home-view').style.display = 'none';
             document.getElementById('apps-view').style.display = 'block';
-            window.scrollTo(0,0);
             document.getElementById('app-list').innerHTML = vpnData[net].map(app => `
                 <div class="app-card">
-                    <div class="download-counter">👤 <span class="count-num">${Math.floor(Math.random()*600)+1800}</span> active users</div>
+                    <div class="download-counter">👤 <span class="count-num">${Math.floor(Math.random()*400)+1200}</span> downloads</div>
                     <h2 style="margin:5px 0;">${app.name}</h2>
                     <a href="${app.link}" target="_blank" class="install-btn">🚀 INSTALL NOW</a>
                 </div>`).join('');
-            startCounting();
-        }, 1300);
+            startCounter();
+        }, 1200);
     }
 
     window.onpopstate = () => {
@@ -230,25 +215,28 @@
         document.getElementById('apps-view').style.display = 'none';
     };
 
-    function startCounting() {
+    function startCounter() {
         setInterval(() => {
             document.querySelectorAll('.count-num').forEach(el => {
-                let current = parseInt(el.innerText);
-                el.innerText = current + (Math.random() > 0.5 ? 1 : -1);
+                let val = parseInt(el.innerText);
+                el.innerText = val + (Math.random() > 0.5 ? 1 : -1);
             });
         }, 2000);
     }
 
-    // Slider Logic: 5s stay + animations
-    let slideIdx = 0;
+    // 🎬 Slider logic with 5s stay
+    let currentSlide = 0;
     const slides = document.querySelectorAll('.slide');
-    setInterval(() => {
-        slides[slideIdx].classList.remove('active');
-        slideIdx = (slideIdx + 1) % slides.length;
-        slides[slideIdx].classList.add('active');
-    }, 6500);
+    function nextSlide() {
+        slides[currentSlide].style.opacity = '0';
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.add('active');
+        slides[currentSlide].style.opacity = '1';
+    }
+    setInterval(nextSlide, 6500); // 1.5s animation + 5s static stay
 
-    VanillaTilt.init(document.querySelectorAll(".network-card"), { max: 10, speed: 400, glare: true, "max-glare": 0.2 });
+    VanillaTilt.init(document.querySelectorAll(".network-card"), { max: 10, speed: 400 });
 </script>
 </body>
 </html>
