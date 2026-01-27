@@ -48,13 +48,12 @@
         }
         @keyframes lightScan { 0% { left: -150%; } 100% { left: 150%; } }
 
-        /* 🤖 Advanced AI Navigation */
+        /* 🤖 Navigation with Logo & Glowing Name */
         nav { padding: 10px 5%; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
         
-        /* 🖼️ Logo & Name Style */
         .brand { display: flex; align-items: center; gap: 12px; }
         .logo-img { 
-            width: 45px; height: 45px; border-radius: 50%; 
+            width: 42px; height: 42px; border-radius: 50%; 
             border: 2px solid var(--ai-cyan); 
             box-shadow: 0 0 15px var(--ai-cyan); 
             object-fit: cover;
@@ -97,13 +96,16 @@
         .ai-dropdown.active .drop-item:nth-child(1) { transition-delay: 0.2s; }
         .ai-dropdown.active .drop-item:nth-child(2) { transition-delay: 0.3s; }
 
-        /* Page Content */
+        /* Hero Content */
         .hero { text-align: center; padding: 30px 20px; }
+        .hero p { color: #a0a0a0; font-size: 0.95rem; margin-top: 10px; letter-spacing: 0.5px; }
+
         .network-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 0 8% 60px; }
         .network-card { background: var(--glass); border: 1px solid var(--border); border-radius: 35px; padding: 40px 20px; cursor: pointer; text-align: center; transition: 0.3s; position: relative; overflow: hidden; }
         .net-img { width: 90px; height: 90px; border-radius: 20px; margin-bottom: 15px; border: 2px solid var(--accent); box-shadow: 0 0 15px var(--accent); }
         .inwi-card { --accent: var(--inwi); } .orange-card { --accent: var(--orange); } .iam-card { --accent: var(--iam); }
 
+        /* 🔙 AI Capsule BACK Button */
         .back-btn { background: #050a10; border: 1.5px solid rgba(0, 242, 255, 0.4); padding: 12px 45px; border-radius: 50px; cursor: pointer; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; margin: 40px auto; transition: all 0.4s ease; box-shadow: 0 0 15px rgba(0, 242, 255, 0.1); }
         .back-text { font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 1.1rem; letter-spacing: 3px; background: linear-gradient(90deg, #fff, var(--ai-cyan), #fff); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: textGlowFlow 3s linear infinite; }
         @keyframes textGlowFlow { 0% { background-position: 0% center; filter: drop-shadow(0 0 2px var(--ai-cyan)); } 50% { filter: drop-shadow(0 0 8px var(--ai-cyan)); } 100% { background-position: 200% center; filter: drop-shadow(0 0 2px var(--ai-cyan)); } }
@@ -131,7 +133,7 @@
 
 <nav>
     <div class="brand">
-        <img src="https://i.ibb.co/27Bb7mMy/In-Shot-20260127-103341799.jpg" alt="Logo" class="logo-img">
+        <img src="https://i.ibb.co/27Bb7mMy/In-Shot-20260127-103341799.jpg" alt="Grizator Logo" class="logo-img">
         <span class="brand-name">Grizator</span>
     </div>
     
@@ -143,7 +145,7 @@
         </div>
         <div class="ai-dropdown" id="aiDropdown">
             <a href="#" class="drop-item">📤 مشاركة</a>
-            <a href="https://wa.me/?text=Check this AI VPN Hub!" class="drop-item">💬 واتساب</a>
+            <a href="https://wa.me/?text=Check out Grizator AI!" class="drop-item">💬 واتساب</a>
         </div>
     </div>
 </nav>
@@ -152,7 +154,7 @@
     <div id="home-view">
         <header class="hero">
             <h1>Choose Your Network</h1>
-            <p>AI-Optimized VPN discovery for Morocco *6</p>
+            <p>All applications that convert *6 to *3</p>
         </header>
 
         <div class="network-grid">
