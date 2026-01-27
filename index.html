@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grizator AI | VPN Hub Morocco</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Cairo:wght@400;900&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
     
     <style>
         :root {
@@ -21,7 +20,7 @@
 
         #ai-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at center, #050a18 0%, #010409 100%); }
 
-        /* 🎬 Slider Section */
+        /* 🎬 Slider Engine */
         .slider-container { width: 100%; height: 380px; position: relative; overflow: hidden; border-bottom: 2px solid var(--ai-cyan); }
         .slide { position: absolute; inset: 0; opacity: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .slide.active { opacity: 1; z-index: 10; animation: hologramReveal 1.2s ease-out forwards; }
@@ -41,7 +40,6 @@
 
         @media (max-width: 768px) { .slider-container { height: 240px; } }
 
-        /* 🤖 Nav */
         nav { padding: 12px 5%; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(15px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
         .brand { display: flex; align-items: center; gap: 12px; }
         .logo-img { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--ai-cyan); box-shadow: 0 0 15px var(--ai-cyan); object-fit: cover; }
@@ -50,7 +48,7 @@
         .hero { text-align: center; padding: 40px 20px; }
         .hero h1 { font-family: 'Orbitron'; font-size: 2rem; margin-bottom: 10px; }
 
-        /* 💎 Legendary Cards (Static tilt, Active Motion) */
+        /* 💎 Legendary Cards (Glow & Glass ON - Tilt OFF) */
         .network-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; padding: 0 8% 50px; }
         
         .network-card { 
@@ -62,33 +60,39 @@
             text-align: center;
             position: relative;
             backdrop-filter: blur(15px);
-            transition: transform 0.2s cubic-bezier(0.2, 0, 0.2, 1), box-shadow 0.3s ease, background 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        .inwi-card { --accent: var(--inwi); }
-        .orange-card { --accent: var(--orange); }
-        .iam-card { --accent: var(--iam); }
+        .inwi-card { --accent: var(--inwi); border-color: rgba(188, 19, 254, 0.3); box-shadow: 0 0 20px rgba(188, 19, 254, 0.1); }
+        .orange-card { --accent: var(--orange); border-color: rgba(255, 121, 0, 0.3); box-shadow: 0 0 20px rgba(255, 121, 0, 0.1); }
+        .iam-card { --accent: var(--iam); border-color: rgba(0, 112, 255, 0.3); box-shadow: 0 0 20px rgba(0, 112, 255, 0.1); }
 
-        /* ⚡ Active Click Animation */
+        /* إضاءة النيون عند Hover */
+        .network-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 0 30px var(--accent);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* ⚡ التفاعل عند الضغط فقط */
         .network-card:active {
-            transform: scale(0.95) rotateX(10deg);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4), 0 0 30px var(--accent);
-            background: rgba(255, 255, 255, 0.1);
+            transform: scale(0.94) rotateX(10deg);
+            background: rgba(255, 255, 255, 0.12);
         }
 
         .net-img { 
             width: 100px; height: 100px; border-radius: 25px; margin-bottom: 20px; 
             border: 2px solid var(--accent); 
             box-shadow: 0 0 20px var(--accent);
-            pointer-events: none;
+            transition: 0.3s;
         }
 
         /* Energy Pulse */
         .pulse-effect {
             position: absolute; border-radius: 50%; background: var(--accent);
-            transform: translate(-50%, -50%) scale(0); opacity: 0.6; pointer-events: none;
+            transform: translate(-50%, -50%) scale(0); opacity: 0.7; pointer-events: none;
             left: 50%; top: 50%;
             animation: energyBurst 0.5s ease-out forwards;
         }
@@ -250,9 +254,6 @@
         currentSlide = (currentSlide + 1) % slides.length;
         slides[currentSlide].classList.add('active');
     }, 6500);
-
-    // ⚡ Disabled automatic tilt, only trigger on click/active in CSS
-    // VanillaTilt.init is removed for a cleaner mobile experience.
 </script>
 </body>
 </html>
