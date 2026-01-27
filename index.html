@@ -11,77 +11,53 @@
         :root {
             --bg: #010409;
             --ai-cyan: #00f2ff;
-            --ai-blue: #0070ff;
             --glass: rgba(255, 255, 255, 0.02);
             --border: rgba(0, 242, 255, 0.1);
             --inwi: #bc13fe; --orange: #ff7900; --iam: #0070ff;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { background-color: var(--bg); color: white; font-family: 'Cairo', sans-serif; overflow-x: hidden; min-height: 100vh; }
+        body { background-color: var(--bg); color: white; font-family: 'Cairo', sans-serif; overflow-x: hidden; }
 
-        /* 🌌 Premium AI Background (Neural Flow) */
-        #ai-background {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1; background: radial-gradient(circle at center, #050a18 0%, #010409 100%);
-        }
+        /* 🌌 Animated AI Background */
+        #ai-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at center, #050a18 0%, #010409 100%); }
 
-        /* 🎬 Cinematic Slider */
-        .slider-container {
-            width: 100%; height: 380px; position: relative; overflow: hidden;
-            border-bottom: 2px solid var(--ai-cyan); box-shadow: 0 0 40px rgba(0, 242, 255, 0.15);
-        }
+        .slider-container { width: 100%; height: 380px; position: relative; overflow: hidden; border-bottom: 2px solid var(--ai-cyan); box-shadow: 0 0 30px rgba(0, 242, 255, 0.2); }
         .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.5s ease-in-out; }
         .slide.active { opacity: 1; z-index: 10; }
-        .slide img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8); }
+        .slide img { width: 100%; height: 100%; object-fit: cover; }
         @media (max-width: 768px) { .slider-container { height: 240px; } }
 
-        /* 🤖 Navigation Bar */
-        nav { padding: 15px 6%; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
-        .brand { display: flex; align-items: center; gap: 15px; }
-        .logo-img { width: 42px; height: 42px; border-radius: 50%; border: 2px solid var(--ai-cyan); box-shadow: 0 0 15px var(--ai-cyan); object-fit: cover; }
-        .brand-name { font-family: 'Orbitron'; font-weight: 900; font-size: 1.4rem; color: #fff; text-shadow: 0 0 10px var(--ai-cyan); }
+        nav { padding: 12px 5%; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(15px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
+        .brand { display: flex; align-items: center; gap: 12px; }
+        .logo-img { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--ai-cyan); box-shadow: 0 0 15px var(--ai-cyan); object-fit: cover; }
+        .brand-name { font-family: 'Orbitron'; font-weight: 900; font-size: 1.3rem; color: #fff; text-shadow: 0 0 10px var(--ai-cyan); }
 
-        .menu-icon { cursor: pointer; display: flex; flex-direction: column; gap: 6px; }
-        .bar { width: 28px; height: 3px; background: var(--ai-cyan); border-radius: 10px; box-shadow: 0 0 10px var(--ai-cyan); }
+        .menu-icon { cursor: pointer; display: flex; flex-direction: column; gap: 5px; }
+        .bar { width: 25px; height: 3px; background: var(--ai-cyan); border-radius: 2px; }
 
-        /* 💎 Layout */
-        .hero { text-align: center; padding: 50px 20px; }
-        .hero h1 { font-family: 'Orbitron'; font-size: 2.2rem; letter-spacing: 2px; margin-bottom: 10px; background: linear-gradient(90deg, #fff, var(--ai-cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero p { color: #8892b0; font-size: 0.95rem; }
+        .hero { text-align: center; padding: 40px 20px; }
+        .hero h1 { font-family: 'Orbitron'; font-size: 2rem; margin-bottom: 10px; }
+        .hero p { color: #888; font-size: 0.9rem; }
 
-        .network-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; padding: 0 8% 60px; }
-        .network-card { 
-            background: var(--glass); border: 1px solid var(--border); border-radius: 35px; padding: 45px 25px; 
-            cursor: pointer; text-align: center; transition: 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); 
-            backdrop-filter: blur(10px); position: relative; overflow: hidden;
-        }
-        .network-card:hover { border-color: var(--accent); transform: translateY(-10px); background: rgba(255, 255, 255, 0.05); }
-        .net-img { width: 95px; height: 95px; border-radius: 25px; margin-bottom: 20px; border: 2px solid var(--accent); box-shadow: 0 0 20px var(--accent); }
+        .network-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 0 8% 50px; }
+        .network-card { background: var(--glass); border: 1px solid var(--border); border-radius: 30px; padding: 40px 20px; cursor: pointer; text-align: center; transition: 0.4s; position: relative; backdrop-filter: blur(5px); }
+        .net-img { width: 85px; height: 85px; border-radius: 20px; margin-bottom: 15px; border: 2px solid var(--accent); box-shadow: 0 0 15px var(--accent); }
         .inwi-card { --accent: var(--inwi); } .orange-card { --accent: var(--orange); } .iam-card { --accent: var(--iam); }
 
-        /* 👤 Live Counter Style */
-        .live-counter { 
-            display: flex; align-items: center; justify-content: center; gap: 8px; 
-            font-family: 'Orbitron'; font-size: 0.8rem; color: #00ffaa; margin-bottom: 10px;
-        }
-        .count-num { font-weight: 900; transition: all 0.5s ease; }
+        .download-counter { font-family: 'Orbitron'; font-size: 0.75rem; color: #00ffaa; display: flex; align-items: center; justify-content: center; gap: 5px; margin-bottom: 5px; }
+        .count-num { font-weight: bold; }
 
-        /* 📱 Apps View */
-        #apps-view { display: none; padding: 30px 8%; animation: slideUp 0.6s ease; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-        .app-card { background: var(--glass); border: 1px solid var(--border); border-radius: 25px; padding: 25px; margin-bottom: 20px; border-left: 5px solid var(--ai-cyan); backdrop-filter: blur(10px); }
-        .install-btn { background: #fff; color: #000; padding: 15px; border-radius: 15px; text-decoration: none; font-weight: 900; display: block; text-align: center; margin-top: 15px; transition: 0.3s; }
-        .install-btn:hover { background: var(--ai-cyan); transform: scale(1.02); }
+        #apps-view { display: none; padding: 20px 8%; animation: fadeIn 0.6s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .app-card { background: var(--glass); border: 1px solid var(--border); border-radius: 20px; padding: 20px; margin-bottom: 15px; border-right: 4px solid var(--ai-cyan); }
+        .install-btn { background: #fff; color: #000; padding: 12px; border-radius: 12px; text-decoration: none; font-weight: 900; display: block; text-align: center; margin-top: 10px; }
 
-        /* 🔙 Back Button */
-        .back-btn { background: transparent; border: 1px solid var(--ai-cyan); padding: 14px 50px; border-radius: 50px; cursor: pointer; margin: 40px auto; display: block; transition: 0.3s; }
-        .back-text { font-family: 'Orbitron'; font-weight: 900; color: var(--ai-cyan); letter-spacing: 3px; }
-        .back-btn:hover { background: rgba(0, 242, 255, 0.1); box-shadow: 0 0 20px rgba(0, 242, 255, 0.2); }
+        .back-btn { background: #000; border: 1px solid var(--ai-cyan); padding: 12px 45px; border-radius: 50px; cursor: pointer; margin: 30px auto; display: block; }
+        .back-text { font-family: 'Orbitron'; font-weight: 900; color: var(--ai-cyan); letter-spacing: 2px; }
 
-        /* 🌀 AI Loading Overlay */
         #ai-scanner { position: fixed; inset: 0; background: var(--bg); z-index: 2000; display: none; flex-direction: column; align-items: center; justify-content: center; }
-        .loader { width: 50px; height: 50px; border: 3px solid rgba(0, 242, 255, 0.1); border-top-color: var(--ai-cyan); border-radius: 50%; animation: spin 0.8s infinite linear; }
+        .loader { width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.1); border-top-color: var(--ai-cyan); border-radius: 50%; animation: spin 1s infinite linear; }
         @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
@@ -102,169 +78,140 @@
         <span class="brand-name">Grizator</span>
     </div>
     <div class="menu-icon">
-        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        <div class="bar"></div><div class="bar" style="margin:5px 0"></div><div class="bar"></div>
     </div>
 </nav>
 
 <div id="home-view">
     <header class="hero">
-        <h1>Grizator Hub</h1>
-        <p>Advanced Solutions for Morocco Networks</p>
+        <h1>Choose Your Network</h1>
+        <p>All applications that convert *6 to *3</p>
     </header>
     <div class="network-grid">
-        <div class="network-card inwi-card" data-tilt onclick="selectNetwork('inwi')">
+        <div class="network-card inwi-card" onclick="selectNetwork('inwi')">
             <img src="https://i.ibb.co/JWHMCRdS/In-Shot-20260126-093834338.jpg" class="net-img">
             <h2 style="font-family:'Orbitron'">INWI</h2>
         </div>
-        <div class="network-card orange-card" data-tilt onclick="selectNetwork('orange')">
+        <div class="network-card orange-card" onclick="selectNetwork('orange')">
             <img src="https://i.ibb.co/23z8x035/In-Shot-20260126-093754730.jpg" class="net-img">
             <h2 style="font-family:'Orbitron'">ORANGE</h2>
         </div>
-        <div class="network-card iam-card" data-tilt onclick="selectNetwork('iam')">
+        <div class="network-card iam-card" onclick="selectNetwork('iam')">
             <img src="https://i.ibb.co/mFzx3KHg/In-Shot-20260126-093339759.jpg" class="net-img">
-            <h2 style="font-family:'Orbitron'">IAM</h2>
+            <h2 style="font-family:'Orbitron'">MAROC TÉLÉCOM</h2>
         </div>
     </div>
 </div>
 
 <div id="apps-view">
     <div id="app-list"></div>
-    <button class="back-btn" onclick="triggerSystemBack()">
+    <button class="back-btn" onclick="window.history.back()">
         <span class="back-text">𝗕𝗔𝗖𝗞</span>
     </button>
 </div>
 
 <div id="ai-scanner">
     <div class="loader"></div>
-    <p style="margin-top:20px; font-family:'Orbitron'; color:var(--ai-cyan); letter-spacing: 2px;">NEURAL SCANNING...</p>
+    <p style="margin-top:20px; font-family:'Orbitron'; color:var(--ai-cyan);">AI SCANNING...</p>
 </div>
 
 <script>
-    // 🌌 Neural AI Background Animation
+    // 🌌 Subtle AI Background Engine
     const canvas = document.getElementById('ai-background');
     const ctx = canvas.getContext('2d');
     let dots = [];
-    const dotCount = 60;
-
-    function initCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-
+    function initCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
     class Dot {
         constructor() {
-            this.x = Math.random() * canvas.width;
-            this.y = Math.random() * canvas.height;
-            this.vx = (Math.random() - 0.5) * 0.4;
-            this.vy = (Math.random() - 0.5) * 0.4;
-            this.size = Math.random() * 2;
+            this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height;
+            this.vx = (Math.random() - 0.5) * 0.3; this.vy = (Math.random() - 0.5) * 0.3;
         }
         update() {
             this.x += this.vx; this.y += this.vy;
-            if(this.x < 0 || this.x > canvas.width) this.vx *= -1;
-            if(this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            if(this.x<0 || this.x>canvas.width) this.vx*=-1;
+            if(this.y<0 || this.y>canvas.height) this.vy*=-1;
         }
         draw() {
-            ctx.fillStyle = 'rgba(0, 242, 255, 0.3)';
-            ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2); ctx.fill();
+            ctx.fillStyle = 'rgba(0, 242, 255, 0.2)';
+            ctx.beginPath(); ctx.arc(this.x, this.y, 1, 0, Math.PI*2); ctx.fill();
         }
     }
-
     function render() {
         ctx.clearRect(0,0,canvas.width, canvas.height);
         dots.forEach(d => {
             d.update(); d.draw();
             dots.forEach(d2 => {
                 let dist = Math.hypot(d.x - d2.x, d.y - d2.y);
-                if(dist < 120) {
-                    ctx.strokeStyle = `rgba(0, 242, 255, ${0.12 - dist/1000})`;
-                    ctx.lineWidth = 0.5;
-                    ctx.beginPath(); ctx.moveTo(d.x, d.y); ctx.lineTo(d2.x, d2.y); ctx.stroke();
+                if(dist < 100) {
+                    ctx.strokeStyle = `rgba(0, 242, 255, ${0.1 - dist/1000})`;
+                    ctx.lineWidth = 0.5; ctx.beginPath(); ctx.moveTo(d.x, d.y); ctx.lineTo(d2.x, d2.y); ctx.stroke();
                 }
             });
         });
         requestAnimationFrame(render);
     }
-    window.addEventListener('resize', initCanvas);
-    initCanvas(); for(let i=0; i<dotCount; i++) dots.push(new Dot()); render();
+    initCanvas(); for(let i=0; i<50; i++) dots.push(new Dot()); render();
 
-    // 📱 Data
+    // 📱 App Links
     const vpnData = {
         inwi: [
-            { name: "MC NET VPN", id: "in1", link: "https://play.google.com/store/apps/details?id=org.mcnetvpn.app" },
-            { name: "AT NET VPN", id: "in2", link: "https://play.google.com/store/apps/details?id=com.technore.atnetvpn" },
-            { name: "OSP TUNNEL", id: "in3", link: "https://play.google.com/store/apps/details?id=xyz.osptunnel.org" },
-            { name: "MORE TUNNEL", id: "in4", link: "https://play.google.com/store/apps/details?id=com.more.tunnel.vpn" },
-            { name: "DT TUNNEL", id: "in5", link: "https://play.google.com/store/apps/details?id=com.victo.dt" },
-            { name: "XRP TUNNEL PLUS", id: "in6", link: "https://play.google.com/store/apps/details?id=com.technore.xrptunnelplus" },
-            { name: "PINAS VPN", id: "in7", link: "https://play.google.com/store/apps/details?id=pinas.vpn.ph" }
+            { name: "MC NET VPN", id: "n1", link: "https://play.google.com/store/apps/details?id=org.mcnetvpn.app" },
+            { name: "AT NET VPN", id: "n2", link: "https://play.google.com/store/apps/details?id=com.technore.atnetvpn" },
+            { name: "OSP TUNNEL", id: "n3", link: "https://play.google.com/store/apps/details?id=xyz.osptunnel.org" },
+            { name: "MORE TUNNEL", id: "n4", link: "https://play.google.com/store/apps/details?id=com.more.tunnel.vpn" },
+            { name: "DT TUNNEL", id: "n5", link: "https://play.google.com/store/apps/details?id=com.victo.dt" },
+            { name: "XRP TUNNEL PLUS", id: "n6", link: "https://play.google.com/store/apps/details?id=com.technore.xrptunnelplus" },
+            { name: "PINAS VPN", id: "n7", link: "https://play.google.com/store/apps/details?id=pinas.vpn.ph" }
         ],
         orange: [
-            { name: "AM TUNNEL LITE", id: "or1", link: "https://play.google.com/store/apps/details?id=app.vpn.amtunnellite" },
-            { name: "MINA PRO NET", id: "or2", link: "https://play.google.com/store/apps/details?id=opencustom.minapronet.com.eg" }
+            { name: "AM TUNNEL LITE", id: "o1", link: "https://play.google.com/store/apps/details?id=app.vpn.amtunnellite" },
+            { name: "MINA PRO NET", id: "o2", link: "https://play.google.com/store/apps/details?id=opencustom.minapronet.com.eg" }
         ],
         iam: [
-            { name: "TSS TUNNEL", id: "iam1", link: "https://play.google.com/store/apps/details?id=com.tss.tunnel" },
-            { name: "XRP TUNNEL PLUS", id: "iam2", link: "https://play.google.com/store/apps/details?id=com.technore.xrptunnelplus" },
-            { name: "PINAS VPN", id: "iam3", link: "https://play.google.com/store/apps/details?id=pinas.vpn.ph" },
-            { name: "TSS TUNNEL (Alt)", id: "iam4", link: "https://play.google.com/store/apps/details?id=com.tss.tunnel" }
+            { name: "TSS TUNNEL", id: "m1", link: "https://play.google.com/store/apps/details?id=com.tss.tunnel" },
+            { name: "XRP TUNNEL PLUS", id: "m2", link: "https://play.google.com/store/apps/details?id=com.technore.xrptunnelplus" },
+            { name: "PINAS VPN", id: "m3", link: "https://play.google.com/store/apps/details?id=pinas.vpn.ph" },
+            { name: "TSS TUNNEL", id: "m4", link: "https://play.google.com/store/apps/details?id=com.tss.tunnel" }
         ]
     };
 
-    // 🔗 System Back Navigation Logic
     function selectNetwork(net) {
         document.getElementById('ai-scanner').style.display = 'flex';
-        history.pushState({view: 'apps'}, ''); // Create a history state
-
+        history.pushState({view: 'apps'}, '');
         setTimeout(() => {
             document.getElementById('ai-scanner').style.display = 'none';
             document.getElementById('home-view').style.display = 'none';
             document.getElementById('apps-view').style.display = 'block';
-            window.scrollTo(0,0);
-            
             document.getElementById('app-list').innerHTML = vpnData[net].map(app => `
                 <div class="app-card">
-                    <div class="live-counter">
-                        👤 <span class="count-num" id="c-${app.id}">${Math.floor(Math.random()*1000)+2500}</span> users online
-                    </div>
-                    <h2 style="margin:5px 0; font-size:1.1rem;">${app.name}</h2>
+                    <div class="download-counter">👤 <span class="count-num">${Math.floor(Math.random()*500)+1500}</span> downloads</div>
+                    <h2 style="margin:5px 0;">${app.name}</h2>
                     <a href="${app.link}" target="_blank" class="install-btn">🚀 INSTALL NOW</a>
                 </div>`).join('');
-            startLiveUpdates();
+            startCounter();
         }, 1200);
     }
 
-    // Catch System Back Button
-    window.onpopstate = function(event) {
+    window.onpopstate = function() {
         document.getElementById('home-view').style.display = 'block';
         document.getElementById('apps-view').style.display = 'none';
     };
 
-    function triggerSystemBack() {
-        window.history.back(); // This triggers onpopstate
-    }
-
-    // 👤 Live Animation Logic
-    function startLiveUpdates() {
+    function startCounter() {
         setInterval(() => {
             document.querySelectorAll('.count-num').forEach(el => {
-                let current = parseInt(el.innerText);
-                let change = Math.floor(Math.random() * 5) - 2; // -2 to +2
-                el.innerText = current + change;
-                el.style.color = change > 0 ? "#00ffaa" : "#00f2ff";
+                let val = parseInt(el.innerText);
+                el.innerText = val + (Math.random() > 0.5 ? 1 : -1);
             });
         }, 2500);
     }
 
-    // Slider
     setInterval(() => {
-        const slides = document.querySelectorAll('.slide');
-        let active = document.querySelector('.slide.active');
-        active.classList.remove('active');
-        (active.nextElementSibling || slides[0]).classList.add('active');
+        const s = document.querySelectorAll('.slide');
+        let a = document.querySelector('.slide.active');
+        a.classList.remove('active');
+        (a.nextElementSibling || s[0]).classList.add('active');
     }, 5000);
-
-    VanillaTilt.init(document.querySelectorAll(".network-card"), { max: 8, speed: 400 });
 </script>
 </body>
 </html>
