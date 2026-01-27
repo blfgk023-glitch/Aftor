@@ -20,7 +20,7 @@
 
         #ai-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at center, #050a18 0%, #010409 100%); }
 
-        /* 🎬 Clean Video Hero (No Controls) */
+        /* 🎬 Pure Background Video (No Interaction) */
         .hero-video-container { 
             width: 100%; 
             position: relative; 
@@ -29,22 +29,15 @@
             box-shadow: 0 0 30px rgba(0, 242, 255, 0.2);
             line-height: 0;
             background: #000;
-        }
-
-        /* منع التفاعل مع الفيديو */
-        .video-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 5;
-            background: transparent;
+            pointer-events: none; /* هادي كتقتل أي تفاعل مع الفيديو نهائياً */
         }
 
         .hero-video-container iframe {
             width: 100%;
             aspect-ratio: 16 / 9;
             border: none;
-            pointer-events: none; /* يمنع الضغط على أزرار الفيديو */
-            transform: scale(1.02); /* لإخفاء أي حواف محتملة */
+            /* تكبير خفيف باش ندفنو أي أزرار باقية ف الجناب */
+            transform: scale(1.15); 
         }
 
         /* 🤖 Nav */
@@ -97,8 +90,6 @@
         }
         @keyframes energyBurst { to { transform: translate(-50%, -50%) scale(4); opacity: 0; } }
 
-        .download-counter { font-family: 'Orbitron'; font-size: 0.75rem; color: #00ffaa; display: flex; align-items: center; justify-content: center; gap: 5px; margin-bottom: 5px; }
-        
         #apps-view { display: none; padding: 20px 8%; animation: fadeIn 0.6s ease; }
         .app-card { background: var(--glass); border: 1px solid var(--border); border-radius: 25px; padding: 25px; margin-bottom: 20px; border-right: 5px solid var(--ai-cyan); backdrop-filter: blur(10px); }
         .install-btn { background: #fff; color: #000; padding: 14px; border-radius: 15px; text-decoration: none; font-weight: 900; display: block; text-align: center; margin-top: 10px; }
@@ -113,8 +104,7 @@
 <canvas id="ai-background"></canvas>
 
 <div class="hero-video-container">
-    <div class="video-overlay"></div>
-    <iframe src="https://player.cloudinary.com/embed/?cloud_name=didg4uwxv&public_id=InShot_20260127_191509607_hckiwc&autoplay=true&loop=true&muted=true&controls=false" allow="autoplay; fullscreen; encrypted-media" frameborder="0"></iframe>
+    <iframe src="https://player.cloudinary.com/embed/?cloud_name=didg4uwxv&public_id=InShot_20260127_191509607_hckiwc&autoplay=true&loop=true&muted=true&controls=false&ui_pause_icon=false&click_to_play=false" allow="autoplay" frameborder="0"></iframe>
 </div>
 
 <nav>
@@ -160,7 +150,7 @@
 </div>
 
 <script>
-    // 🌌 Neural Background Logic
+    // 🌌 Neural Background
     const canvas = document.getElementById('ai-background');
     const ctx = canvas.getContext('2d');
     let dots = [];
@@ -212,11 +202,9 @@
             document.getElementById('apps-view').style.display = 'block';
             document.getElementById('app-list').innerHTML = vpnData[net].map(app => `
                 <div class="app-card">
-                    <div class="download-counter">👤 <span class="count-num">${Math.floor(Math.random()*400)+1200}</span> active</div>
                     <h2 style="margin:5px 0;">${app.name}</h2>
                     <a href="${app.link}" target="_blank" class="install-btn">🚀 INSTALL NOW</a>
                 </div>`).join('');
-            startCounter();
         }, 1200);
     }
 
@@ -224,15 +212,6 @@
         document.getElementById('home-view').style.display = 'block';
         document.getElementById('apps-view').style.display = 'none';
     };
-
-    function startCounter() {
-        setInterval(() => {
-            document.querySelectorAll('.count-num').forEach(el => {
-                let val = parseInt(el.innerText);
-                el.innerText = val + (Math.random() > 0.5 ? 1 : -1);
-            });
-        }, 2000);
-    }
 </script>
 </body>
 </html>
