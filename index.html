@@ -48,61 +48,63 @@
         }
         @keyframes lightScan { 0% { left: -150%; } 100% { left: 150%; } }
 
+        /* 🤖 Advanced AI Navigation */
         nav { padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
         .logo { font-family: 'Orbitron'; font-weight: 900; color: var(--ai-cyan); text-shadow: 0 0 10px var(--ai-cyan); }
 
+        /* 🍔 AI Menu Icon */
+        .ai-menu-container { position: relative; }
+        .menu-icon {
+            cursor: pointer; display: flex; flex-direction: column; gap: 5px; padding: 10px;
+        }
+        .bar {
+            width: 25px; height: 3px; border-radius: 2px;
+            background: linear-gradient(90deg, var(--ai-cyan), #fff, var(--ai-cyan));
+            background-size: 200% auto;
+            animation: barGlow 3s linear infinite;
+            box-shadow: 0 0 5px var(--ai-cyan);
+        }
+        @keyframes barGlow {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        /* 🪜 AI Dropdown (Step by Step) */
+        .ai-dropdown {
+            position: absolute; top: 50px; left: 0; width: 160px;
+            background: rgba(5, 10, 16, 0.95); border: 1px solid var(--ai-cyan);
+            border-radius: 15px; overflow: hidden; display: none;
+            flex-direction: column; box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
+        }
+        .ai-dropdown.active { display: flex; }
+
+        .drop-item {
+            padding: 15px; font-size: 0.9rem; font-weight: bold; color: white;
+            text-align: center; border-bottom: 1px solid var(--border);
+            opacity: 0; transform: translateY(-10px); transition: 0.3s;
+            cursor: pointer; text-decoration: none;
+        }
+        .drop-item:hover { background: rgba(0, 242, 255, 0.1); color: var(--ai-cyan); }
+
+        /* Step Animation */
+        .ai-dropdown.active .drop-item { opacity: 1; transform: translateY(0); }
+        .ai-dropdown.active .drop-item:nth-child(1) { transition-delay: 0.1s; }
+        .ai-dropdown.active .drop-item:nth-child(2) { transition-delay: 0.2s; }
+
+        /* Rest of Styles */
         .hero { text-align: center; padding: 30px 20px; }
         .network-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 0 8% 60px; }
         .network-card { background: var(--glass); border: 1px solid var(--border); border-radius: 35px; padding: 40px 20px; cursor: pointer; text-align: center; transition: 0.3s; position: relative; overflow: hidden; }
         .net-img { width: 90px; height: 90px; border-radius: 20px; margin-bottom: 15px; border: 2px solid var(--accent); box-shadow: 0 0 15px var(--accent); }
-
         .inwi-card { --accent: var(--inwi); } .orange-card { --accent: var(--orange); } .iam-card { --accent: var(--iam); }
 
-        /* 💊 AI Capsule BACK Button */
-        .back-btn {
-            background: #050a10;
-            border: 1.5px solid rgba(0, 242, 255, 0.4);
-            padding: 12px 45px;
-            border-radius: 50px;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 40px auto;
-            transition: all 0.4s ease;
-            box-shadow: 0 0 15px rgba(0, 242, 255, 0.1);
-        }
-
-        /* نص BACK مع إضاءة متحركة */
-        .back-text {
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
-            font-size: 1.1rem;
-            letter-spacing: 3px;
-            background: linear-gradient(90deg, #fff, var(--ai-cyan), #fff);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: textGlowFlow 3s linear infinite;
-        }
-
-        @keyframes textGlowFlow {
-            0% { background-position: 0% center; filter: drop-shadow(0 0 2px var(--ai-cyan)); }
-            50% { filter: drop-shadow(0 0 8px var(--ai-cyan)); }
-            100% { background-position: 200% center; filter: drop-shadow(0 0 2px var(--ai-cyan)); }
-        }
-
-        .back-btn:hover {
-            border-color: var(--ai-cyan);
-            box-shadow: 0 0 25px rgba(0, 242, 255, 0.4);
-            transform: scale(1.05);
-        }
+        .back-btn { background: #050a10; border: 1.5px solid rgba(0, 242, 255, 0.4); padding: 12px 45px; border-radius: 50px; cursor: pointer; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; margin: 40px auto; transition: all 0.4s ease; box-shadow: 0 0 15px rgba(0, 242, 255, 0.1); }
+        .back-text { font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 1.1rem; letter-spacing: 3px; background: linear-gradient(90deg, #fff, var(--ai-cyan), #fff); background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: textGlowFlow 3s linear infinite; }
+        @keyframes textGlowFlow { 0% { background-position: 0% center; filter: drop-shadow(0 0 2px var(--ai-cyan)); } 50% { filter: drop-shadow(0 0 8px var(--ai-cyan)); } 100% { background-position: 200% center; filter: drop-shadow(0 0 2px var(--ai-cyan)); } }
+        .back-btn:hover { border-color: var(--ai-cyan); box-shadow: 0 0 25px rgba(0, 242, 255, 0.4); transform: scale(1.05); }
 
         #apps-view { display: none; padding: 30px 8%; animation: fadeIn 0.8s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
         .app-card { background: var(--glass); border: 1px solid var(--border); border-radius: 25px; padding: 25px; margin-bottom: 20px; border-right: 4px solid var(--ai-cyan); }
         .install-btn { background: #fff; color: #000; padding: 15px; border-radius: 15px; text-decoration: none; font-weight: 900; display: block; text-align: center; margin-top: 15px; }
 
@@ -124,7 +126,18 @@
 
 <nav>
     <div class="logo">GRIZATOR AI</div>
-    <div style="font-family:'Orbitron'; color:var(--ai-cyan); font-size:0.6rem;">CORE: ONLINE</div>
+    
+    <div class="ai-menu-container">
+        <div class="menu-icon" onclick="toggleMenu()">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+        <div class="ai-dropdown" id="aiDropdown">
+            <a href="#" class="drop-item">📤 مشاركة</a>
+            <a href="https://wa.me/?text=Check this AI VPN Hub!" class="drop-item">💬 واتساب</a>
+        </div>
+    </div>
 </nav>
 
 <div class="container">
@@ -164,6 +177,22 @@
 </div>
 
 <script>
+    // ☰ Toggle Menu Logic
+    function toggleMenu() {
+        const menu = document.getElementById('aiDropdown');
+        menu.classList.toggle('active');
+    }
+
+    // Close menu when clicking outside
+    window.onclick = function(event) {
+        if (!event.target.matches('.menu-icon') && !event.target.matches('.bar')) {
+            const dropdown = document.getElementById('aiDropdown');
+            if (dropdown.classList.contains('active')) {
+                dropdown.classList.remove('active');
+            }
+        }
+    }
+
     const slides = document.querySelectorAll('.slide');
     let current = 0;
     setInterval(() => {
