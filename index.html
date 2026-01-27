@@ -21,6 +21,7 @@
 
         #ai-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at center, #050a18 0%, #010409 100%); }
 
+        /* 🎬 Slider Section */
         .slider-container { width: 100%; height: 380px; position: relative; overflow: hidden; border-bottom: 2px solid var(--ai-cyan); }
         .slide { position: absolute; inset: 0; opacity: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
         .slide.active { opacity: 1; z-index: 10; animation: hologramReveal 1.2s ease-out forwards; }
@@ -40,6 +41,7 @@
 
         @media (max-width: 768px) { .slider-container { height: 240px; } }
 
+        /* 🤖 Nav */
         nav { padding: 12px 5%; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(15px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
         .brand { display: flex; align-items: center; gap: 12px; }
         .logo-img { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--ai-cyan); box-shadow: 0 0 15px var(--ai-cyan); object-fit: cover; }
@@ -47,9 +49,8 @@
 
         .hero { text-align: center; padding: 40px 20px; }
         .hero h1 { font-family: 'Orbitron'; font-size: 2rem; margin-bottom: 10px; }
-        .hero p { color: #888; font-size: 0.9rem; }
 
-        /* 💎 Legendary Cards UI */
+        /* 💎 Legendary Cards (Static tilt, Active Motion) */
         .network-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; padding: 0 8% 50px; }
         
         .network-card { 
@@ -61,47 +62,38 @@
             text-align: center;
             position: relative;
             backdrop-filter: blur(15px);
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: transform 0.2s cubic-bezier(0.2, 0, 0.2, 1), box-shadow 0.3s ease, background 0.3s ease;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        /* Neon Glow Frames */
         .inwi-card { --accent: var(--inwi); }
         .orange-card { --accent: var(--orange); }
         .iam-card { --accent: var(--iam); }
 
-        .network-card::before {
-            content: ''; position: absolute; inset: 0;
-            border-radius: 40px; padding: 2px;
-            background: linear-gradient(135deg, transparent, var(--accent), transparent);
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            mask-composite: exclude; opacity: 0.5;
-        }
-
-        .network-card:hover {
-            transform: translateY(-15px) scale(1.02);
-            background: rgba(255, 255, 255, 0.08);
-            border-color: var(--accent);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 25px var(--accent);
+        /* ⚡ Active Click Animation */
+        .network-card:active {
+            transform: scale(0.95) rotateX(10deg);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4), 0 0 30px var(--accent);
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .net-img { 
             width: 100px; height: 100px; border-radius: 25px; margin-bottom: 20px; 
             border: 2px solid var(--accent); 
             box-shadow: 0 0 20px var(--accent);
-            transition: 0.5s;
+            pointer-events: none;
         }
-        .network-card:hover .net-img { transform: rotate(5deg) scale(1.1); filter: brightness(1.2); }
 
-        /* Energy Pulse Animation */
+        /* Energy Pulse */
         .pulse-effect {
             position: absolute; border-radius: 50%; background: var(--accent);
-            transform: scale(0); opacity: 0.8; pointer-events: none;
-            animation: energyBurst 0.6s ease-out;
+            transform: translate(-50%, -50%) scale(0); opacity: 0.6; pointer-events: none;
+            left: 50%; top: 50%;
+            animation: energyBurst 0.5s ease-out forwards;
         }
         @keyframes energyBurst {
-            to { transform: scale(4); opacity: 0; }
+            to { transform: translate(-50%, -50%) scale(4); opacity: 0; }
         }
 
         .download-counter { font-family: 'Orbitron'; font-size: 0.75rem; color: #00ffaa; display: flex; align-items: center; justify-content: center; gap: 5px; margin-bottom: 5px; }
@@ -145,15 +137,15 @@
         <p>All applications that convert *6 to *3</p>
     </header>
     <div class="network-grid">
-        <div class="network-card inwi-card" data-tilt data-tilt-glare="true" data-tilt-max-glare="0.3" onclick="selectNetwork(this, 'inwi')">
+        <div class="network-card inwi-card" onclick="selectNetwork(this, 'inwi')">
             <img src="https://i.ibb.co/JWHMCRdS/In-Shot-20260126-093834338.jpg" class="net-img">
             <h2 style="font-family:'Orbitron'">INWI</h2>
         </div>
-        <div class="network-card orange-card" data-tilt data-tilt-glare="true" data-tilt-max-glare="0.3" onclick="selectNetwork(this, 'orange')">
+        <div class="network-card orange-card" onclick="selectNetwork(this, 'orange')">
             <img src="https://i.ibb.co/23z8x035/In-Shot-20260126-093754730.jpg" class="net-img">
             <h2 style="font-family:'Orbitron'">ORANGE</h2>
         </div>
-        <div class="network-card iam-card" data-tilt data-tilt-glare="true" data-tilt-max-glare="0.3" onclick="selectNetwork(this, 'iam')">
+        <div class="network-card iam-card" onclick="selectNetwork(this, 'iam')">
             <img src="https://i.ibb.co/mFzx3KHg/In-Shot-20260126-093339759.jpg" class="net-img">
             <h2 style="font-family:'Orbitron'">MAROC TÉLÉCOM</h2>
         </div>
@@ -171,7 +163,7 @@
 </div>
 
 <script>
-    // 🌌 Neural Background (Canvas)
+    // 🌌 Neural Background
     const canvas = document.getElementById('ai-background');
     const ctx = canvas.getContext('2d');
     let dots = [];
@@ -207,7 +199,6 @@
     }
     initCanvas(); for(let i=0; i<40; i++) dots.push(new Dot()); render();
 
-    // 📱 App Data
     const vpnData = {
         inwi: [ { name: "MC NET VPN", link: "https://play.google.com/store/apps/details?id=org.mcnetvpn.app" }, { name: "AT NET VPN", link: "https://play.google.com/store/apps/details?id=com.technore.atnetvpn" }, { name: "OSP TUNNEL", link: "https://play.google.com/store/apps/details?id=xyz.osptunnel.org" }, { name: "MORE TUNNEL", link: "https://play.google.com/store/apps/details?id=com.more.tunnel.vpn" }, { name: "DT TUNNEL", link: "https://play.google.com/store/apps/details?id=com.victo.dt" }, { name: "XRP TUNNEL PLUS", link: "https://play.google.com/store/apps/details?id=com.technore.xrptunnelplus" }, { name: "PINAS VPN", link: "https://play.google.com/store/apps/details?id=pinas.vpn.ph" } ],
         orange: [ { name: "AM TUNNEL LITE", link: "https://play.google.com/store/apps/details?id=app.vpn.amtunnellite" }, { name: "MINA PRO NET", link: "https://play.google.com/store/apps/details?id=opencustom.minapronet.com.eg" } ],
@@ -215,11 +206,11 @@
     };
 
     function selectNetwork(el, net) {
-        // Create Energy Pulse Effect
+        // Pulse Effect
         const pulse = document.createElement('div');
         pulse.className = 'pulse-effect';
         el.appendChild(pulse);
-        setTimeout(() => pulse.remove(), 600);
+        setTimeout(() => pulse.remove(), 500);
 
         document.getElementById('ai-scanner').style.display = 'flex';
         history.pushState({view: 'apps'}, '');
@@ -260,7 +251,8 @@
         slides[currentSlide].classList.add('active');
     }, 6500);
 
-    VanillaTilt.init(document.querySelectorAll(".network-card"), { max: 15, speed: 400, glare: true, "max-glare": 0.4 });
+    // ⚡ Disabled automatic tilt, only trigger on click/active in CSS
+    // VanillaTilt.init is removed for a cleaner mobile experience.
 </script>
 </body>
 </html>
