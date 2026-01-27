@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Grizator AI | VPN Hub Morocco</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Cairo:wght@400;900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
@@ -25,47 +25,22 @@
             z-index: -2;
         }
 
-        /* 🎬 FULLSCREEN RESPONSIVE SLIDER (No Black Bars) */
+        /* 🎬 Responsive Cinematic Slider */
         .slider-container {
-            width: 100%;
-            height: 450px; /* طول الحاسوب */
-            min-height: 50vh;
-            position: relative;
-            overflow: hidden;
-            border-bottom: 2px solid var(--ai-cyan);
-            box-shadow: 0 5px 30px rgba(0, 242, 255, 0.3);
+            width: 100%; height: 400px; position: relative; overflow: hidden;
+            border-bottom: 2px solid var(--ai-cyan); box-shadow: 0 5px 30px rgba(0, 242, 255, 0.3);
             background: #000;
         }
-
-        /* الموبايل: الشاشة كاملة بدون فراغات سوداء */
-        @media (max-width: 768px) {
-            .slider-container {
-                height: 100svh; /* ياخد طول الشاشة كامل فالموبايل */
-                min-height: -webkit-fill-available;
-            }
-        }
-
-        .slide { 
-            position: absolute; 
-            inset: 0; 
-            opacity: 0; 
-            transition: opacity 1.2s ease-in-out; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            z-index: 1; 
-        }
-        
+        .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1.2s ease-in-out; display: flex; align-items: center; justify-content: center; z-index: 1; }
         .slide.active { opacity: 1; z-index: 10; }
+        .slide img { width: 100%; height: 100%; object-fit: cover; }
 
-        .slide img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; /* باش الصورة تعمر المساحة كاملة وتقطع الزوايد */
-            object-position: center;
+        @media (max-width: 768px) {
+            .slider-container { height: 260px; }
+            .slide img { object-fit: contain; }
         }
 
-        /* ✨ AI Glow Scan Overlay */
+        /* ✨ AI Glow Scan */
         .slide.active::after {
             content: ""; position: absolute; top: 0; left: -150%; width: 100%; height: 100%;
             background: linear-gradient(90deg, transparent, rgba(0, 242, 255, 0.4), transparent);
@@ -83,7 +58,7 @@
 
         .inwi-card { --accent: var(--inwi); } .orange-card { --accent: var(--orange); } .iam-card { --accent: var(--iam); }
 
-        /* 💊 AI Capsule BACK Button with Glowing Text */
+        /* 💊 AI Capsule BACK Button */
         .back-btn {
             background: #050a10;
             border: 1.5px solid rgba(0, 242, 255, 0.4);
@@ -100,6 +75,7 @@
             box-shadow: 0 0 15px rgba(0, 242, 255, 0.1);
         }
 
+        /* نص BACK مع إضاءة متحركة */
         .back-text {
             font-family: 'Orbitron', sans-serif;
             font-weight: 900;
@@ -118,7 +94,11 @@
             100% { background-position: 200% center; filter: drop-shadow(0 0 2px var(--ai-cyan)); }
         }
 
-        .back-btn:hover { border-color: var(--ai-cyan); box-shadow: 0 0 25px rgba(0, 242, 255, 0.4); transform: scale(1.05); }
+        .back-btn:hover {
+            border-color: var(--ai-cyan);
+            box-shadow: 0 0 25px rgba(0, 242, 255, 0.4);
+            transform: scale(1.05);
+        }
 
         #apps-view { display: none; padding: 30px 8%; animation: fadeIn 0.8s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -128,6 +108,7 @@
 
         #ai-scanner { position: fixed; inset: 0; background: var(--bg); z-index: 2000; display: none; flex-direction: column; align-items: center; justify-content: center; }
         .loader { width: 45px; height: 45px; border: 3px solid var(--glass); border-top-color: var(--ai-cyan); border-radius: 50%; animation: spin 1s infinite linear; }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
@@ -143,6 +124,7 @@
 
 <nav>
     <div class="logo">GRIZATOR AI</div>
+    <div style="font-family:'Orbitron'; color:var(--ai-cyan); font-size:0.6rem;">CORE: ONLINE</div>
 </nav>
 
 <div class="container">
@@ -178,7 +160,7 @@
 
 <div id="ai-scanner">
     <div class="loader"></div>
-    <p id="scan-text" style="margin-top:20px; font-family:'Orbitron'; color:var(--ai-cyan)"></p>
+    <p id="scan-text" style="margin-top:20px; font-family:'Orbitron'; color:var(--ai-cyan); letter-spacing:2px;"></p>
 </div>
 
 <script>
