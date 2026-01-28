@@ -12,10 +12,8 @@
             --ai-cyan: #00f2ff;
             --glass: rgba(255, 255, 255, 0.03);
             --border: rgba(0, 242, 255, 0.15);
-            --inwi: #bc13fe; 
-            --orange: #ff7900; 
-            --iam: #0070ff;
-            --custom: #ffcc00; /* Gold Color */
+            --inwi: #bc13fe; --orange: #ff7900; --iam: #0070ff;
+            --gold: #ffcc00;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -23,24 +21,12 @@
 
         #ai-background { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at center, #050a18 0%, #010409 100%); }
 
-        /* 🎬 Pure Background Video (No Interaction) */
+        /* 🎬 Hero Video */
         .hero-video-container { 
-            width: 100%; 
-            position: relative; 
-            overflow: hidden; 
-            border-bottom: 2px solid var(--ai-cyan);
-            box-shadow: 0 0 30px rgba(0, 242, 255, 0.2);
-            line-height: 0;
-            background: #000;
-            pointer-events: none; 
+            width: 100%; position: relative; overflow: hidden; border-bottom: 2px solid var(--ai-cyan);
+            line-height: 0; background: #000; pointer-events: none; 
         }
-
-        .hero-video-container iframe {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            border: none;
-            transform: scale(1.15); 
-        }
+        .hero-video-container iframe { width: 100%; aspect-ratio: 16 / 9; border: none; transform: scale(1.15); }
 
         /* 🤖 Nav */
         nav { padding: 12px 5%; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(15px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
@@ -49,67 +35,47 @@
         .brand-name { font-family: 'Orbitron'; font-weight: 900; font-size: 1.3rem; color: #fff; text-shadow: 0 0 10px var(--ai-cyan); }
 
         .hero-text { text-align: center; padding: 30px 20px; }
-        .hero-text h1 { font-family: 'Orbitron'; font-size: 2rem; margin-bottom: 10px; }
+        .hero-text h1 { font-family: 'Orbitron'; font-size: 2rem; }
 
-        /* 💎 Legendary Cards UI */
+        /* 💎 Cards UI */
         .network-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; padding: 0 8% 50px; }
         
         .network-card { 
-            background: var(--glass);
-            border: 1px solid var(--border);
-            border-radius: 40px;
-            padding: 50px 20px;
-            cursor: pointer;
-            text-align: center;
-            position: relative;
-            backdrop-filter: blur(15px);
-            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            background: var(--glass); border: 1px solid var(--border); border-radius: 40px;
+            padding: 50px 20px; cursor: pointer; text-align: center; position: relative;
+            backdrop-filter: blur(15px); transition: all 0.3s ease; overflow: hidden;
         }
 
-        .inwi-card { --accent: var(--inwi); border-color: rgba(188, 19, 254, 0.3); }
-        .orange-card { --accent: var(--orange); border-color: rgba(255, 121, 0, 0.3); }
-        .iam-card { --accent: var(--iam); border-color: rgba(0, 112, 255, 0.3); }
-        .custom-card { --accent: var(--custom); border-color: rgba(255, 204, 0, 0.3); } /* Gold Theme */
+        .inwi-card { --accent: var(--inwi); }
+        .orange-card { --accent: var(--orange); }
+        .iam-card { --accent: var(--iam); }
+        .custom-card { --accent: var(--gold); border-color: rgba(255, 204, 0, 0.4); }
 
-        .network-card:hover {
-            border-color: var(--accent);
-            box-shadow: 0 0 40px var(--accent);
-            background: rgba(255, 255, 255, 0.08);
-        }
+        .network-card:hover { border-color: var(--accent); box-shadow: 0 0 40px var(--accent); background: rgba(255, 255, 255, 0.08); }
+        .network-card:active { transform: scale(0.94) rotateX(10deg); }
 
-        .network-card:active {
-            transform: scale(0.94) rotateX(10deg);
-            background: rgba(255, 255, 255, 0.12);
-        }
+        .net-img { width: 100px; height: 100px; border-radius: 25px; margin-bottom: 20px; border: 2px solid var(--accent); box-shadow: 0 0 20px var(--accent); object-fit: cover; }
 
-        .net-img { 
-            width: 100px; height: 100px; border-radius: 25px; margin-bottom: 20px; 
-            border: 2px solid var(--accent); 
-            box-shadow: 0 0 20px var(--accent);
-            pointer-events: none;
-            object-fit: cover;
-        }
-
-        /* Energy Pulse */
-        .pulse-effect {
-            position: absolute; border-radius: 50%; background: var(--accent);
-            transform: translate(-50%, -50%) scale(0); opacity: 0.7; pointer-events: none;
-            left: 50%; top: 50%; animation: energyBurst 0.5s ease-out forwards;
-        }
-        @keyframes energyBurst { to { transform: translate(-50%, -50%) scale(4); opacity: 0; } }
-
-        /* Apps View Styles */
+        /* 📂 Apps/Configs View */
         #apps-view { display: none; padding: 20px 8%; animation: fadeIn 0.6s ease; }
-        .app-card { background: var(--glass); border: 1px solid var(--border); border-radius: 25px; padding: 25px; margin-bottom: 20px; border-right: 5px solid var(--ai-cyan); backdrop-filter: blur(10px); }
-        .install-btn { background: #fff; color: #000; padding: 14px; border-radius: 15px; text-decoration: none; font-weight: 900; display: block; text-align: center; margin-top: 10px; }
+        .config-card { 
+            background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border); 
+            border-radius: 20px; padding: 20px; margin-bottom: 15px; 
+            display: flex; justify-content: space-between; align-items: center;
+            backdrop-filter: blur(10px);
+        }
+        .download-link { 
+            background: var(--ai-cyan); color: #000; padding: 8px 20px; 
+            border-radius: 10px; text-decoration: none; font-weight: bold; font-size: 0.9rem;
+        }
+        .gold-btn { background: var(--gold) !important; }
+
         .back-btn { background: transparent; border: 1px solid var(--ai-cyan); padding: 12px 45px; border-radius: 50px; cursor: pointer; margin: 40px auto; display: block; color: var(--ai-cyan); font-family: 'Orbitron'; font-weight: 900; }
 
         #ai-scanner { position: fixed; inset: 0; background: var(--bg); z-index: 2000; display: none; flex-direction: column; align-items: center; justify-content: center; }
         .loader { width: 40px; height: 40px; border: 3px solid rgba(255,255,255,0.1); border-top-color: var(--ai-cyan); border-radius: 50%; animation: spin 1s infinite linear; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
@@ -129,41 +95,41 @@
 
 <div id="home-view">
     <header class="hero-text">
-        <h1>Choose Your Network</h1>
-        <p>All applications that convert *6 to *3</p>
+        <h1>CHOOSE NETWORK</h1>
     </header>
     <div class="network-grid">
-        <div class="network-card inwi-card" onclick="selectNetwork(this, 'inwi')">
+        <div class="network-card inwi-card" onclick="selectNetwork('inwi')">
             <img src="https://i.ibb.co/JWHMCRdS/In-Shot-20260126-093834338.jpg" class="net-img">
             <h2 style="font-family:'Orbitron'">INWI</h2>
         </div>
-        <div class="network-card orange-card" onclick="selectNetwork(this, 'orange')">
+        <div class="network-card orange-card" onclick="selectNetwork('orange')">
             <img src="https://i.ibb.co/23z8x035/In-Shot-20260126-093754730.jpg" class="net-img">
             <h2 style="font-family:'Orbitron'">ORANGE</h2>
         </div>
-        <div class="network-card iam-card" onclick="selectNetwork(this, 'iam')">
+        <div class="network-card iam-card" onclick="selectNetwork('iam')">
             <img src="https://i.ibb.co/mFzx3KHg/In-Shot-20260126-093339759.jpg" class="net-img">
-            <h2 style="font-family:'Orbitron'">MAROC TÉLÉCOM</h2>
+            <h2 style="font-family:'Orbitron'">IAM</h2>
         </div>
-        <div class="network-card custom-card" onclick="selectNetwork(this, 'custom')">
+        <div class="network-card custom-card" onclick="selectNetwork('custom')">
             <img src="https://i.ibb.co/wrKMMcs9/In-Shot-20260128-084155501.jpg" class="net-img">
-            <h2 style="font-family:'Orbitron'; color: var(--custom);">HTTP CUSTOM</h2>
+            <h2 style="font-family:'Orbitron'; color: var(--gold);">CONFIGS</h2>
         </div>
     </div>
 </div>
 
 <div id="apps-view">
-    <div id="app-list"></div>
+    <h2 id="view-title" style="text-align:center; margin-bottom:20px; font-family:'Orbitron';"></h2>
+    <div id="list-container"></div>
     <button class="back-btn" onclick="window.history.back()">𝗕𝗔𝗖𝗞</button>
 </div>
 
 <div id="ai-scanner">
     <div class="loader"></div>
-    <p style="margin-top:20px; font-family:'Orbitron'; color:var(--ai-cyan);">NEURAL SYNCING...</p>
+    <p style="margin-top:20px; font-family:'Orbitron'; color:var(--ai-cyan);">LOADING DATA...</p>
 </div>
 
 <script>
-    // 🌌 Background Particles
+    // 🌌 Canvas Background
     const canvas = document.getElementById('ai-background');
     const ctx = canvas.getContext('2d');
     let dots = [];
@@ -178,50 +144,47 @@
             if(this.x<0 || this.x>canvas.width) this.vx*=-1;
             if(this.y<0 || this.y>canvas.height) this.vy*=-1;
         }
-        draw() { ctx.fillStyle = 'rgba(0, 242, 255, 0.2)'; ctx.beginPath(); ctx.arc(this.x, this.y, 1, 0, Math.PI*2); ctx.fill(); }
+        draw() { ctx.fillStyle = 'rgba(0, 242, 255, 0.1)'; ctx.beginPath(); ctx.arc(this.x, this.y, 1, 0, Math.PI*2); ctx.fill(); }
     }
     function render() {
         ctx.clearRect(0,0,canvas.width, canvas.height);
-        dots.forEach(d => {
-            d.update(); d.draw();
-            dots.forEach(d2 => {
-                let dist = Math.hypot(d.x - d2.x, d.y - d2.y);
-                if(dist < 100) {
-                    ctx.strokeStyle = `rgba(0, 242, 255, ${0.1 - dist/1000})`;
-                    ctx.beginPath(); ctx.moveTo(d.x, d.y); ctx.lineTo(d2.x, d2.y); ctx.stroke();
-                }
-            });
-        });
+        dots.forEach(d => { d.update(); d.draw(); });
         requestAnimationFrame(render);
     }
-    initCanvas(); for(let i=0; i<40; i++) dots.push(new Dot()); render();
+    initCanvas(); for(let i=0; i<50; i++) dots.push(new Dot()); render();
 
-    const vpnData = {
-        inwi: [ { name: "MC NET VPN", link: "https://play.google.com/store/apps/details?id=org.mcnetvpn.app" }, { name: "AT NET VPN", link: "https://play.google.com/store/apps/details?id=com.technore.atnetvpn" }, { name: "OSP TUNNEL", link: "https://play.google.com/store/apps/details?id=xyz.osptunnel.org" } ],
-        orange: [ { name: "AM TUNNEL LITE", link: "https://play.google.com/store/apps/details?id=app.vpn.amtunnellite" }, { name: "MINA PRO NET", link: "https://play.google.com/store/apps/details?id=opencustom.minapronet.com.eg" } ],
-        iam: [ { name: "TSS TUNNEL", link: "https://play.google.com/store/apps/details?id=com.tss.tunnel" }, { name: "XRP TUNNEL PLUS", link: "https://play.google.com/store/apps/details?id=com.technore.xrptunnelplus" } ],
-        custom: [ { name: "HTTP CUSTOM (Official)", link: "https://play.google.com/store/apps/details?id=com.fatadev.httpcustom" } ]
+    // 📊 Data System
+    const data = {
+        inwi: { title: "INWI VPN APPS", items: [ {n: "MC NET VPN", l: "#"}, {n: "AT NET VPN", l: "#"} ] },
+        orange: { title: "ORANGE VPN APPS", items: [ {n: "AM TUNNEL", l: "#"}, {n: "MINA PRO", l: "#"} ] },
+        iam: { title: "IAM VPN APPS", items: [ {n: "TSS TUNNEL", l: "#"}, {n: "XRP PLUS", l: "#"} ] },
+        custom: { title: "GOLDEN CONFIGS", items: [ 
+            {n: "📁 Config INWI *6", l: "#", isGold: true}, 
+            {n: "📁 Config Orange *6", l: "#", isGold: true}, 
+            {n: "📁 Config Maroc Telecom", l: "#", isGold: true} 
+        ]}
     };
 
-    function selectNetwork(el, net) {
-        const pulse = document.createElement('div');
-        pulse.className = 'pulse-effect';
-        el.appendChild(pulse);
-        setTimeout(() => pulse.remove(), 500);
-
+    function selectNetwork(net) {
         document.getElementById('ai-scanner').style.display = 'flex';
-        history.pushState({view: 'apps'}, '');
-
         setTimeout(() => {
             document.getElementById('ai-scanner').style.display = 'none';
             document.getElementById('home-view').style.display = 'none';
             document.getElementById('apps-view').style.display = 'block';
-            document.getElementById('app-list').innerHTML = vpnData[net].map(app => `
-                <div class="app-card" style="border-right-color: ${net === 'custom' ? '#ffcc00' : '#00f2ff'}">
-                    <h2 style="margin:5px 0;">${app.name}</h2>
-                    <a href="${app.link}" target="_blank" class="install-btn">🚀 INSTALL NOW</a>
-                </div>`).join('');
-        }, 1200);
+            
+            const current = data[net];
+            document.getElementById('view-title').innerText = current.title;
+            document.getElementById('view-title').style.color = net === 'custom' ? 'var(--gold)' : 'var(--ai-cyan)';
+            
+            document.getElementById('list-container').innerHTML = current.items.map(item => `
+                <div class="config-card" style="border-right: 4px solid ${net === 'custom' ? 'var(--gold)' : 'var(--ai-cyan)'}">
+                    <span>${item.n}</span>
+                    <a href="${item.l}" class="download-link ${net === 'custom' ? 'gold-btn' : ''}">DOWNLOAD</a>
+                </div>
+            `).join('');
+            
+            history.pushState({view: 'apps'}, '');
+        }, 1000);
     }
 
     window.onpopstate = () => {
