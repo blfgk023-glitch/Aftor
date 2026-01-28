@@ -124,7 +124,9 @@
         iam: [ { name: "TSS TUNNEL", link: "https://play.google.com/store/apps/details?id=com.tss.tunnel" } ],
         custom: [ 
             { name: "HTTP CUSTOM (Official App)", link: "https://play.google.com/store/apps/details?id=com.fatadev.httpcustom" },
-            { name: "📁 IAM SSH VIP (CONFIG)", link: "https://www.mediafire.com/file/4x6m2ut40b6qpdb/%25F0%259D%2597%259C%25F0%259D%2597%2594%25F0%259D%2597%25A0_%25E2%259C%25AE%25E2%259D%25BB_%25F0%259D%2597%25A6%25F0%259D%2597%25A6%25F0%259D%2597%259B_%25F0%259D%2597%25A9%25F0%259D%2597%259C%25F0%259D%2597%25A3_%25E2%259E%258A.npvt/file" }
+            { name: "📁 IAM SSH VIP ① (CONFIG)", link: "https://www.mediafire.com/file/4x6m2ut40b6qpdb/%25F0%259D%2597%259C%25F0%259D%2597%2594%25F0%259D%2597%25A0_%25E2%259C%25AE%25E2%259D%25BB_%25F0%259D%2597%25A6%25F0%259D%2597%25A6%25F0%259D%2597%259B_%25F0%259D%2597%25A9%25F0%259D%2597%259C%25F0%259D%2597%25A3_%25E2%259E%258A.npvt/file" },
+            { name: "📁 IAM SSH VIP ② (CONFIG)", link: "https://www.mediafire.com/file/4x6m2ut40b6qpdb/%25F0%259D%2597%259C%25F0%259D%2597%2594%25F0%259D%2597%25A0_%25E2%259C%25AE%25E2%259D%25BB_%25F0%259D%2597%25A6%25F0%259D%2597%25A6%25F0%259D%2597%259B_%25F0%259D%2597%25A9%25F0%259D%2597%259C%25F0%259D%2597%25A3_%25E2%259E%258A.npvt/file" },
+            { name: "📁 IAM SSH VIP ③ (CONFIG)", link: "https://www.mediafire.com/file/4x6m2ut40b6qpdb/%25F0%259D%2597%259C%25F0%259D%2597%2594%25F0%259D%2597%25A0_%25E2%259C%25AE%25E2%259D%25BB_%25F0%259D%2597%25A6%25F0%259D%2597%25A6%25F0%259D%2597%259B_%25F0%259D%2597%25A9%25F0%259D%2597%259C%25F0%259D%2597%25A3_%25E2%259E%258A.npvt/file" }
         ]
     };
 
@@ -139,7 +141,7 @@
                 <div class="app-card" style="border-right-color: ${net === 'custom' ? '#ffcc00' : '#00f2ff'}">
                     <h2 style="margin:5px 0;">${app.name}</h2>
                     <a href="${app.link}" target="_blank" class="install-btn">
-                       🚀 ${app.name.includes('CONFIG') ? 'DOWNLOAD FROM MEDIAFIRE' : 'INSTALL NOW'}
+                       🚀 ${app.name.includes('CONFIG') ? 'GET CONFIG' : 'INSTALL NOW'}
                     </a>
                 </div>`).join('');
         }, 1000);
@@ -150,7 +152,6 @@
         document.getElementById('apps-view').style.display = 'none';
     };
 
-    // 🌌 Animation Background
     const canvas = document.getElementById('ai-background');
     const ctx = canvas.getContext('2d');
     let dots = [];
