@@ -124,7 +124,7 @@
         iam: [ { name: "TSS TUNNEL", link: "https://play.google.com/store/apps/details?id=com.tss.tunnel" } ],
         custom: [ 
             { name: "HTTP CUSTOM (Official App)", link: "https://play.google.com/store/apps/details?id=com.fatadev.httpcustom" },
-            { name: "📁 IAM CONFIG (V1)", link: "https://raw.githubusercontent.com/blfgk023-glitch/Aftor/main/iam_v1.npvt" }
+            { name: "📁 IAM SSH VIP (CONFIG)", link: "https://www.mediafire.com/file/4x6m2ut40b6qpdb/%25F0%259D%2597%259C%25F0%259D%2597%2594%25F0%259D%2597%25A0_%25E2%259C%25AE%25E2%259D%25BB_%25F0%259D%2597%25A6%25F0%259D%2597%25A6%25F0%259D%2597%259B_%25F0%259D%2597%25A9%25F0%259D%2597%259C%25F0%259D%2597%25A3_%25E2%259E%258A.npvt/file" }
         ]
     };
 
@@ -138,10 +138,8 @@
             document.getElementById('app-list').innerHTML = vpnData[net].map(app => `
                 <div class="app-card" style="border-right-color: ${net === 'custom' ? '#ffcc00' : '#00f2ff'}">
                     <h2 style="margin:5px 0;">${app.name}</h2>
-                    <a href="${app.link}" 
-                       ${app.name.includes('CONFIG') ? 'download="iam_v1.npvt"' : 'target="_blank"'} 
-                       class="install-btn">
-                       🚀 ${app.name.includes('CONFIG') ? 'DOWNLOAD NOW' : 'INSTALL NOW'}
+                    <a href="${app.link}" target="_blank" class="install-btn">
+                       🚀 ${app.name.includes('CONFIG') ? 'DOWNLOAD FROM MEDIAFIRE' : 'INSTALL NOW'}
                     </a>
                 </div>`).join('');
         }, 1000);
