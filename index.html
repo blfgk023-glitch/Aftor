@@ -3,203 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grizator AI | Next Gen Portal</title>
+    <title>Grizator AI | VPN Hub Morocco</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Cairo:wght@400;900&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --bg: #02050a;
+            --bg: #010409;
             --ai-cyan: #00f2ff;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(0, 242, 255, 0.15);
             --inwi: #bc13fe; 
             --orange: #ff7900; 
             --iam: #0070ff;
-            --custom: #ffcc00;
+            --custom: #ffcc00; 
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { background-color: var(--bg); color: white; font-family: 'Cairo', sans-serif; overflow-x: hidden; }
 
-        /* 🌌 الخلفية التفاعلية المرعبة */
-        #interactive-bg {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: -1;
-            background: radial-gradient(circle at 50% 50%, #0a1128 0%, #02050a 100%);
+        /* 🌌 الخلفية التفاعلية (خيوط الضوء) */
+        #interactive-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+
+        .hero-video-container { 
+            width: 100%; position: relative; overflow: hidden; border-bottom: 2px solid var(--ai-cyan);
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.2); line-height: 0; background: #000; pointer-events: none; 
+        }
+        .hero-video-container iframe { width: 100%; aspect-ratio: 16 / 9; border: none; transform: scale(1.15); }
+
+        nav { padding: 12px 5%; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(15px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 1000; }
+        .brand { display: flex; align-items: center; gap: 12px; }
+        .logo-img { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--ai-cyan); box-shadow: 0 0 15px var(--ai-cyan); object-fit: cover; }
+        .brand-name { font-family: 'Orbitron'; font-weight: 900; font-size: 1.3rem; color: #fff; text-shadow: 0 0 10px var(--ai-cyan); }
+
+        .hero-text { text-align: center; padding: 30px 20px; }
+        .hero-text h1 { font-family: 'Orbitron'; font-size: 2rem; margin-bottom: 10px; }
+        .hero-text p { color: var(--ai-cyan); font-weight: bold; }
+
+        .network-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; padding: 0 8% 50px; }
+        
+        .network-card { 
+            background: var(--glass); border: 1px solid var(--border); border-radius: 40px;
+            padding: 50px 20px; cursor: pointer; text-align: center; position: relative;
+            backdrop-filter: blur(15px); transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        /* 🎬 Hero Video Section */
-        .hero-video { 
-            width: 100%; position: relative; border-bottom: 3px solid var(--ai-cyan);
-            box-shadow: 0 0 50px rgba(0, 242, 255, 0.3); overflow: hidden;
-        }
-        .hero-video iframe { width: 100%; aspect-ratio: 16/9; border: none; transform: scale(1.1); pointer-events: none; }
+        .inwi-card { --accent: var(--inwi); border-color: rgba(188, 19, 254, 0.3); }
+        .orange-card { --accent: var(--orange); border-color: rgba(255, 121, 0, 0.3); }
+        .iam-card { --accent: var(--iam); border-color: rgba(0, 112, 255, 0.3); }
+        .custom-card { --accent: var(--custom); border-color: rgba(255, 204, 0, 0.3); }
 
-        nav { 
-            padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; 
-            background: rgba(0,0,0,0.6); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,242,255,0.2);
-            position: sticky; top: 0; z-index: 1000;
-        }
-        .brand { display: flex; align-items: center; gap: 15px; }
-        .logo { width: 45px; height: 45px; border-radius: 50%; border: 2px solid var(--ai-cyan); box-shadow: 0 0 15px var(--ai-cyan); }
-        .brand-name { font-family: 'Orbitron'; font-weight: 900; font-size: 1.6rem; text-shadow: 0 0 10px var(--ai-cyan); }
+        .network-card:hover { border-color: var(--accent); box-shadow: 0 0 40px var(--accent); background: rgba(255, 255, 255, 0.08); transform: translateY(-10px); }
+        .net-img { width: 100px; height: 100px; border-radius: 25px; margin-bottom: 20px; border: 2px solid var(--accent); box-shadow: 0 0 20px var(--accent); object-fit: cover; }
 
-        .hero-title { text-align: center; padding: 40px 20px; }
-        .hero-title h1 { font-family: 'Orbitron'; font-size: 2.5rem; letter-spacing: 3px; text-transform: uppercase; }
+        #apps-view { display: none; padding: 20px 8%; animation: fadeIn 0.6s ease; }
+        .app-card { background: var(--glass); border: 1px solid var(--border); border-radius: 25px; padding: 25px; margin-bottom: 20px; border-right: 5px solid var(--ai-cyan); backdrop-filter: blur(10px); }
+        .install-btn { background: #fff; color: #000; padding: 14px; border-radius: 15px; text-decoration: none; font-weight: 900; display: block; text-align: center; margin-top: 10px; }
+        .back-btn { background: transparent; border: 1px solid var(--ai-cyan); padding: 12px 45px; border-radius: 50px; cursor: pointer; margin: 40px auto; display: block; color: var(--ai-cyan); font-family: 'Orbitron'; font-weight: 900; }
 
-        /* 🚥 الشبكة الاحترافية */
-        .grid-container { 
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-            gap: 30px; padding: 0 8% 60px; 
-        }
-
-        .card { 
-            background: rgba(255, 255, 255, 0.02); 
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 35px; padding: 45px 25px; 
-            text-align: center; cursor: pointer;
-            backdrop-filter: blur(15px); transition: 0.4s;
-            position: relative; overflow: hidden;
-        }
-
-        /* الإضاءة الملونة لكل بطاقة */
-        .card.inwi:hover { border-color: var(--inwi); box-shadow: 0 0 40px rgba(188, 19, 254, 0.4); }
-        .card.orange:hover { border-color: var(--orange); box-shadow: 0 0 40px rgba(255, 121, 0, 0.4); }
-        .card.iam:hover { border-color: var(--iam); box-shadow: 0 0 40px rgba(0, 112, 255, 0.4); }
-        .card.custom:hover { border-color: var(--custom); box-shadow: 0 0 40px rgba(255, 204, 0, 0.4); }
-
-        .card:hover { transform: translateY(-15px); background: rgba(255,255,255,0.05); }
-
-        .card img { width: 100px; height: 100px; border-radius: 25px; margin-bottom: 20px; border: 2px solid rgba(255,255,255,0.2); }
-
-        /* 📱 واجهة التحميل */
-        #apps-view { display: none; padding: 30px 8%; animation: slideUp 0.6s ease; }
-        .app-box { 
-            background: rgba(0,0,0,0.7); border: 1px solid var(--ai-cyan); 
-            padding: 30px; border-radius: 25px; margin-bottom: 20px;
-            border-left: 8px solid var(--ai-cyan);
-        }
-        .dl-btn { 
-            background: white; color: black; padding: 15px; border-radius: 15px; 
-            display: block; text-align: center; text-decoration: none; font-weight: 900; 
-            margin-top: 15px; font-family: 'Orbitron';
-        }
-
-        @keyframes slideUp { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-    <canvas id="interactive-bg"></canvas>
+<canvas id="interactive-bg"></canvas>
 
-    <div class="hero-video">
-        <iframe src="https://player.cloudinary.com/embed/?cloud_name=didg4uwxv&public_id=InShot_20260127_191509607_hckiwc&autoplay=true&loop=true&muted=true&controls=false" allow="autoplay"></iframe>
+<div class="hero-video-container">
+    <iframe src="https://player.cloudinary.com/embed/?cloud_name=didg4uwxv&public_id=InShot_20260127_191509607_hckiwc&autoplay=true&loop=true&muted=true&controls=false" allow="autoplay" frameborder="0"></iframe>
+</div>
+
+<nav>
+    <div class="brand">
+        <img src="https://i.ibb.co/27Bb7mMy/In-Shot-20260127-103341799.jpg" class="logo-img">
+        <span class="brand-name">Grizator</span>
     </div>
+</nav>
 
-    <nav>
-        <div class="brand">
-            <img src="https://i.ibb.co/27Bb7mMy/In-Shot-20260127-103341799.jpg" class="logo">
-            <span class="brand-name">GRIZATOR AI</span>
+<div id="home-view">
+    <header class="hero-text">
+        <h1>Choose Your Network</h1>
+        <p>All applications that convert *6 to *3</p>
+    </header>
+    <div class="network-grid">
+        <div class="network-card inwi-card" onclick="selectNetwork('inwi')">
+            <img src="https://i.ibb.co/JWHMCRdS/In-Shot-20260126-093834338.jpg" class="net-img">
+            <h2 style="font-family:'Orbitron'">INWI</h2>
         </div>
-    </nav>
-
-    <div id="home-view">
-        <div class="hero-title">
-            <h1>Select Portal</h1>
-            <p style="color: var(--ai-cyan); letter-spacing: 5px;">DECODING NETWORKS...</p>
+        <div class="network-card orange-card" onclick="selectNetwork('orange')">
+            <img src="https://i.ibb.co/23z8x035/In-Shot-20260126-093754730.jpg" class="net-img">
+            <h2 style="font-family:'Orbitron'">ORANGE</h2>
         </div>
-        
-        <div class="grid-container">
-            <div class="card inwi" onclick="showApps('inwi')">
-                <img src="https://i.ibb.co/JWHMCRdS/In-Shot-20260126-093834338.jpg">
-                <h2 style="font-family:'Orbitron'; color: var(--inwi);">INWI</h2>
-            </div>
-            <div class="card orange" onclick="showApps('orange')">
-                <img src="https://i.ibb.co/23z8x035/In-Shot-20260126-093754730.jpg">
-                <h2 style="font-family:'Orbitron'; color: var(--orange);">ORANGE</h2>
-            </div>
-            <div class="card iam" onclick="showApps('iam')">
-                <img src="https://i.ibb.co/mFzx3KHg/In-Shot-20260126-093339759.jpg">
-                <h2 style="font-family:'Orbitron'; color: var(--iam);">IAM</h2>
-            </div>
-            <div class="card custom" onclick="showApps('custom')">
-                <img src="https://i.ibb.co/wrKMMcs9/In-Shot-20260128-084155501.jpg">
-                <h2 style="font-family:'Orbitron'; color: var(--custom);">CUSTOM</h2>
-            </div>
+        <div class="network-card iam-card" onclick="selectNetwork('iam')">
+            <img src="https://i.ibb.co/mFzx3KHg/In-Shot-20260126-093339759.jpg" class="net-img">
+            <h2 style="font-family:'Orbitron'">MAROC TÉLÉCOM</h2>
+        </div>
+        <div class="network-card custom-card" onclick="selectNetwork('custom')">
+            <img src="https://i.ibb.co/wrKMMcs9/In-Shot-20260128-084155501.jpg" class="net-img">
+            <h2 style="font-family:'Orbitron'; color: var(--custom);">HTTP CUSTOM</h2>
         </div>
     </div>
+</div>
 
-    <div id="apps-view">
-        <div id="list"></div>
-        <button style="background:none; border:1px solid white; color:white; padding:10px 40px; border-radius:50px; cursor:pointer; margin:20px auto; display:block;" onclick="location.reload()">◄ BACK TO CORE</button>
-    </div>
+<div id="apps-view">
+    <div id="app-list"></div>
+    <button class="back-btn" onclick="goBack()">◄ BACK</button>
+</div>
 
-    <script>
-        // --- 🌌 INTERACTIVE BACKGROUND ENGINE ---
-        const canvas = document.getElementById('interactive-bg');
-        const ctx = canvas.getContext('2d');
-        let points = [];
-        const mouse = { x: null, y: null };
+<script>
+    // --- 🌌 INTERACTIVE BG ---
+    const canvas = document.getElementById('interactive-bg');
+    const ctx = canvas.getContext('2d');
+    let points = [];
+    const mouse = { x: null, y: null };
 
-        function init() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            points = [];
-            for(let i=0; i<80; i++) {
-                points.push({
-                    x: Math.random() * canvas.width,
-                    y: Math.random() * canvas.height,
-                    vx: (Math.random() - 0.5) * 0.8,
-                    vy: (Math.random() - 0.5) * 0.8,
-                    size: Math.random() * 2
-                });
-            }
-        }
-
-        function draw() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            points.forEach(p => {
-                p.x += p.vx; p.y += p.vy;
-                if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
-                if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
-
-                ctx.fillStyle = 'rgba(0, 242, 255, 0.3)';
-                ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI*2); ctx.fill();
-
-                // Connect to mouse
-                let distMouse = Math.hypot(mouse.x - p.x, mouse.y - p.y);
-                if(distMouse < 200) {
-                    ctx.strokeStyle = `rgba(0, 242, 255, ${1 - distMouse/200})`;
-                    ctx.lineWidth = 0.5;
-                    ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
-                }
+    function init() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        points = [];
+        for(let i=0; i<60; i++) {
+            points.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                vx: (Math.random() - 0.5) * 0.5,
+                vy: (Math.random() - 0.5) * 0.5
             });
-            requestAnimationFrame(draw);
         }
+    }
 
-        window.addEventListener('mousemove', (e) => { mouse.x = e.x; mouse.y = e.y; });
-        window.addEventListener('touchmove', (e) => { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; });
-        window.addEventListener('resize', init);
-        init(); draw();
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        points.forEach(p => {
+            p.x += p.vx; p.y += p.vy;
+            if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
+            if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
+            ctx.fillStyle = 'rgba(0, 242, 255, 0.2)';
+            ctx.beginPath(); ctx.arc(p.x, p.y, 1.5, 0, Math.PI*2); ctx.fill();
+            
+            let dist = Math.hypot(mouse.x - p.x, mouse.y - p.y);
+            if(dist < 180) {
+                ctx.strokeStyle = `rgba(0, 242, 255, ${0.3 - dist/600})`;
+                ctx.lineWidth = 0.5;
+                ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(mouse.x, mouse.y); ctx.stroke();
+            }
+        });
+        requestAnimationFrame(animate);
+    }
+    window.addEventListener('mousemove', (e) => { mouse.x = e.x; mouse.y = e.y; });
+    window.addEventListener('resize', init);
+    init(); animate();
 
-        // --- 🛠️ LOGIC ---
-        const data = {
-            inwi: [{name: "MC NET VPN", link: "https://play.google.com/store/apps/details?id=org.mcnetvpn.app"}],
-            orange: [{name: "AM TUNNEL LITE", link: "https://play.google.com/store/apps/details?id=app.vpn.amtunnellite"}],
-            iam: [{name: "TSS TUNNEL", link: "https://play.google.com/store/apps/details?id=com.tss.tunnel"}],
-            custom: [{name: "IAM SSH VIP (CONFIG)", link: "https://www.mediafire.com/file/4x6m2ut40b6qpdb/file"}]
-        };
+    // --- 📂 DATA ---
+    const vpnData = {
+        inwi: [{ name: "MC NET VPN", link: "https://play.google.com/store/apps/details?id=org.mcnetvpn.app" }],
+        orange: [{ name: "AM TUNNEL LITE", link: "https://play.google.com/store/apps/details?id=app.vpn.amtunnellite" }],
+        iam: [{ name: "TSS TUNNEL", link: "https://play.google.com/store/apps/details?id=com.tss.tunnel" }],
+        custom: [
+            { name: "HTTP CUSTOM APP", link: "https://play.google.com/store/apps/details?id=com.fatadev.httpcustom" },
+            { name: "CONFIG IAM SSH VIP", link: "https://www.mediafire.com/file/4x6m2ut40b6qpdb/file" }
+        ]
+    };
 
-        function showApps(net) {
-            document.getElementById('home-view').style.display = 'none';
-            document.getElementById('apps-view').style.display = 'block';
-            document.getElementById('list').innerHTML = data[net].map(a => `
-                <div class="app-box">
-                    <h2 style="font-family:'Orbitron'">${a.name}</h2>
-                    <a href="${a.link}" target="_blank" class="dl-btn">INITIALIZE DOWNLOAD</a>
-                </div>
-            `).join('');
-        }
-    </script>
+    function selectNetwork(net) {
+        document.getElementById('home-view').style.display = 'none';
+        document.getElementById('apps-view').style.display = 'block';
+        document.getElementById('app-list').innerHTML = vpnData[net].map(app => `
+            <div class="app-card" style="border-right-color: ${net === 'custom' ? '#ffcc00' : '#00f2ff'}">
+                <h2 style="font-family:'Orbitron'">${app.name}</h2>
+                <a href="${app.link}" target="_blank" class="install-btn">🚀 GET ACCESS</a>
+            </div>
+        `).join('');
+    }
+    function goBack() { document.getElementById('home-view').style.display = 'block'; document.getElementById('apps-view').style.display = 'none'; }
+</script>
 </body>
 </html>
