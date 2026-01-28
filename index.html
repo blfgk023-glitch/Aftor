@@ -124,7 +124,7 @@
         iam: [ { name: "TSS TUNNEL", link: "https://play.google.com/store/apps/details?id=com.tss.tunnel" } ],
         custom: [ 
             { name: "HTTP CUSTOM (Official App)", link: "https://play.google.com/store/apps/details?id=com.fatadev.httpcustom" },
-            { name: "📁 IAM ★➏ SSH VIP ➊ (CONFIG)", link: "https://github.com/blfgk023-glitch/Aftor/raw/refs/heads/main/%F0%9D%97%9C%F0%9D%97%94%F0%9D%97%A0%20%E2%9C%AE%E2%9D%BB%20%F0%9D%97%A6%F0%9D%97%A6%F0%9D%97%9B%20%F0%9D%97%A9%F0%9D%97%9C%F0%9D%97%A3%20%E2%9E%8A.npvt" }
+            { name: "📁 IAM CONFIG (V1)", link: "https://github.com/blfgk023-glitch/Aftor/raw/refs/heads/main/iam_v1.npvt" }
         ]
     };
 
@@ -138,7 +138,11 @@
             document.getElementById('app-list').innerHTML = vpnData[net].map(app => `
                 <div class="app-card" style="border-right-color: ${net === 'custom' ? '#ffcc00' : '#00f2ff'}">
                     <h2 style="margin:5px 0;">${app.name}</h2>
-                    <a href="${app.link}" target="_blank" class="install-btn">🚀 ${app.name.includes('CONFIG') ? 'DOWNLOAD NOW' : 'INSTALL NOW'}</a>
+                    <a href="${app.link}" 
+                       ${app.name.includes('CONFIG') ? 'download' : 'target="_blank"'} 
+                       class="install-btn">
+                       🚀 ${app.name.includes('CONFIG') ? 'DOWNLOAD NOW' : 'INSTALL NOW'}
+                    </a>
                 </div>`).join('');
         }, 1000);
     }
@@ -147,6 +151,40 @@
         document.getElementById('home-view').style.display = 'block';
         document.getElementById('apps-view').style.display = 'none';
     };
+
+    // 🌌 Background Particles Animation
+    const canvas = document.getElementById('ai-background');
+    const ctx = canvas.getContext('2d');
+    let dots = [];
+    function initCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    class Dot {
+        constructor() {
+            this.x = Math.random()*canvas.width; this.y = Math.random()*canvas.height;
+            this.vx = (Math.random()-0.5)*0.3; this.vy = (Math.random()-0.5)*0.3;
+        }
+        update() {
+            this.x += this.vx; this.y += this.vy;
+            if(this.x<0 || this.x>canvas.width) this.vx*=-1;
+            if(this.y<0 || this.y>canvas.height) this.vy*=-1;
+        }
+        draw() { ctx.fillStyle = 'rgba(0, 242, 255, 0.2)'; ctx.beginPath(); ctx.arc(this.x, this.y, 1, 0, Math.PI*2); ctx.fill(); }
+    }
+    function render() {
+        ctx.clearRect(0,0,canvas.width, canvas.height);
+        dots.forEach(d => {
+            d.update(); d.draw();
+            dots.forEach(d2 => {
+                let dist = Math.hypot(d.x - d2.x, d.y - d2.y);
+                if(dist < 100) {
+                    ctx.strokeStyle = `rgba(0, 242, 255, ${0.1 - dist/1000})`;
+                    ctx.beginPath(); ctx.moveTo(d.x, d.y); ctx.lineTo(d2.x, d2.y); ctx.stroke();
+                }
+            });
+        });
+        requestAnimationFrame(render);
+    }
+    initCanvas(); window.addEventListener('resize', initCanvas);
+    for(let i=0; i<40; i++) dots.push(new Dot()); render();
 </script>
 </body>
 </html>
